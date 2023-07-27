@@ -1,0 +1,22 @@
+[
+  {
+    "name": "About us",
+    "link": "/about"
+  },
+  {
+    "name": "Careers",
+    "link": "/carrers"
+  },
+  {
+    "name": "Store Locations",
+    "link": "/store_locations"
+  },
+  {
+    "name": "Our Blog",
+    "link": "/blog"
+  },
+  {
+    "name": "Reviews",
+    "link": "/reviews"
+  }
+]
