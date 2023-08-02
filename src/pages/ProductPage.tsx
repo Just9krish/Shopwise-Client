@@ -55,7 +55,7 @@ export default function ProductPage() {
 const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
   const [activeTab, setActiveTab] = useState("productDetails");
   const [shopProducts, setShopProducts] = useState(0);
-  const { images, name, description, shop } = product;
+  const { description, shop } = product;
 
   const handleTabClick = (tabName: string) => {
     setActiveTab(tabName);

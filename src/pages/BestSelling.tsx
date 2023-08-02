@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 const Product = loadable(() => import("../components/Product/Product"));
-import productsData from "../constant/product.json";
 import style from "../styles/style";
 import { IProduct } from "../Interface";
 import loadable from "@loadable/component";
