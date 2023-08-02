@@ -1,13 +1,13 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { server } from "../../server";
+import { API_URL } from "../../constant";
 
 export const getShopAllEvents =
   (sellerId: string) => async (dispatch: Dispatch) => {
     try {
       dispatch({ type: "getShopAllEvents" });
 
-      const { data } = await axios.get(`${server}/shops/${sellerId}/events`, {
+      const { data } = await axios.get(API_URL.GET_SHOP_EVENTS(sellerId), {
         withCredentials: true,
       });
 
@@ -26,7 +26,7 @@ export const deleteEvent =
       dispatch({ type: "deleteEventRequest" });
 
       const { data } = await axios.delete(
-        `${server}/shops/${shopId}/events/${eventId}`,
+        API_URL.DELETE_SHOP_EVENT(shopId, eventId),
         {
           headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
@@ -50,7 +50,7 @@ export const getAllEvents = () => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: "getALLEvents" });
 
-    const { data } = await axios.get(`${server}/events`);
+    const { data } = await axios.get(API_URL.GET_ALL_EVENTS);
     dispatch({ type: "getAllEventsSuccess", payload: data });
   } catch (error: AxiosError | any) {
     console.log(error);

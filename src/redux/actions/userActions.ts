@@ -1,7 +1,7 @@
 import { Action, Dispatch } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { IUser } from "../../Interface";
-import { server } from "../../server";
+import { API_URL } from "../../constant";
 
 interface IFrom extends IUser {
   password: string;
@@ -21,7 +21,7 @@ export const loadUser = () => async (dispatch: Dispatch<Action>) => {
   try {
     dispatch({ type: "LoadUserRequest" });
 
-    const { data } = await axios.get(`${server}/users/getuser`, {
+    const { data } = await axios.get(API_URL.GET_USER_INFO, {
       withCredentials: true,
     });
 
@@ -38,7 +38,7 @@ export const updateUserInfo =
   (form: IFrom) => async (dispatch: Dispatch<Action>) => {
     try {
       dispatch({ type: "UpdateUserInfoRequest" });
-      const { data } = await axios.put(`${server}/users/profile`, form, {
+      const { data } = await axios.put(API_URL.UPDATE_USER, form, {
         withCredentials: true,
       });
       dispatch({ type: "UpdateUserInfoSuccess", payload: data.user });
@@ -54,7 +54,7 @@ export const updateUserInfo =
 export const updateUserAddress =
   (form: addressFrom) => async (dispatch: Dispatch<Action>) => {
     try {
-      const { data } = await axios.post(`${server}/users/address`, form, {
+      const { data } = await axios.post(API_URL.ADD_USER_ADDRESS, form, {
         withCredentials: true,
       });
       dispatch({ type: "UpdateUserAddressSuccess", payload: data });
@@ -70,7 +70,7 @@ export const updateUserAddress =
 export const deleteUserAddress =
   (id: string) => async (dispatch: Dispatch<Action>) => {
     try {
-      const { data } = await axios.delete(`${server}/users/address/${id}`, {
+      const { data } = await axios.delete(API_URL.DELETE_USER_ADDRESS(id), {
         withCredentials: true,
       });
 

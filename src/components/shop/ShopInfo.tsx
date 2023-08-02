@@ -6,6 +6,7 @@ import formateDate from "../../helper/formatDate";
 import { useAppSelector } from "../../hooks";
 import { host, server } from "../../server";
 import style from "../../styles/style";
+import { API_URL } from "../../constant";
 
 interface IProps {
   isOwner: boolean;
@@ -21,7 +22,7 @@ export default function ShopInfo({ isOwner }: IProps) {
     event.preventDefault();
 
     try {
-      const res = await axios.get(`${server}/shops/logout`, {
+      const res = await axios.get(API_URL.LOGOUT_SHOP, {
         withCredentials: true,
       });
 

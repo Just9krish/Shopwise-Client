@@ -8,6 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { server } from "../../../server";
+import { API_URL } from "../../../constant";
 
 export default function AddProduct() {
   const navigate = useNavigate();
@@ -56,7 +57,7 @@ export default function AddProduct() {
       axios.defaults.withCredentials = true;
       const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-      const res = await axios.post(`${server}/products`, form, config);
+      const res = await axios.post(API_URL.ADD_PRODUCT, form, config);
 
       if (res.status == 201) {
         toast.success("Product Added Successfully");

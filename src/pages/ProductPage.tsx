@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useAppSelector } from "../hooks";
 import { host, server } from "../server";
 import axios from "axios";
+import { API_URL } from "../constant";
 
 const ProductDetails = loadable(
   () => import("../components/ProductDetails/ProductDetails")
@@ -62,7 +63,7 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
 
   useEffect(() => {
     axios
-      .get(`${server}/shops/${shop._id}/products`)
+      .get(API_URL.GET_SHOP_PRODUCTS(shop?._id))
       .then((res) => setShopProducts(res.data.products.length));
   }, []);
 

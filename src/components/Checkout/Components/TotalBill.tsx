@@ -10,6 +10,7 @@ import { server } from "../../../server";
 import style from "../../../styles/style";
 import { getCartItemPrice } from "../../../helper/getCartItemPrice";
 import { totalSavingCalculate } from "../../../redux/actions/cartActions";
+import { API_URL } from "../../../constant";
 
 export default function TotalBill() {
   const { cart, cartPrice } = useAppSelector((state) => state.cart);
@@ -49,7 +50,7 @@ export default function TotalBill() {
 
     try {
       const res = await axios.post(
-        `${server}/coupons/`,
+        API_URL.GET_ALL_COUPONS,
         { couponCode: enterCouponCode, cartPrice },
         { withCredentials: true }
       );

@@ -1,12 +1,12 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { server } from "../../server";
+import { API_URL } from "../../constant";
 
 export const getAllProducts = () => async (dispatch: Dispatch) => {
   try {
     dispatch({ type: "getAllProducts" });
 
-    const { data } = await axios.get(`${server}/products`);
+    const { data } = await axios.get(API_URL.GET_ALL_PRODUCTS);
 
     dispatch({ type: "getAllProductsSuccess", payload: data.products });
   } catch (error: AxiosError | any) {

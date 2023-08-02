@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { server } from "../../server";
+import { API_URL } from "../../constant";
 
 export default function ActivationPage() {
   const { activation_token } = useParams();
@@ -11,7 +12,7 @@ export default function ActivationPage() {
   useEffect(() => {
     const activationEmail = async () => {
       try {
-        const res = await axios.post(`${server}/users/activation`, {
+        const res = await axios.post(API_URL.ACTIVATE_USER, {
           activation_token,
         });
       } catch (error) {

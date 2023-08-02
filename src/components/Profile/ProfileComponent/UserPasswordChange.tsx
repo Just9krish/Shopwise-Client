@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { server } from "../../../server";
 import PasswordInput from "../../Auth/passwordInput/PasswordInput";
+import { API_URL } from "../../../constant";
 
 export default function UserPasswordChange() {
   const initialState = {
@@ -28,7 +29,7 @@ export default function UserPasswordChange() {
 
     try {
       const { data } = await axios.post(
-        `${server}/users/password-change`,
+        API_URL.USER_PASSWORD_CHANGE,
         formData,
         { withCredentials: true }
       );

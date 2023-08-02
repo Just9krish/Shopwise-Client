@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
+import { API_URL } from "../../constant";
 
 const initialState = {
   email: "",
@@ -30,7 +31,7 @@ export default function ShopLogin() {
 
     try {
       const res = await axios.post(
-        `${server}/shops/login-shop`,
+        API_URL.LOGIN_SHOP,
         {
           email: formData.email,
           password: formData.password,

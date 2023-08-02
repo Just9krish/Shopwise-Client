@@ -8,6 +8,7 @@ import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { server } from "../../../server";
+import { API_URL } from "../../../constant";
 
 export default function CreateEvent() {
   const navigate = useNavigate();
@@ -87,7 +88,7 @@ export default function CreateEvent() {
       axios.defaults.withCredentials = true;
       const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-      const res = await axios.post(`${server}/shops/events`, form, config);
+      const res = await axios.post(API_URL.CREATE_SHOP_EVENT, form, config);
 
       if (res.status == 201) {
         toast.success("Event Added Successfully");

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { server } from "../../../server";
 import style from "../../../styles/style";
+import { API_URL } from "../../../constant";
 
 type SavedAddress = {
   fullName: string;
@@ -80,7 +81,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
       if (cardNumberElement) {
         // creating payment intent
         const { data } = await axios.post(
-          `${server}/payments/create-payment-intent`,
+          API_URL.CREATE_PAYMENT_INTENT,
           cartData,
           {
             headers: {
@@ -116,7 +117,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
               paidPrice: paymentIntent.amount,
             };
 
-            const { data } = await axios.post(`${server}/orders`, order, {
+            const { data } = await axios.post(API_URL.CREATE_ORDER, order, {
               headers: {
                 "Content-Type": "application/json",
               },
@@ -173,7 +174,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
         couponID: cartData.couponID,
       };
 
-      const { data } = await axios.post(`${server}/orders`, order, {
+      const { data } = await axios.post(API_URL.CREATE_ORDER, order, {
         headers: {
           "Content-Type": "application/json",
         },

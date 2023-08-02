@@ -1,7 +1,7 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { IAddProduct } from "../../Interface";
-import { server } from "../../server";
+import { API_URL } from "../../constant";
 
 axios.defaults.withCredentials = true;
 
@@ -12,7 +12,7 @@ export const addProduct =
 
       const config = { headers: { "Content-Type": "multipart/form-data" } };
 
-      const { data } = await axios.post(`${server}/products`, newForm, config);
+      const { data } = await axios.post(API_URL.ADD_PRODUCT, newForm, config);
 
       dispatch({ type: "productAddSuccess", payload: data.product });
     } catch (error: AxiosError | any) {
@@ -28,7 +28,7 @@ export const getShopAllProducts =
     try {
       dispatch({ type: "getShopAllProducts" });
 
-      const { data } = await axios.get(`${server}/shops/${sellerId}/products`);
+      const { data } = await axios.get(API_URL.GET_SHOP_PRODUCTS(sellerId));
 
       dispatch({ type: "getShopAllProductsSuccess", payload: data.products });
     } catch (error: AxiosError | any) {
@@ -48,7 +48,7 @@ export const deleteProduct =
       const config = { headers: { "Content-Type": "multipart/form-data" } };
 
       const { data } = await axios.delete(
-        `${server}/shops/${shopId}/products/${productId}`,
+        API_URL.DELETE_SHOP_PRODUCT(shopId, productId),
         config
       );
 

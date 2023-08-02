@@ -10,6 +10,7 @@ import { host, server } from "../../../server";
 import { Country, State } from "country-state-city";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import { API_URL } from "../../../constant";
 const Loader = loadable(() => import("../../Loader/Loader"));
 
 export default function OrderDetails() {
@@ -37,10 +38,10 @@ export default function OrderDetails() {
     return country ? country.name : "";
   };
 
-  async function orderUpdateHandler() {
+  async function orderUpdateHandler(sellerId: string, orderId: string) {
     try {
       const res = await axios.put(
-        `${server}/shops/${seller._id}/orders/${selectedOrder?._id}`,
+        API_URL.UPDATE_SHOP_ORDERS(sellerId, orderId),
         { orderStatus },
         { withCredentials: true }
       );
@@ -272,7 +273,10 @@ export default function OrderDetails() {
               </div>
 
               <button
-                onClick={orderUpdateHandler}
+                onClick={() => {
+                  if (selectedOrder)
+                    orderUpdateHandler(seller._id, selectedOrder?._id);
+                }}
                 className="bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-4 rounded mt-4"
               >
                 Update Status

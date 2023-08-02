@@ -10,6 +10,7 @@ import { server } from "../../../server";
 import Loader from "../../Loader/Loader";
 import { getShopAllProducts } from "../../../redux/actions/productActions";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { API_URL } from "../../../constant";
 
 type row = {
   id: string;
@@ -26,10 +27,10 @@ export default function ShopCupons() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function getCoupons() {
+  async function getCoupons(sellerId: string) {
     try {
       setIsLoading(true);
-      const res = await axios.get(`${server}/shops/${seller._id}/coupons`, {
+      const res = await axios.get(API_URL.GET_SHOP_COUPONS(sellerId), {
         withCredentials: true,
       });
 
@@ -48,19 +49,16 @@ export default function ShopCupons() {
     }
   }
 
-  async function handleDeleteCoupon(id: string) {
+  async function handleDeleteCoupon(sellerId: string, id: string) {
     try {
       setIsLoading(true);
-      const res = await axios.delete(
-        `${server}/shops/${seller._id}/coupons/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const res = await axios.delete(API_URL.DELETE_SHOP_COUPON(sellerId, id), {
+        withCredentials: true,
+      });
       if (res.status == 200) {
         setIsLoading(false);
         toast.success(res.data.message);
-        getCoupons();
+        getCoupons(seller?._id);
       }
     } catch (err: AxiosError | any) {
       setIsLoading(false);
@@ -88,7 +86,7 @@ export default function ShopCupons() {
     try {
       setIsLoading(true);
       const res = await axios.post(
-        `${server}/shops/${seller._id}/coupons`,
+        API_URL.CREATE_SHOP_COUPON(seller?._id),
         {
           name: cuponcode,
           value: discountpercentage,
@@ -107,7 +105,7 @@ export default function ShopCupons() {
         setDiscountpercentage(0);
         setMiniAmount(0);
         setSelectedProduct(null);
-        getCoupons();
+        getCoupons(seller?._id);
         toast.success(res.data.message);
       }
     } catch (e: AxiosError | any) {
@@ -123,7 +121,7 @@ export default function ShopCupons() {
 
   useEffect(() => {
     dispatch(getShopAllProducts(seller._id));
-    getCoupons();
+    getCoupons(seller?._id);
   }, [seller._id]);
 
   const columns = [
@@ -162,7 +160,9 @@ export default function ShopCupons() {
         return (
           <>
             <button
-              onClick={() => handleDeleteCoupon(params.id.toString())}
+              onClick={() =>
+                handleDeleteCoupon(seller?._id, params.id.toString())
+              }
               className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all"
             >
               <AiOutlineDelete size={20} />

@@ -4,8 +4,8 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import style from "../../../styles/style";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
-import { server } from "../../../server";
 import { toast } from "react-toastify";
+import { API_URL } from "../../../constant";
 
 const initialState = {
   email: "",
@@ -31,7 +31,7 @@ export default function Login() {
 
     try {
       const res = await axios.post(
-        `${server}/users/login`,
+        API_URL.LOGIN_USER,
         {
           email: formData.email,
           password: formData.password,

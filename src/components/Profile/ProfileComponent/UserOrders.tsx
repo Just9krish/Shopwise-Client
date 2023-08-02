@@ -9,6 +9,7 @@ import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { IOrder } from "../../../Interface";
 import Loader from "../../Loader/Loader";
+import { API_URL } from "../../../constant";
 
 export default function UserOrders() {
   const [userOrders, setUserOrders] = useState<IOrder[]>([]);
@@ -18,7 +19,7 @@ export default function UserOrders() {
   const loadUserOrders = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(`${server}/users/${user._id}/orders`, {
+      const { data } = await axios.get(API_URL.GET_ALL_USER_ORDERS(user?._id), {
         withCredentials: true,
       });
 

@@ -6,6 +6,7 @@ import { server } from "../../server";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ICustomResponse } from "../../Interface";
+import { API_URL } from "../../constant";
 
 const initialState = {
   file: null as File | null,
@@ -76,7 +77,7 @@ export default function CreateShop() {
     try {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       const res = await axios.post<ICustomResponse>(
-        `${server}/shops/create-shop`,
+        API_URL.CREATE_SHOP,
         newFrom,
         config
       );

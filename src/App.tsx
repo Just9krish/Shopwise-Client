@@ -7,7 +7,6 @@ import { useEffect, useLayoutEffect } from "react";
 import { loadSeller } from "./redux/actions/sellerActions";
 import { getAllEvents } from "./redux/actions/eventsActions";
 import { useState } from "react";
-import { server } from "./server";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import axios from "axios";
@@ -21,6 +20,7 @@ import LoginPage from "./pages/User/LoginPage";
 import Loader from "./components/Loader/Loader";
 import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
+import { API_URL } from "./constant";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -68,7 +68,7 @@ function App() {
   const [stripeKey, setStripeKey] = useState<string | null>(null);
 
   async function getStripeSecretKey() {
-    const { data } = await axios.get(`${server}/payments/stripe-secret-key`);
+    const { data } = await axios.get(API_URL.GET_STRIPE_SECRET_KEY);
     setStripeKey(data);
   }
 

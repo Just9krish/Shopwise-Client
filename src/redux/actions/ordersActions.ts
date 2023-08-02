@@ -1,13 +1,13 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { server } from "../../server";
+import { API_URL } from "../../constant";
 
 export const getAllOrdersOfSeller =
   (shopid: string) => async (dispatch: Dispatch) => {
     try {
       dispatch({ type: "getShopOrders" });
 
-      const { data } = await axios.get(`${server}/shops/${shopid}/orders`, {
+      const { data } = await axios.get(API_URL.GET_SHOP_ORDERS(shopid), {
         withCredentials: true,
       });
 

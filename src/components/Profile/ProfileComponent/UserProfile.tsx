@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { loadUser, updateUserInfo } from "../../../redux/actions/userActions";
 import axios, { AxiosError } from "axios";
+import { API_URL } from "../../../constant";
 
 export default function UserProfile() {
   const { user } = useAppSelector((state) => state.user);
@@ -51,10 +52,14 @@ export default function UserProfile() {
       formData.append("file", e.target.files[0]);
 
       try {
-        const { data } = await axios.put(`${server}/users/avatar`, formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-          withCredentials: true,
-        });
+        const { data } = await axios.put(
+          API_URL.UPDATE_USER_PROFILE,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true,
+          }
+        );
 
         dispatch(loadUser());
       } catch (e: AxiosError | any) {

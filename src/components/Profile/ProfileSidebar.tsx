@@ -8,6 +8,7 @@ import { MdOutlinePassword, MdOutlineTrackChanges } from "react-icons/md";
 import axios from "axios";
 import { server } from "../../server";
 import { toast } from "react-toastify";
+import { API_URL } from "../../constant";
 
 interface IProps {
   setActiveTab: (prev: number) => void;
@@ -40,7 +41,7 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
 
   async function handleLogout() {
     try {
-      const res = await axios.get(`${server}/users/logout`, {
+      const res = await axios.get(API_URL.LOGOUT_USER, {
         withCredentials: true,
       });
 
