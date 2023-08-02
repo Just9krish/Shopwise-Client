@@ -3,7 +3,6 @@ import axios from "axios";
 import loadable from "@loadable/component";
 const PasswordInput = loadable(() => import("../passwordInput/PasswordInput"));
 import style from "../../../styles/style";
-import { server } from "../../../server";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ICustomResponse } from "../../../Interface";

@@ -3,7 +3,6 @@ import PasswordInput from "../Auth/passwordInput/PasswordInput";
 import style from "../../styles/style";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { server } from "../../server";
 import { toast } from "react-toastify";
 import { API_URL } from "../../constant";
 

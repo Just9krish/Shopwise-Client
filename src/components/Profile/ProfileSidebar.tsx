@@ -6,7 +6,6 @@ import { TbAddressBook } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { MdOutlinePassword, MdOutlineTrackChanges } from "react-icons/md";
 import axios from "axios";
-import { server } from "../../server";
 import { toast } from "react-toastify";
 import { API_URL } from "../../constant";
 

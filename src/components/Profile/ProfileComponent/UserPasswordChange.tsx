@@ -1,7 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { server } from "../../../server";
 import PasswordInput from "../../Auth/passwordInput/PasswordInput";
 import { API_URL } from "../../../constant";
 

@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { server } from "../../../server";
 import { API_URL } from "../../../constant";
 
 export default function SellerActivationPage() {

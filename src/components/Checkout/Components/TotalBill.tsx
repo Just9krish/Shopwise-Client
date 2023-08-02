@@ -6,7 +6,6 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { ICoupon } from "../../../Interface";
 import { setCouponId } from "../../../redux/actions/cartActions";
-import { server } from "../../../server";
 import style from "../../../styles/style";
 import { getCartItemPrice } from "../../../helper/getCartItemPrice";
 import { totalSavingCalculate } from "../../../redux/actions/cartActions";

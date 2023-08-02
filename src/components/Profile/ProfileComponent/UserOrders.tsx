@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks";
-import { server } from "../../../server";
 import { toast } from "react-toastify";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { formattedPrice } from "../../../helper/formatPrice";

@@ -6,7 +6,6 @@ import { RxCross1 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { ICoupon } from "../../../Interface";
-import { server } from "../../../server";
 import Loader from "../../Loader/Loader";
 import { getShopAllProducts } from "../../../redux/actions/productActions";
 import { useAppDispatch, useAppSelector } from "../../../hooks";

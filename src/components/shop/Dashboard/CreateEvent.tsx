@@ -7,7 +7,6 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { RxCross2 } from "react-icons/rx";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { server } from "../../../server";
 import { API_URL } from "../../../constant";
 
 export default function CreateEvent() {

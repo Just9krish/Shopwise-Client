@@ -1,14 +1,11 @@
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import { useEffect, useState } from "react";
-import { AiOutlineArrowRight, AiOutlineEye } from "react-icons/ai";
+import { useEffect } from "react";
+import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { IOrder, IShopOrder } from "../../../Interface";
 import { getAllOrdersOfSeller } from "../../../redux/actions/ordersActions";
-import { server } from "../../../server";
 import Loader from "../../Loader/Loader";
-import OrderDetails from "./OrderDetails";
 
 type Row = {
   id: string;

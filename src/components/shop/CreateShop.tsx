@@ -2,7 +2,6 @@ import { useState, ChangeEvent, FormEvent } from "react";
 import axios, { AxiosError } from "axios";
 import PasswordInput from "../Auth/passwordInput/PasswordInput";
 import style from "../../styles/style";
-import { server } from "../../server";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ICustomResponse } from "../../Interface";

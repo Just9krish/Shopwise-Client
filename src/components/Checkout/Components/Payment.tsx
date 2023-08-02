@@ -10,7 +10,6 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { GrPowerReset } from "react-icons/gr";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { server } from "../../../server";
 import style from "../../../styles/style";
 import { API_URL } from "../../../constant";
 
