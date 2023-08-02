@@ -31,7 +31,6 @@ const EventsPage = loadable(() => import("./pages/EventsPage"));
 const FAQ = loadable(() => import("./pages/FAQPage"));
 const ProfilePage = loadable(() => import("./pages/User/ProfilePage"));
 const ShopCuponsPage = loadable(() => import("./pages/Seller/ShopCuponsPage"));
-const NotFound = loadable(() => import("./components/404/NotFound"));
 const CheckoutPage = loadable(() => import("./pages/User/CheckoutPage"));
 const ShopHomePage = loadable(() => import("./pages/Seller/ShopHomePage"));
 
@@ -123,7 +122,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route
-          path="/activation/:activation_token"
+          path="/user/verify/:activation_token"
           element={<ActivationPage />}
         />
         <Route
