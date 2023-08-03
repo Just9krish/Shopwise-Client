@@ -9,6 +9,9 @@ export const API_URL = {
   ACTIVATE_USER: `${DOMAIN}/users/activation`,
   LOGIN_USER: `${DOMAIN}/users/login`,
   GET_USER_INFO: `${DOMAIN}/users/getuser`,
+  FORGOT_USER_PASSWORD: `${DOMAIN}/users/forgotpassword`,
+  REST_USER_PASSWORD: (resetToken: string) =>
+    `${DOMAIN}/users/resetpassword/${resetToken}`,
   UPDATE_USER: `${DOMAIN}/users/profile`,
   UPDATE_USER_PROFILE: `${DOMAIN}/users/avatar`,
   ADD_USER_ADDRESS: `${DOMAIN}/users/address`,
