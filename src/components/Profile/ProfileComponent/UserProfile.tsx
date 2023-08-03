@@ -33,6 +33,7 @@ export default function UserProfile() {
     _id: _id,
     primaryPhoneNumber: primaryPhoneNumber,
     secondaryPhoneNumber: secondaryPhoneNumber,
+    addresses: [],
   };
 
   const [formData, setFormData] = useState<IUser>(initialsate);
