@@ -21,6 +21,7 @@ import Loader from "./components/Loader/Loader";
 import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
 import { API_URL } from "./constant";
+import ForgotPasswordPage from "./pages/User/ForgotPasswordPage";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -121,6 +122,7 @@ function App() {
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
         <Route
           path="/user/verify/:activation_token"
           element={<ActivationPage />}

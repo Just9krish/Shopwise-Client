@@ -1,5 +1,6 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import axios from "axios";
+import logo from "../../../assets/shopwise.png";
 import loadable from "@loadable/component";
 const PasswordInput = loadable(() => import("../passwordInput/PasswordInput"));
 import style from "../../../styles/style";
@@ -77,11 +78,12 @@ export default function Signup() {
   }
 
   return (
-    <div className="px-8 py-12 w-full max-w-md mx-auto bg-white shadow-lg">
-      <h2 className="text-center text-2xl font-extrabold text-gray-900">
+    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img className="mx-auto h-10 w-auto" src={logo} alt="Shopwise" />
+      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         Register as a new user
       </h2>
-      <div className="mt-10">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className={`${style.flex_normal} justify-center flex-col`}>
             <input
@@ -96,13 +98,13 @@ export default function Signup() {
             <img
               id="img-preview"
               src="https://i.ibb.co/kK2JV13/Png-Item-1503945.png"
-              className="h-40 w-40 rounded-full"
+              className="h-40 w-40 rounded-full shadow-sm"
               alt="Profile Preview"
               loading="lazy"
             />
             <label
               htmlFor="file"
-              className="text-blue-600 mt-2  cursor-pointer hover:text-blue-500 focus::text-blue-500"
+              className="text-[#ff7d1a] mt-2 cursor-pointer hover:text-orange-500 focus:text-orange-500"
             >
               Edit profile picture
             </label>
@@ -119,7 +121,7 @@ export default function Signup() {
               value={formData.fullname}
               onChange={handleChange}
               placeholder="Full Name"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
+              className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
             />
           </div>
           <div>
@@ -134,7 +136,7 @@ export default function Signup() {
               value={formData.email}
               onChange={handleChange}
               placeholder="Email"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
+              className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
             />
           </div>
 
@@ -146,20 +148,20 @@ export default function Signup() {
           />
 
           <button
-            className="w-full group bg-[#ff7d1a] text-white py-2 rounded hover:bg-orange-500 focus:bg-orange-500 transition-all"
+            className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
             type="submit"
           >
             Submit
           </button>
-          <div className={`${style.flex_normal}`}>
-            <h4>Already have an account ?</h4>
+          <p className="mt-10 text-center text-sm text-gray-500">
+            Already have an account?
             <Link
               to="/login"
-              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
+              className="font-semibold leading-6 text-[#ff7d1a] hover:text-orange-500 ml-1"
             >
               Login
             </Link>
-          </div>
+          </p>
         </form>
       </div>
     </div>

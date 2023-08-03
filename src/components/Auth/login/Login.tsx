@@ -1,4 +1,5 @@
 import loadable from "@loadable/component";
+import logo from "../../../assets/shopwise.png";
 const PasswordInput = loadable(() => import("../passwordInput/PasswordInput"));
 import { useState, ChangeEvent, FormEvent } from "react";
 import style from "../../../styles/style";
@@ -53,11 +54,12 @@ export default function Login() {
   }
 
   return (
-    <div className="px-8 py-12 w-full max-w-md mx-auto bg-white shadow-lg">
-      <h2 className="text-center text-2xl font-extrabold text-gray-900">
+    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img className="mx-auto h-10 w-auto" src={logo} alt="Shopwise" />
+      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         Log in to your account
       </h2>
-      <div className="mt-14">
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="email" className="sr-only">
@@ -71,7 +73,7 @@ export default function Login() {
               value={formData.email}
               onChange={handleChange}
               placeholder="Email"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
+              className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
             />
           </div>
 
@@ -100,7 +102,7 @@ export default function Login() {
             </div>
             <div className="text-sm">
               <Link
-                to="/forgetpassword"
+                to="/forgotpassword"
                 className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500"
               >
                 Forgot your password?
@@ -113,24 +115,24 @@ export default function Login() {
           >
             Login
           </button>
-          <div className={`${style.flex_normal}`}>
-            <h4>Not have any account?</h4>
+          <p className="mt-10 text-center text-sm text-gray-500">
+            Not have any account?
             <Link
               to="/signup"
-              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
+              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 ml-1 focus:text-orange-500 leading-6"
             >
               Signup
             </Link>
-          </div>
-          <div>
-            looking for Home Page?
+          </p>
+          <p className="text-center text-sm text-gray-500">
+            Send me back to
             <Link
               to="/"
-              className="font-medium text-blue-500 transition-all hover:text-blue-500 focus:text-blue-500 ml-2"
+              className="font-medium text-blue-500 transition-all hover:text-blue-500 ml-1 focus:text-blue-500"
             >
-              click here
+              Home
             </Link>
-          </div>
+          </p>
         </form>
       </div>
     </div>
