@@ -1,41 +1,29 @@
-import loadable from "@loadable/component";
 import logo from "../../../assets/shopwise.png";
-const PasswordInput = loadable(() => import("../passwordInput/PasswordInput"));
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
 import style from "../../../styles/style";
 import { Link, useNavigate } from "react-router-dom";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { API_URL } from "../../../constant";
-
-const initialState = {
-  email: "",
-  password: "",
-  isRemeber: false,
-};
+import { useForm } from "react-hook-form";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function Login() {
-  const [formData, setFormData] = useState(initialState);
-
   const navigate = useNavigate();
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value, type, checked } = e.target;
-    setFormData((prevForm) => ({
-      ...prevForm,
-      [name]: type === "checkbox" ? checked : value,
-    }));
-  }
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
+  async function handleLogin(email: string, password: string) {
     try {
       const res = await axios.post(
         API_URL.LOGIN_USER,
         {
-          email: formData.email,
-          password: formData.password,
+          email,
+          password,
         },
         { withCredentials: true }
       );
@@ -60,37 +48,73 @@ export default function Login() {
         Log in to your account
       </h2>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={handleSubmit}>
+        <form
+          noValidate
+          className="space-y-6"
+          onSubmit={handleSubmit((data) => {
+            handleLogin;
+          })}
+        >
           <div>
             <label htmlFor="email" className="sr-only">
-              Email
+              Email address
             </label>
             <input
+              id="email"
               type="email"
-              name="email"
               autoComplete="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
               placeholder="Email"
               className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+              {...register("email", {
+                required: "Email is required!",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "Email is not Valid!",
+                },
+              })}
             />
+            {errors?.email && (
+              <span className="text-red-500 text-sm">
+                {errors.email.message?.toString()}
+              </span>
+            )}
           </div>
 
-          <PasswordInput
-            placeholder="Password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+          <div>
+            <label className="sr-only" htmlFor="password">
+              password
+            </label>
+            <div className="relative">
+              <input
+                type={isPasswordShown ? "text" : "password"}
+                className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+                {...register("password", {
+                  required: "Password is requried!",
+                })}
+              />
+              <div
+                className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
+                onClick={() => setIsPasswordShown(!isPasswordShown)}
+              >
+                {isPasswordShown ? (
+                  <AiOutlineEyeInvisible color="orange" size={20} />
+                ) : (
+                  <AiOutlineEye color="orange" size={20} />
+                )}
+              </div>
+            </div>
+            {errors?.password && (
+              <span className="text-red-500 text-sm">
+                {errors?.password.message?.toString()}
+              </span>
+            )}
+          </div>
+
           <div className={`${style.flex_normal} justify-between`}>
             <div className={`${style.flex_normal}`}>
               <input
                 type="checkbox"
-                name="isRemeber"
                 id="remeberme"
-                checked={formData.isRemeber}
-                onChange={handleChange}
                 className="h-4 w-4 text-[#ff7d1a] focus:ring-orange-500 border-gray-300 rounded"
               />
               <label
