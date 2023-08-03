@@ -1,7 +1,9 @@
 // constants.ts
 
-export const DOMAIN = "http://localhost:3000/api/v2";
-export const IMAGE_URL = "http://localhost:3000";
+const SERVER_URL = import.meta.env.VITE_SERVER_DOMAIN;
+export const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
+
+export const DOMAIN = `${SERVER_URL}/api/v2`;
 
 export const API_URL = {
   // User APIs
