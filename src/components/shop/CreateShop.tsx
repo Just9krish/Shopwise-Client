@@ -1,87 +1,42 @@
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
 import axios, { AxiosError } from "axios";
-import PasswordInput from "../Auth/passwordInput/PasswordInput";
 import style from "../../styles/style";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ICustomResponse } from "../../Interface";
 import { API_URL } from "../../constant";
-
-const initialState = {
-  file: null as File | null,
-  fullname: "",
-  email: "",
-  password: "",
-  phoneNumber: "",
-  address: "",
-  zipcode: "",
-};
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useForm } from "react-hook-form";
+import logo from "../../assets/shopwise.png";
 
 export default function CreateShop() {
-  const [formData, setFormData] = useState(initialState);
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  function handleChange(
-    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  async function handleSignup(
+    fullname: string,
+    email: string,
+    password: string,
+    address: string,
+    phoneNumber: string,
+    zipcode: string
   ) {
-    const { name, value, type } = event.target;
-
-    if (type === "file") {
-      const fileInput = event.target as HTMLInputElement;
-      const files = fileInput.files;
-
-      if (files?.[0]) {
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: files[0],
-        }));
-
-        // Create a preview of the uploaded image and display it in the UI
-        const reader = new FileReader();
-        reader.onload = () => {
-          const imgPreview = document.getElementById(
-            "img-preview"
-          ) as HTMLImageElement;
-          if (imgPreview) {
-            imgPreview.src = reader.result as string;
-          }
-        };
-        reader.readAsDataURL(files[0]);
-      }
-    } else {
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        [name]: value,
-      }));
-    }
-  }
-
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const { file, fullname, email, password, address, phoneNumber, zipcode } =
-      formData;
-
-    const newFrom = new FormData();
-
-    newFrom.append("name", fullname);
-    newFrom.append("email", email);
-    newFrom.append("password", password);
-    newFrom.append("address", address);
-    newFrom.append("phoneNumber", phoneNumber);
-    newFrom.append("zipcode", zipcode);
-    if (file) {
-      newFrom.append("file", file);
-    }
-
     try {
       const config = { headers: { "Content-Type": "multipart/form-data" } };
       const res = await axios.post<ICustomResponse>(
         API_URL.CREATE_SHOP,
-        newFrom,
+        { fullname, email, password, address, phoneNumber, zipcode },
         config
       );
+
       toast.success(res.data.message);
-      setFormData(initialState);
+      reset();
     } catch (error: AxiosError | any) {
       console.error(error);
       if (error.response) {
@@ -93,50 +48,44 @@ export default function CreateShop() {
   }
 
   return (
-    <div className="px-8 py-12 w-full max-w-lg mx-auto bg-white shadow-lg">
-      <h2 className="text-center text-2xl font-extrabold text-gray-900">
+    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img className="mx-auto h-10 w-auto" src={logo} alt="Shopwise" />
+      <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         Register as a new Seller
       </h2>
-      <div className="mt-10">
-        <form className="space-y-6" onSubmit={handleSubmit}>
-          <div className={`${style.flex_normal} justify-center flex-col`}>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={handleChange}
-              name="file"
-              id="file"
-              hidden
-              required
-            />
-            <img
-              id="img-preview"
-              src="https://i.ibb.co/kK2JV13/Png-Item-1503945.png"
-              className="h-40 w-40 rounded-full"
-              alt="Profile Preview"
-              loading="lazy"
-            />
-            <label
-              htmlFor="file"
-              className="text-blue-600 mt-2  cursor-pointer hover:text-blue-500 focus::text-blue-500"
-            >
-              Edit profile picture
-            </label>
-          </div>
-
+      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form
+          noValidate
+          className="space-y-6"
+          onSubmit={handleSubmit((data) => {
+            console.log(data);
+            handleSignup(
+              data.fullname,
+              data.eamil,
+              data.password,
+              data.address,
+              data.phoneNumber,
+              data.zipcode
+            );
+          })}
+        >
           <div className="w-full">
             <label htmlFor="email" className="sr-only">
               Full Name
             </label>
             <input
               type="text"
-              name="fullname"
-              required
-              value={formData.fullname}
-              onChange={handleChange}
               placeholder="Full Name"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
+              className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+              {...register("fullname", {
+                required: "Full Name is required!",
+              })}
             />
+            {errors?.fullname && (
+              <span className="text-red-500 text-sm">
+                {errors?.fullname.message?.toString()}
+              </span>
+            )}
           </div>
 
           <div className="w-full">
@@ -145,13 +94,21 @@ export default function CreateShop() {
             </label>
             <input
               type="email"
-              name="email"
-              required
-              value={formData.email}
-              onChange={handleChange}
               placeholder="Email"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
+              className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+              {...register("email", {
+                required: "Email is required!",
+                pattern: {
+                  value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+                  message: "Email is not Valid!",
+                },
+              })}
             />
+            {errors?.email && (
+              <span className="text-red-500 text-sm">
+                {errors.email.message?.toString()}
+              </span>
+            )}
           </div>
 
           <div>
@@ -160,13 +117,17 @@ export default function CreateShop() {
             </label>
             <input
               type="number"
-              name="phoneNumber"
-              required
-              value={formData.phoneNumber}
-              onChange={handleChange}
               placeholder="Phone Number"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
+              className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+              {...register("phoneNumber", {
+                required: "Phone number is required!",
+              })}
             />
+            {errors?.phoneNumber && (
+              <span className="text-red-500 text-sm">
+                {errors.phoneNumber.message?.toString()}
+              </span>
+            )}
           </div>
 
           <div>
@@ -175,13 +136,17 @@ export default function CreateShop() {
             </label>
             <input
               type="number"
-              name="zipcode"
-              required
-              value={formData.zipcode}
-              onChange={handleChange}
               placeholder="Zip Code"
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
+              className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+              {...register("zipcode", {
+                required: "Zipcode is required!",
+              })}
             />
+            {errors?.zipcode && (
+              <span className="text-red-500 text-sm">
+                {errors.zipcode.message?.toString()}
+              </span>
+            )}
           </div>
 
           <div>
@@ -190,38 +155,123 @@ export default function CreateShop() {
             </label>
 
             <textarea
-              name="address"
               id="address"
               cols={30}
               rows={3}
-              value={formData.address}
-              onChange={handleChange}
-              className="appearance-none block w-full py-2 px-3 border border-gray-200 rounded-md focus:outline-none shadow-sm placeholder-gray-400 focus:ring-orange-500 focus:border-orange-500"
+              className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+              {...register("address", {
+                required: "Address is required!",
+              })}
             ></textarea>
+            {errors?.address && (
+              <span className="text-red-500 text-sm">
+                {errors.address.message?.toString()}
+              </span>
+            )}
           </div>
 
-          <PasswordInput
-            placeholder="Password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-          />
+          <div>
+            <label className="sr-only" htmlFor="password">
+              password
+            </label>
+            <div className="relative">
+              <input
+                id="password"
+                placeholder="Password"
+                type={isPasswordShown ? "text" : "password"}
+                className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+                {...register("password", {
+                  required: "Password is requried!",
+                  pattern: {
+                    value:
+                      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+                    message:
+                      "Password requirements:\n\n" +
+                      "- At least 8 characters\n" +
+                      "- Must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number\n" +
+                      "- Can contain special characters",
+                  },
+                })}
+              />
+              <div
+                className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
+                onClick={() => setIsPasswordShown(!isPasswordShown)}
+              >
+                {isPasswordShown ? (
+                  <AiOutlineEyeInvisible color="orange" size={20} />
+                ) : (
+                  <AiOutlineEye color="orange" size={20} />
+                )}
+              </div>
+            </div>
+            {errors?.password && (
+              <span className="text-red-500 text-sm">
+                {errors?.password.message?.toString()}
+              </span>
+            )}
+          </div>
+
+          <div>
+            <label className="sr-only" htmlFor="confirm-password">
+              Confirm Password
+            </label>
+            <div className="relative">
+              <input
+                id="confirm-password"
+                placeholder="Confirm Password"
+                type={isConfirmPasswordShown ? "text" : "password"}
+                className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+                {...register("confirmPassword", {
+                  required: "Confirm password is requied!",
+                  validate: (value, formValues) =>
+                    value === formValues.password ||
+                    "Password is not matching!",
+                })}
+              />
+              <div
+                className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
+                onClick={() =>
+                  setIsConfirmPasswordShown(!isConfirmPasswordShown)
+                }
+              >
+                {isConfirmPasswordShown ? (
+                  <AiOutlineEyeInvisible color="orange" size={20} />
+                ) : (
+                  <AiOutlineEye color="orange" size={20} />
+                )}
+              </div>
+            </div>
+            {errors?.confirmPassword && (
+              <span className="text-red-500 text-sm">
+                {errors?.confirmPassword.message?.toString()}
+              </span>
+            )}
+          </div>
 
           <button
-            className="w-full group bg-[#ff7d1a] text-white py-2 rounded hover:bg-orange-500 focus:bg-orange-500 transition-all"
+            className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
             type="submit"
           >
             Submit
           </button>
-          <div className={`${style.flex_normal}`}>
-            <h4>Already have shop?</h4>
+          <p className="mt-10 text-center text-sm text-gray-500">
+            Already have shop?
             <Link
               to="/login-shop"
-              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500 ml-2"
+              className="font-semibold leading-6 text-[#ff7d1a] hover:text-orange-500 ml-1"
             >
               Login
             </Link>
-          </div>
+          </p>
+          <p className="text-center text-sm text-gray-500">
+            Send me back to
+            <Link
+              to="/"
+              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 ml-1 focus:text-orange-500"
+            >
+              Home
+            </Link>
+          </p>
         </form>
       </div>
     </div>
