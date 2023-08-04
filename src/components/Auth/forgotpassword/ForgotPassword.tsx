@@ -1,6 +1,9 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/shopwise.png";
+import axios from "axios";
+import { API_URL } from "../../../constant";
+import { toast } from "react-toastify";
 
 export default function ForgotPassword() {
   const {
@@ -8,6 +11,17 @@ export default function ForgotPassword() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  async function onSubmit(email: string) {
+    try {
+      const res = await axios.post(API_URL.FORGOT_USER_PASSWORD, { email });
+
+      toast.success(res.data.message);
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
 
   return (
     <div>
@@ -22,7 +36,7 @@ export default function ForgotPassword() {
         <form
           noValidate
           onSubmit={handleSubmit((data) => {
-            // TODO : implementation on backend with email
+            onSubmit(data.email);
           })}
           className="space-y-6"
         >

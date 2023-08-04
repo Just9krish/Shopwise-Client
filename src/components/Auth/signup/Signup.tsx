@@ -10,6 +10,7 @@ import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function Signup() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
   const {
     register,
     handleSubmit,
@@ -136,13 +137,13 @@ export default function Signup() {
 
           <div>
             <label className="sr-only" htmlFor="confirm-password">
-              password
+              Confirm Password
             </label>
             <div className="relative">
               <input
                 id="confirm-password"
                 placeholder="Confirm Password"
-                type={isPasswordShown ? "text" : "password"}
+                type={isConfirmPasswordShown ? "text" : "password"}
                 className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
                 {...register("confirmPassword", {
                   required: "Confirm password is requied!",
@@ -153,9 +154,11 @@ export default function Signup() {
               />
               <div
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() => setIsPasswordShown(!isPasswordShown)}
+                onClick={() =>
+                  setIsConfirmPasswordShown(!isConfirmPasswordShown)
+                }
               >
-                {isPasswordShown ? (
+                {isConfirmPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
                 ) : (
                   <AiOutlineEye color="orange" size={20} />

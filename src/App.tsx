@@ -21,7 +21,6 @@ import Loader from "./components/Loader/Loader";
 import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
 import { API_URL } from "./constant";
-import ForgotPasswordPage from "./pages/User/ForgotPasswordPage";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -61,6 +60,12 @@ const ShopAllEventsPage = loadable(
 );
 const SellerAllOrdersPage = loadable(
   () => import("./pages/Seller/SellerAllOrdersPage")
+);
+const ForgotPasswordPage = loadable(
+  () => import("./pages/User/ForgotPasswordPage")
+);
+const ResetPasswordPage = loadable(
+  () => import("./pages/User/ResetPasswordPage")
 );
 
 function App() {
@@ -123,6 +128,10 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
+        <Route
+          path="/resetPassword/:resetToken"
+          element={<ResetPasswordPage />}
+        />
         <Route
           path="/user/verify/:activation_token"
           element={<ActivationPage />}
