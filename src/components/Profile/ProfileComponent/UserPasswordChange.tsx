@@ -1,40 +1,36 @@
 import axios, { AxiosError } from "axios";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import PasswordInput from "../../Auth/passwordInput/PasswordInput";
 import { API_URL } from "../../../constant";
+import { set, useForm } from "react-hook-form";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function UserPasswordChange() {
-  const initialState = {
-    oldPassword: "",
-    newPassword: "",
-    confirmNewPassword: "",
-  };
+  const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const [isNewPasswordShown, setIsNewPasswordShown] = useState(false);
+  const [isConfirmNewPasswordShown, setIsConfirmNewPasswordShown] =
+    useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const [formData, setFormData] = useState(initialState);
-  const [formError, setFormError] = useState(false);
-
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
-
-  async function handleSubmit(e: FormEvent<HTMLElement>) {
-    e.preventDefault();
-
+  async function handlePasswordChange(
+    oldPassword: string,
+    newPassword: string,
+    confirmNewPassword: string
+  ) {
     try {
       const { data } = await axios.post(
         API_URL.USER_PASSWORD_CHANGE,
-        formData,
+        { oldPassword, newPassword, confirmNewPassword },
         { withCredentials: true }
       );
 
       toast.success(data.message);
-      setFormData(initialState);
+      reset();
     } catch (error: AxiosError | any) {
       if (error.response) {
         toast.error(error.response);
@@ -43,14 +39,6 @@ export default function UserPasswordChange() {
       }
     }
   }
-
-  useEffect(() => {
-    if (formData.newPassword !== formData.confirmNewPassword) {
-      setFormError(true);
-    } else {
-      setFormError(false);
-    }
-  }, [formData.newPassword, formData.confirmNewPassword]);
 
   return (
     <div className="w-full px-5">
@@ -63,42 +51,110 @@ export default function UserPasswordChange() {
         </p>
         <form
           className="space-y-4 w-full max-w-xl mx-auto"
-          onSubmit={handleSubmit}
+          onSubmit={handleSubmit((data) => {
+            console.log(data);
+            handlePasswordChange(
+              data.oldPassword,
+              data.newPassword,
+              data.confirmNewPassword
+            );
+          })}
         >
-          <PasswordInput
-            name="oldPassword"
-            placeholder="Enter Old Password"
-            value={formData.oldPassword}
-            onChange={handleChange}
-          />
-          <PasswordInput
-            name="newPassword"
-            placeholder="Enter New Password"
-            value={formData.newPassword}
-            onChange={handleChange}
-          />
-          {formError && (
-            <span className="text-xs text-red-400 font-Poppins">
-              New password is not matching with confirm new password
-            </span>
-          )}
-          <PasswordInput
-            name="confirmNewPassword"
-            placeholder="Confirm New Password"
-            value={formData.confirmNewPassword}
-            onChange={handleChange}
-          />
-          {formError && (
-            <span className="text-xs text-red-400 font-Poppins">
-              New password is not matching with confirm new password
-            </span>
-          )}
+          <div>
+            <label className="sr-only" htmlFor="password">
+              Old Password
+            </label>
+            <div className="relative">
+              <input
+                type={isPasswordShown ? "text" : "password"}
+                className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+                {...register("oldPassword", {
+                  required: "Old password is requried!",
+                })}
+              />
+              <div
+                className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
+                onClick={() => setIsPasswordShown(!isPasswordShown)}
+              >
+                {isPasswordShown ? (
+                  <AiOutlineEyeInvisible color="orange" size={20} />
+                ) : (
+                  <AiOutlineEye color="orange" size={20} />
+                )}
+              </div>
+            </div>
+            {errors?.oldPassword && (
+              <span className="text-red-500 text-sm">
+                {errors?.oldPassword.message?.toString()}
+              </span>
+            )}
+          </div>
+
+          <div>
+            <label className="sr-only" htmlFor="password">
+              New Password
+            </label>
+            <div className="relative">
+              <input
+                type={isNewPasswordShown ? "text" : "password"}
+                className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+                {...register("newPassword", {
+                  required: "New password is requried!",
+                })}
+              />
+              <div
+                className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
+                onClick={() => setIsNewPasswordShown(!isNewPasswordShown)}
+              >
+                {isNewPasswordShown ? (
+                  <AiOutlineEyeInvisible color="orange" size={20} />
+                ) : (
+                  <AiOutlineEye color="orange" size={20} />
+                )}
+              </div>
+            </div>
+            {errors?.newPassword && (
+              <span className="text-red-500 text-sm">
+                {errors?.newPassword.message?.toString()}
+              </span>
+            )}
+          </div>
+
+          <div>
+            <label className="sr-only" htmlFor="password">
+              Confirm New Password
+            </label>
+            <div className="relative">
+              <input
+                type={isConfirmNewPasswordShown ? "text" : "password"}
+                className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
+                {...register("confirmNewPassword", {
+                  required: "Confrim new password is requried!",
+                })}
+              />
+              <div
+                className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
+                onClick={() =>
+                  setIsConfirmNewPasswordShown(!isConfirmNewPasswordShown)
+                }
+              >
+                {isConfirmNewPasswordShown ? (
+                  <AiOutlineEyeInvisible color="orange" size={20} />
+                ) : (
+                  <AiOutlineEye color="orange" size={20} />
+                )}
+              </div>
+            </div>
+            {errors?.newPassword && (
+              <span className="text-red-500 text-sm">
+                {errors?.newPassword.message?.toString()}
+              </span>
+            )}
+          </div>
+
           <div>
             <button
-              disabled={formError}
-              className={`bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600 ${
-                formError ? "cursor-not-allowed" : "cursor-pointer"
-              }`}
+              className={`bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600`}
             >
               Save Changes
             </button>
