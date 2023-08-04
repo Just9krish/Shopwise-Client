@@ -1,8 +1,11 @@
 import { useForm } from "react-hook-form";
 import logo from "../../../assets/shopwise.png";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import axios, { AxiosError } from "axios";
+import { API_URL } from "../../../constant";
 
 export default function ResetPassword() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -12,7 +15,26 @@ export default function ResetPassword() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
+  const { resetToken } = useParams();
+
+  async function resetPassword(token: string, password: string) {
+    try {
+      const config = { headers: { "Content-Type": "application/json" } };
+      const res = await axios.post(
+        API_URL.REST_USER_PASSWORD(token),
+        { password },
+        config
+      );
+      setSuccess(true);
+      reset();
+      toast.success(res.data.message);
+    } catch (error: AxiosError | any) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
   return (
     <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -28,7 +50,7 @@ export default function ResetPassword() {
             noValidate
             onSubmit={handleSubmit((data) => {
               console.log(data);
-              setSuccess(true);
+              if (resetToken) resetPassword(resetToken, data.password);
             })}
           >
             <div>

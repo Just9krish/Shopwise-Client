@@ -52,7 +52,7 @@ export default function Login() {
           noValidate
           className="space-y-6"
           onSubmit={handleSubmit((data) => {
-            handleLogin;
+            handleLogin(data.email, data.password);
           })}
         >
           <div>
