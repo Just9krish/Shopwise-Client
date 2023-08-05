@@ -1,15 +1,18 @@
 import { Navigate } from "react-router-dom";
 import Loader from "../components/Loader/Loader";
 import { useAppSelector } from "../hooks";
+import {
+  selectIsUserAuthenticate,
+  selectIsUserLoading,
+} from "../redux/features/User/userSlice";
 
 interface IProps {
   children: JSX.Element;
 }
 
 const ProtectedRoute = ({ children }: IProps): JSX.Element => {
-  const { isUserLoading, isUserAuthenticate } = useAppSelector(
-    (state) => state.user
-  );
+  const isUserAuthenticate = useAppSelector(selectIsUserAuthenticate);
+  const isUserLoading = useAppSelector(selectIsUserLoading);
 
   if (isUserLoading) {
     return (

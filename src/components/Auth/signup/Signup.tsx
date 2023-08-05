@@ -1,14 +1,13 @@
 import { useState } from "react";
-import axios from "axios";
 import logo from "../../../assets/shopwise.png";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { ICustomResponse } from "../../../Interface";
-import { API_URL } from "../../../constant";
 import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useAppDispatch } from "../../../hooks";
+import { createUserAsync } from "../../../redux/features/User/userSlice";
 
 export default function Signup() {
+  const dispatch = useAppDispatch();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
   const {
@@ -16,27 +15,6 @@ export default function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  async function handleSignup(
-    fullname: string,
-    email: string,
-    password: string
-  ) {
-    try {
-      const config = { headers: { "Content-Type": "application/json" } };
-      const res = await axios.post<ICustomResponse>(
-        API_URL.REGISTER_USER,
-        { name: fullname, email, password },
-        config
-      );
-      toast.success(res.data.message);
-    } catch (error: any) {
-      console.error(error);
-      if (error.response) {
-        toast.error(error.response.data.message);
-      }
-    }
-  }
 
   return (
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -49,7 +27,12 @@ export default function Signup() {
           noValidate
           className="space-y-6"
           onSubmit={handleSubmit((data) => {
-            handleSignup(data.fullname, data.email, data.password);
+            const userData = {
+              name: data.fullname,
+              email: data.email,
+              password: data.password,
+            };
+            dispatch(createUserAsync(userData));
           })}
         >
           <div>

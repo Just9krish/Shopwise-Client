@@ -127,11 +127,11 @@ export interface ISeller {
 }
 
 export interface IUserState {
-  isUserAuthenticate: boolean;
+  isUserAuthenticated: boolean;
   isUserLoading: boolean;
   userError: null | string;
-  user: IUser;
-  message: string;
+  user: IUser | null;
+  userMessage: string;
 }
 
 export interface ISellerState {

@@ -9,21 +9,26 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { IOrder } from "../../../Interface";
 import Loader from "../../Loader/Loader";
 import { API_URL } from "../../../constant";
+import { selectUser } from "../../../redux/features/User/userSlice";
 
 export default function UserOrders() {
   const [userOrders, setUserOrders] = useState<IOrder[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAppSelector((state) => state.user);
+  const user = useAppSelector(selectUser);
 
   const loadUserOrders = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(API_URL.GET_ALL_USER_ORDERS(user?._id), {
-        withCredentials: true,
-      });
+      if (user) {
+        const { data } = await axios.get(
+          API_URL.GET_ALL_USER_ORDERS(user?._id),
+          {
+            withCredentials: true,
+          }
+        );
 
-      setUserOrders(data.orders);
-
+        setUserOrders(data.orders);
+      }
       setIsLoading(false);
     } catch (e: AxiosError | any) {
       setIsLoading(false);

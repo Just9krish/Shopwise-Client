@@ -2,6 +2,7 @@ import style from "../../../styles/style";
 import { Country, State } from "country-state-city";
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks";
+import { selectUser } from "../../../redux/features/User/userSlice";
 
 type IProps = {
   toggleActiveStep: (para: number) => void;
@@ -10,7 +11,7 @@ type IProps = {
 export default function ShippingInfo({ toggleActiveStep }: IProps) {
   const [selectedAddress, setSelectedAddress] = useState<null | string>(null);
 
-  const { user } = useAppSelector((state) => state.user);
+  const user = useAppSelector(selectUser) ?? { addresses: [] };
   const { addresses } = user;
 
   const initialFormState = {

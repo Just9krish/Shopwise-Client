@@ -2,7 +2,7 @@ import { createReducer } from "@reduxjs/toolkit";
 import { IUserState } from "../../Interface";
 
 const initialState: IUserState = {
-  isUserAuthenticate: false,
+  isUserAuthenticated: false,
   isUserLoading: false,
   userError: null,
   user: {
@@ -15,7 +15,7 @@ const initialState: IUserState = {
     primaryPhoneNumber: "",
     secondaryPhoneNumber: "",
   },
-  message: "",
+  userMessage: "",
 };
 
 export const userReducer = createReducer(initialState, {
@@ -23,14 +23,14 @@ export const userReducer = createReducer(initialState, {
     state.isUserLoading = true;
   },
   LoadUserSuccess: (state, action) => {
-    state.isUserAuthenticate = true;
+    state.isUserAuthenticated = true;
     state.isUserLoading = false;
     state.user = action.payload;
   },
   LoadUserFail: (state, action) => {
     (state.isUserLoading = false),
       (state.userError = action.error),
-      (state.isUserAuthenticate = false);
+      (state.isUserAuthenticated = false);
   },
 
   // update user
@@ -56,7 +56,7 @@ export const userReducer = createReducer(initialState, {
     // state.isUserLoading = false;
     console.log(action.payload);
     state.user = action.payload.user;
-    state.message = action.payload.message;
+    state.userMessage = action.payload.userMessage;
   },
 
   UpdateUserAddressFailure: (state, action) => {
@@ -69,15 +69,15 @@ export const userReducer = createReducer(initialState, {
 
   DeleteUserAddressSuccess: (state, action) => {
     state.user = action.payload.user;
-    state.message = action.payload.message;
+    state.userMessage = action.payload.userMessage;
   },
 
   DeleteUserAddressFailure: (state, action) => {
-    state.message = action.payload;
+    state.userMessage = action.payload;
   },
 
-  ClearMessage: (state) => {
-    state.message = "";
+  ClearuserMessage: (state) => {
+    state.userMessage = "";
   },
   // clear error
   ClearErrors: (state) => {

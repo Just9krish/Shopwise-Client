@@ -3,6 +3,7 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppSelector } from "../../../hooks";
 import { IProduct, IShippingAddress } from "../../../Interface";
 import { host } from "../../../server";
+import { selectUser } from "../../../redux/features/User/userSlice";
 
 type Iorder = {
   orders: {
@@ -23,7 +24,7 @@ type OrderItem = {
 };
 
 export default function PlacedProduct() {
-  const { user } = useAppSelector((state) => state.user);
+  const user = useAppSelector(selectUser);
   const [order, setOrder] = useState<Iorder>();
   const [orderProducts, setOrderProducts] = useState<null | OrderItem[]>();
 

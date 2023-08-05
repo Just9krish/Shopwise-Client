@@ -1,42 +1,30 @@
 import { AiOutlineCamera } from "react-icons/ai";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { IUser } from "../../../Interface";
-import { host, server } from "../../../server";
+import { ChangeEvent, useState, useEffect } from "react";
+import { host } from "../../../server";
 import style from "../../../styles/style";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { loadUser, updateUserInfo } from "../../../redux/actions/userActions";
+import { loadUser } from "../../../redux/actions/userActions";
 import axios, { AxiosError } from "axios";
 import { API_URL } from "../../../constant";
+import {
+  selectUser,
+  updateUserInfoAsync,
+} from "../../../redux/features/User/userSlice";
+import { useForm } from "react-hook-form";
 
 export default function UserProfile() {
-  const { user } = useAppSelector((state) => state.user);
-  const {
-    name,
-    email,
-    avatar,
-    role,
-    _id,
-    primaryPhoneNumber,
-    secondaryPhoneNumber,
-  } = user;
+  const user = useAppSelector(selectUser);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [password, setPassword] = useState("");
   const [profilePic, setProfilePic] = useState<null | File>(null);
   const dispatch = useAppDispatch();
-
-  const initialsate: IUser = {
-    name: name,
-    avatar: avatar,
-    email: email,
-    role: role,
-    _id: _id,
-    primaryPhoneNumber: primaryPhoneNumber,
-    secondaryPhoneNumber: secondaryPhoneNumber,
-    addresses: [],
-  };
-
-  const [formData, setFormData] = useState<IUser>(initialsate);
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
   function handleUpdate() {
     setIsDisabled((prev) => !prev);
@@ -75,30 +63,25 @@ export default function UserProfile() {
 
   function handleCancel() {
     setIsDisabled((prev) => !prev);
-    setFormData(initialsate);
+    clearErrors();
     toast.info("No changes made.");
   }
 
-  function handleChange(e: ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  }
-
-  function handleSubmit(event: FormEvent<HTMLElement>) {
-    event.preventDefault();
-    dispatch(updateUserInfo({ ...formData, password }));
-  }
+  useEffect(() => {
+    if (user) {
+      setValue("name", user.name);
+      setValue("email", user.email);
+      setValue("primaryPhoneNumber", user.primaryPhoneNumber);
+      setValue("secondaryPhoneNumber", user.secondaryPhoneNumber);
+    }
+  }, [user]);
 
   return (
     <div className={`${style.flex_normal} flex-col w-full space-y-10`}>
       <div className="relative w-fit">
         <img
           className="h-36 w-36 rounded-full object-cover"
-          src={`${host}/${avatar}`}
+          src={`${host}/${user?.avatar}`}
           alt="User Avatar"
         />
         <button className="w-8 h-8 rounded-full flex justify-center items-center absolute bottom-1 right-1 cursor-pointer bg-gray-200">
@@ -117,7 +100,21 @@ export default function UserProfile() {
       </div>
 
       <div className="w-full max-w-4xl mx-auto">
-        <form onSubmit={handleSubmit} className="space-y-7 md:space-y-9">
+        <form
+          noValidate
+          onSubmit={handleSubmit((data) => {
+            const updateData = {
+              password: data.password,
+              name: data.name,
+              primaryPhoneNumber: data.primaryPhoneNumber,
+              secondaryPhoneNumber: data.secondaryPhoneNumber,
+              email: data.email,
+            };
+
+            dispatch(updateUserInfoAsync(updateData));
+          })}
+          className="space-y-7 md:space-y-9"
+        >
           <div className="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
             <div className="w-full md:w-1/2">
               <label className="block mb-2" htmlFor="name">
@@ -127,12 +124,16 @@ export default function UserProfile() {
                 className={`${style.input} w-full`}
                 type="text"
                 id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
                 disabled={isDisabled}
-                required
+                {...register("name", {
+                  required: "Full name is required!",
+                })}
               />
+              {errors.name && (
+                <p className="text-red-500">
+                  {errors.name.message?.toString()}
+                </p>
+              )}
             </div>
             <div className="w-full md:w-1/2">
               <label className="block mb-2" htmlFor="email">
@@ -141,13 +142,21 @@ export default function UserProfile() {
               <input
                 className={`${style.input} w-full`}
                 type="email"
-                name="email"
                 id="email"
-                value={formData.email}
-                onChange={handleChange}
                 disabled={isDisabled}
-                required
+                {...register("email", {
+                  required: "Email is required!",
+                  pattern: {
+                    value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+                    message: "Email not valid!",
+                  },
+                })}
               />
+              {errors.email && (
+                <p className="text-red-500">
+                  {errors.email.message?.toString()}
+                </p>
+              )}
             </div>
           </div>
 
@@ -159,15 +168,29 @@ export default function UserProfile() {
               <input
                 className={`${style.input} w-full`}
                 type="number"
-                name="primaryPhoneNumber"
                 id="phone"
-                minLength={10}
-                maxLength={10}
-                value={formData.primaryPhoneNumber}
-                onChange={handleChange}
                 disabled={isDisabled}
-                required
+                {...register("primaryPhoneNumber", {
+                  required: "Primary phone number is required!",
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Only numbers are allowed!",
+                  },
+                  maxLength: {
+                    value: 10,
+                    message: "Maximum length is 10!",
+                  },
+                  minLength: {
+                    value: 10,
+                    message: "Minimum length is 10!",
+                  },
+                })}
               />
+              {errors.primaryPhoneNumber && (
+                <p className="text-red-500">
+                  {errors.primaryPhoneNumber.message?.toString()}
+                </p>
+              )}
             </div>
             <div className="w-full md:w-1/2">
               <label className="block mb-2" htmlFor="alternateNumber">
@@ -177,13 +200,27 @@ export default function UserProfile() {
                 className={`${style.input} w-full`}
                 type="number"
                 id="alternateNumber"
-                name="secondaryPhoneNumber"
-                minLength={10}
-                maxLength={10}
-                value={formData.secondaryPhoneNumber}
-                onChange={handleChange}
                 disabled={isDisabled}
+                {...register("secondaryPhoneNumber", {
+                  pattern: {
+                    value: /^[0-9]+$/,
+                    message: "Only numbers are allowed!",
+                  },
+                  maxLength: {
+                    value: 10,
+                    message: "Maximum length is 10!",
+                  },
+                  minLength: {
+                    value: 10,
+                    message: "Minimum length is 10!",
+                  },
+                })}
               />
+              {errors.secondaryPhoneNumber && (
+                <p className="text-red-500">
+                  {errors.secondaryPhoneNumber.message?.toString()}
+                </p>
+              )}
             </div>
           </div>
           <hr />
@@ -193,17 +230,19 @@ export default function UserProfile() {
             </label>
             <input
               className={`${style.input} w-1/2`}
-              type="text"
+              type="password"
               id="password"
-              name="password"
               placeholder="Enter your password"
-              max={6}
-              min={4}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               disabled={isDisabled}
-              required
+              {...register("password", {
+                required: "Password is required!",
+              })}
             />
+            {errors.password && (
+              <p className="text-red-500">
+                {errors.password.message?.toString()}
+              </p>
+            )}
           </div>
           <div className={`${style.flex_normal} gap-6`}>
             {isDisabled && (

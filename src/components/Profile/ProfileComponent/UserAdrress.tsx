@@ -6,12 +6,19 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { deleteUserAddress } from "../../../redux/actions/userActions";
 import style from "../../../styles/style";
+import {
+  selectUser,
+  selectUserError,
+  selectUserMessage,
+} from "../../../redux/features/User/userSlice";
 const AddAddress = loadable(() => import("./AddAddress"));
 
 export default function UserAdrress() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { user, userError, message } = useAppSelector((state) => state.user);
+  const user = useAppSelector(selectUser) ?? { addresses: [] };
+  const message = useAppSelector(selectUserMessage);
+  const userError = useAppSelector(selectUserError);
 
   const { addresses } = user;
 

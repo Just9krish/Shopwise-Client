@@ -21,6 +21,8 @@ import Loader from "./components/Loader/Loader";
 import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
 import { API_URL } from "./constant";
+import { useAppDispatch } from "./hooks";
+import { fetchUserDetailsAsync } from "./redux/features/User/userSlice";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -78,15 +80,12 @@ function App() {
   }
 
   useEffect(() => {
-    getStripeSecretKey();
-  }, []);
-
-  useLayoutEffect(() => {
     Promise.all([
-      store.dispatch(loadUser()),
+      store.dispatch(fetchUserDetailsAsync()),
       store.dispatch(loadSeller()),
       store.dispatch(getAllProducts()),
       store.dispatch(getAllEvents()),
+      getStripeSecretKey(),
     ]).then(() => setAppState(!appState));
   }, []);
 
@@ -268,8 +267,6 @@ function App() {
             </SellerProtectedRoute>
           }
         />
-
-        {/* <Route path="*" element={<NotFound />} /> */}
       </Routes>
       <ToastContainer
         position="bottom-center"

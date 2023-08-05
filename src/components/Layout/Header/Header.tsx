@@ -33,7 +33,7 @@ export default function Header() {
 
   const dispatch = useAppDispatch();
 
-  const userState = useAppSelector((state) => state.user);
+  const userState = useAppSelector((state) => state.userState);
   const { allProducts } = useAppSelector((state) => state.allProducts);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>): void {
@@ -255,7 +255,7 @@ export default function Header() {
                 </button>
               </Link>
             </div>
-            {!userState.isUserAuthenticate ? (
+            {!userState.isUserAuthenticated ? (
               <div className={`${style.flex_normal} gap-4`}>
                 <Link to="/login" className="text-lg text-gray-600">
                   Login

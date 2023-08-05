@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default function UserNavigation({ userState, toggleWishlist }: IProps) {
-  const { user, isUserAuthenticate } = userState;
+  const { user, isUserAuthenticated } = userState;
   const { cart } = useAppSelector((state) => state.cart);
   const { wishlists } = useAppSelector((state) => state.wishlists);
 
@@ -37,7 +37,7 @@ export default function UserNavigation({ userState, toggleWishlist }: IProps) {
         </span>
       </button>
       <div className="relative cursor-pointer">
-        {isUserAuthenticate ? (
+        {isUserAuthenticated ? (
           <Link to="/profile">
             <img
               className="h-7 w-7 rounded-full"

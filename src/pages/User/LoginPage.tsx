@@ -1,21 +1,23 @@
 import loadable from "@loadable/component";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 const Login = loadable(() => import("../../components/Auth/login/Login"));
 import { useAppSelector } from "../../hooks";
+import {
+  selectIsUserAuthenticate,
+  selectUser,
+} from "../../redux/features/User/userSlice";
 
 export default function LoginPage() {
   const navigate = useNavigate();
-
-  const { isUserAuthenticate } = useAppSelector((state) => state.user);
+  const isUserAuthenticated = useAppSelector(selectIsUserAuthenticate);
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
-    if (isUserAuthenticate) {
-      toast.info("You are already logged in");
+    if (isUserAuthenticated) {
       navigate("/");
     }
-  }, []);
+  }, [user]);
 
   return (
     <section className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

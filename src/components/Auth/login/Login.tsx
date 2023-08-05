@@ -2,44 +2,19 @@ import logo from "../../../assets/shopwise.png";
 import { useState } from "react";
 import style from "../../../styles/style";
 import { Link, useNavigate } from "react-router-dom";
-import axios, { AxiosError } from "axios";
-import { toast } from "react-toastify";
-import { API_URL } from "../../../constant";
 import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useAppDispatch } from "../../../hooks";
+import { loginUserAsync } from "../../../redux/features/User/userSlice";
 
 export default function Login() {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-
-  async function handleLogin(email: string, password: string) {
-    try {
-      const res = await axios.post(
-        API_URL.LOGIN_USER,
-        {
-          email,
-          password,
-        },
-        { withCredentials: true }
-      );
-      if (res.status) {
-        toast.success("Login Success!");
-        navigate("/");
-        window.location.reload();
-      }
-    } catch (error: AxiosError | any) {
-      if (error.response) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(error.message);
-      }
-    }
-  }
 
   return (
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -52,7 +27,11 @@ export default function Login() {
           noValidate
           className="space-y-6"
           onSubmit={handleSubmit((data) => {
-            handleLogin(data.email, data.password);
+            const loginData = {
+              email: data.email,
+              password: data.password,
+            };
+            dispatch(loginUserAsync(loginData));
           })}
         >
           <div>

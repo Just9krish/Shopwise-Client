@@ -8,8 +8,9 @@ import {
   HiOutlineHome,
 } from "react-icons/hi";
 import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useAppDispatch } from "../../../hooks";
 import { updateUserAddress } from "../../../redux/actions/userActions";
+import { updateUserAddressAsync } from "../../../redux/features/User/userSlice";
 
 type Props = {
   handleModalOpen: () => void;
@@ -61,7 +62,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
         zipcode,
         addressType: selectedAddressType,
       };
-      dispatch(updateUserAddress(obj));
+      dispatch(updateUserAddressAsync(obj));
 
       handleModalOpen();
       setSelectedCountry("");
