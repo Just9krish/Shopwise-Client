@@ -137,7 +137,7 @@ function App() {
           element={<ActivationPage />}
         />
         <Route
-          path="/seller/activation/:activation_token"
+          path="/seller/verify/:activation_token"
           element={<SellerActivationPage />}
         />
         <Route

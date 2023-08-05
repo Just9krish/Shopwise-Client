@@ -29,7 +29,7 @@ export default function Signup() {
         { name: fullname, email, password },
         config
       );
-      toast(res.data.message);
+      toast.success(res.data.message);
     } catch (error: any) {
       console.error(error);
       if (error.response) {

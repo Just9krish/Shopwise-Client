@@ -28,10 +28,10 @@ export default function CreateShop() {
     zipcode: string
   ) {
     try {
-      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const config = { headers: { "Content-Type": "application/json" } };
       const res = await axios.post<ICustomResponse>(
         API_URL.CREATE_SHOP,
-        { fullname, email, password, address, phoneNumber, zipcode },
+        { name: fullname, email, password, address, phoneNumber, zipcode },
         config
       );
 
@@ -61,7 +61,7 @@ export default function CreateShop() {
             console.log(data);
             handleSignup(
               data.fullname,
-              data.eamil,
+              data.email,
               data.password,
               data.address,
               data.phoneNumber,
