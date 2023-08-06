@@ -1,10 +1,11 @@
 import loadable from "@loadable/component";
 import { useAppSelector } from "../../hooks";
 import style from "../../styles/style";
+import { selectAllEvents } from "../../redux/features/Events/eventSlice";
 const EventCard = loadable(() => import("./EventCard/EventCard"));
 
 export default function Events() {
-  const { events } = useAppSelector((state) => state.events);
+  const events = useAppSelector(selectAllEvents);
 
   if (events.length === 0) return null;
 

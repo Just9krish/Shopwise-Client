@@ -4,12 +4,14 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import {
-  deleteEvent,
-  getShopAllEvents,
-} from "../../../redux/actions/eventsActions";
 import Loader from "../../Loader/Loader";
 import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import {
+  deleteShopEventAsync,
+  getShopAllEventsAsync,
+  selectEventLoading,
+  selectShopEvents,
+} from "../../../redux/features/Events/eventSlice";
 
 type row = {
   id: string;
@@ -25,19 +27,18 @@ type row = {
 };
 
 export default function ShopAllEvents() {
-  const dispatch = useAppDispatch();
   const shop = useAppSelector(selectShop);
-  const { shopEvents, isEventsLoading } = useAppSelector(
-    (state) => state.events
-  );
+  const isEventsLoading = useAppSelector(selectEventLoading);
+  const shopEvents = useAppSelector(selectShopEvents);
+  const dispatch = useAppDispatch();
 
   function deleteEventHandler(eventId: string, shopId: string) {
-    dispatch(deleteEvent(eventId, shopId));
+    dispatch(deleteShopEventAsync({ eventId, shopId }));
   }
 
   useEffect(() => {
     if (shop) {
-      dispatch(getShopAllEvents(shop._id));
+      dispatch(getShopAllEventsAsync(shop._id));
     }
   }, [dispatch, shop?._id]);
 

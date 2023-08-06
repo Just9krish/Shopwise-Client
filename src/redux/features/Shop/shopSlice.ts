@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { createShop, fetchShop, loginShop } from "./shopAPI";
 import { RootState } from "../../store";
+import { IShopData, IShopLoginData, IShopState } from "./interface";
 
 const initialState: IShopState = {
   isShopAuthenticated: false,

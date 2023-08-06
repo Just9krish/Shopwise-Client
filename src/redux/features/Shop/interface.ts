@@ -1,4 +1,4 @@
-interface IShopData {
+export interface IShopData {
   name: string;
   email: string;
   password: string;
@@ -7,7 +7,7 @@ interface IShopData {
   zipcode: string;
 }
 
-interface IShop {
+export interface IShop {
   _id: string;
   name: string;
   email: string;
@@ -19,7 +19,7 @@ interface IShop {
   createdAt: string;
 }
 
-interface IShopState {
+export interface IShopState {
   isShopAuthenticated: boolean;
   isShopLoading: boolean;
   shopError: null | string;
@@ -27,7 +27,7 @@ interface IShopState {
   shopMessage: string;
 }
 
-interface IShopLoginData {
+export interface IShopLoginData {
   email: string;
   password: string;
 }

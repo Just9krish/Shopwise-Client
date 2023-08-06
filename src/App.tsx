@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getAllProducts } from "./redux/actions/allProductsActions";
 import { useEffect } from "react";
-import { getAllEvents } from "./redux/actions/eventsActions";
 import { useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -21,6 +20,7 @@ import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
 import { API_URL } from "./constant";
 import { fetchUserDetailsAsync } from "./redux/features/User/userSlice";
 import { fetchShopAsync } from "./redux/features/Shop/shopSlice";
+import { getAllEventsAsync } from "./redux/features/Events/eventSlice";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -82,7 +82,7 @@ function App() {
       store.dispatch(fetchUserDetailsAsync()),
       store.dispatch(fetchShopAsync()),
       store.dispatch(getAllProducts()),
-      store.dispatch(getAllEvents()),
+      store.dispatch(getAllEventsAsync()),
       getStripeSecretKey(),
     ]).then(() => setAppState(!appState));
   }, []);
