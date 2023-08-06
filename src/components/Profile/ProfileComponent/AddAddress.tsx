@@ -1,5 +1,4 @@
 import { RxCross1 } from "react-icons/rx";
-import { FormEvent, useState } from "react";
 import { Country, State } from "country-state-city";
 import style from "../../../styles/style";
 import {
@@ -7,10 +6,9 @@ import {
   HiOutlineGlobeAlt,
   HiOutlineHome,
 } from "react-icons/hi";
-import { toast } from "react-toastify";
 import { useAppDispatch } from "../../../hooks";
-import { updateUserAddress } from "../../../redux/actions/userActions";
 import { updateUserAddressAsync } from "../../../redux/features/User/userSlice";
+import { useForm } from "react-hook-form";
 
 type Props = {
   handleModalOpen: () => void;
@@ -20,7 +18,6 @@ export default function AddAddress({ handleModalOpen }: Props) {
   const addressType = [
     {
       name: "Home",
-
       icon: <HiOutlineHome className="mr-1" />,
     },
     {
@@ -33,47 +30,16 @@ export default function AddAddress({ handleModalOpen }: Props) {
     },
   ];
 
+  const {
+    register,
+    watch,
+    setValue,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const selectedCountry = watch("country");
   const dispatch = useAppDispatch();
-
-  const [selectedCountry, setSelectedCountry] = useState("");
-  const [selectedState, setSelectedState] = useState("");
-  const [zipcode, setZipcode] = useState("");
-  const [address1, setAddress1] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [address3, setAddress3] = useState("");
-  const [selectedAddressType, setSelectedAddressType] = useState("");
-
-  async function handleSubmit(event: FormEvent<HTMLElement>) {
-    event.preventDefault();
-
-    if (
-      selectedAddressType === "" ||
-      selectedCountry === "" ||
-      selectedState == ""
-    ) {
-      toast.error("Please fill all the required fields");
-    } else {
-      const obj = {
-        country: selectedCountry,
-        state: selectedState,
-        address1,
-        address2,
-        address3,
-        zipcode,
-        addressType: selectedAddressType,
-      };
-      dispatch(updateUserAddressAsync(obj));
-
-      handleModalOpen();
-      setSelectedCountry("");
-      setAddress1("");
-      setAddress2("");
-      setAddress3("");
-      setSelectedState("");
-      setZipcode("");
-      setSelectedAddressType("");
-    }
-  }
 
   return (
     <div
@@ -88,21 +54,35 @@ export default function AddAddress({ handleModalOpen }: Props) {
           </button>
         </div>
         <div className="mt-7">
-          <form aria-required onSubmit={handleSubmit} className="space-y-6">
-            <div
-              className="w-full flex flex-wrap gap-4 justify-between items-center"
-              onSubmit={handleSubmit}
-            >
+          <form
+            noValidate
+            onSubmit={handleSubmit((data) => {
+              const address = {
+                country: data.country,
+                state: data.state,
+                address1: data.address1,
+                address2: data.address2,
+                address3: data.address3,
+                zipcode: data.zipcode,
+                addressType: data.addressType,
+              };
+
+              dispatch(updateUserAddressAsync(address));
+            })}
+            className="space-y-6"
+          >
+            <div className="w-full flex flex-wrap gap-4 justify-between items-start">
               <div className="w-2/5">
                 <label htmlFor="country" className="block pb-1">
                   Choose your Country:
                 </label>
                 <select
+                  {...register("country", {
+                    required: "Country name is required!",
+                  })}
                   className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
-                  value={selectedCountry}
-                  required
                   id="country"
-                  onChange={(e) => setSelectedCountry(e.target.value)}
+                  aria-invalid={errors.country ? "true" : "false"}
                 >
                   <option disabled selected value="">
                     Select your country
@@ -115,6 +95,11 @@ export default function AddAddress({ handleModalOpen }: Props) {
                       </option>
                     ))}
                 </select>
+                {errors.country && (
+                  <p className="text-red-500 text-sm italic">
+                    {errors.country.message?.toString()}
+                  </p>
+                )}
               </div>
               <div className="w-2/5">
                 <label className="block pb-1" htmlFor="zipcode">
@@ -122,13 +107,19 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 </label>
                 <input
                   type="number"
-                  value={zipcode}
                   id="zipcode"
-                  required
-                  onChange={(e) => setZipcode(e.target.value)}
                   className={`${style.input}`}
+                  aria-invalid={errors.zipcode ? "true" : "false"}
                   placeholder="Zip Code (Required)*"
+                  {...register("zipcode", {
+                    required: "Zip Code is required!",
+                  })}
                 />
+                {errors.zipcode && (
+                  <p className="text-red-500 text-sm italic">
+                    {errors.zipcode.message?.toString()}
+                  </p>
+                )}
               </div>
             </div>
 
@@ -139,10 +130,11 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 </label>
                 <select
                   className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
-                  value={selectedState}
-                  required
                   id="state"
-                  onChange={(e) => setSelectedState(e.target.value)}
+                  {...register("state", {
+                    required: "State is required!",
+                  })}
+                  aria-invalid={errors.state ? "true" : "false"}
                 >
                   <option selected disabled value="">
                     Select your State
@@ -155,7 +147,13 @@ export default function AddAddress({ handleModalOpen }: Props) {
                       </option>
                     ))}
                 </select>
+                {errors.state && (
+                  <p className="text-red-500 text-sm italic">
+                    {errors.state.message?.toString()}
+                  </p>
+                )}
               </div>
+
               <div className="w-2/5">
                 <label className="block pb-1">Select Address Type:</label>
                 <div className={`${style.flex_normal} gap-2`}>
@@ -163,9 +161,9 @@ export default function AddAddress({ handleModalOpen }: Props) {
                     <button
                       type="button"
                       key={addressType.name}
-                      onClick={() => setSelectedAddressType(addressType.name)}
+                      onClick={() => setValue("addressType", addressType.name)}
                       className={`${
-                        selectedAddressType == addressType.name
+                        watch("addressType") === addressType.name
                           ? "bg-orange-500 text-white"
                           : ""
                       } flex items-center py-1 px-2 text-xs rounded border`}
@@ -175,6 +173,19 @@ export default function AddAddress({ handleModalOpen }: Props) {
                     </button>
                   ))}
                 </div>
+                {errors.addressType && (
+                  <span className="text-red-500 text-sm italic">
+                    {errors.addressType.message?.toString()}
+                  </span>
+                )}
+                {/* Hidden input field to store the selected address type */}
+                <input
+                  type="hidden"
+                  aria-invalid={errors.addressType ? "true" : "false"}
+                  {...register("addressType", {
+                    required: "Address type is required! ",
+                  })}
+                />
               </div>
             </div>
 
@@ -184,13 +195,23 @@ export default function AddAddress({ handleModalOpen }: Props) {
               </label>
               <input
                 type="text"
-                value={address1}
                 id="address1"
-                required
-                onChange={(e) => setAddress1(e.target.value)}
                 className={`${style.input} w-full`}
                 placeholder="House No., Building Name (Required)*"
+                aria-invalid={errors.address1 ? "true" : "false"}
+                {...register("address1", {
+                  required: "Address 1 is required!",
+                  pattern: {
+                    value: /^([^0-9]*)$/,
+                    message: "Not a valid addresss!",
+                  },
+                })}
               />
+              {errors.address1 && (
+                <span className="text-red-500 text-sm italic">
+                  {errors.address1.message?.toString()}
+                </span>
+              )}
             </div>
 
             <div className="w-full">
@@ -199,27 +220,46 @@ export default function AddAddress({ handleModalOpen }: Props) {
               </label>
               <input
                 type="text"
-                value={address2}
-                onChange={(e) => setAddress2(e.target.value)}
-                required
                 id="address2"
                 className={`${style.input} w-full`}
+                aria-invalid={errors.address2 ? "true" : "false"}
                 placeholder="Road Name, Area, Colony (Required)*"
+                {...register("address2", {
+                  required: "Address 2 is required!",
+                  pattern: {
+                    value: /^([^0-9]*)$/,
+                    message: "Not a valid addresss!",
+                  },
+                })}
               />
+              {errors.address2 && (
+                <span className="text-red-500 text-sm italic">
+                  {errors.address2.message?.toString()}
+                </span>
+              )}
             </div>
 
             <div className="w-full">
               <label className="hidden md:block pb-1" htmlFor="address3">
-                Address 2:
+                Address 3:
               </label>
               <input
                 type="text"
                 id="address3"
-                value={address3}
-                onChange={(e) => setAddress3(e.target.value)}
                 className={`${style.input} w-full`}
                 placeholder="Nearby Famous Shop/Mall/Landmark"
+                {...register("address3", {
+                  pattern: {
+                    value: /^([^0-9]*)$/,
+                    message: "Not a valid addresss!",
+                  },
+                })}
               />
+              {errors.address3 && (
+                <span className="text-red-500 text-sm italic">
+                  {errors.address3.message?.toString()}
+                </span>
+              )}
             </div>
 
             <div>

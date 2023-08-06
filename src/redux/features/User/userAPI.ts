@@ -86,7 +86,7 @@ export function updateUserInfo(updateData: IUpdateData) {
 export function updateUserAddress(address: IAddressFrom) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.put(
+      const res: AxiosResponse = await axios.post(
         API_URL.ADD_USER_ADDRESS,
         address,
         config

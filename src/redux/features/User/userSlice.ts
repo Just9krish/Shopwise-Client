@@ -140,29 +140,29 @@ export const userSlice = createSlice({
           : "Something went wrong";
       })
       .addCase(updateUserAddressAsync.pending, (state) => {
-        state.isUserLoading = true;
+        // state.isUserLoading = true;
       })
       .addCase(updateUserAddressAsync.fulfilled, (state, action) => {
-        state.isUserLoading = false;
+        // state.isUserLoading = false;
         state.user = action.payload.user;
         state.userMessage = action.payload.message;
       })
       .addCase(updateUserAddressAsync.rejected, (state, action) => {
-        state.isUserLoading = false;
+        // state.isUserLoading = false;
         state.userError = action.error.message
           ? action.error.message
           : "Something went wrong";
       })
       .addCase(deleteUserAddressAsync.pending, (state) => {
-        state.isUserLoading = true;
+        // state.isUserLoading = true;
       })
       .addCase(deleteUserAddressAsync.fulfilled, (state, action) => {
-        state.isUserLoading = false;
+        // state.isUserLoading = false;
         state.user = action.payload.user;
         state.userMessage = action.payload.message;
       })
       .addCase(deleteUserAddressAsync.rejected, (state, action) => {
-        state.isUserLoading = false;
+        // state.isUserLoading = false;
         state.userError = action.error.message
           ? action.error.message
           : "Something went wrong";

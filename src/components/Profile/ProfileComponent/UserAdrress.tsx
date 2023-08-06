@@ -4,9 +4,11 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { MdOutlineAdd } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { deleteUserAddress } from "../../../redux/actions/userActions";
 import style from "../../../styles/style";
 import {
+  clearUserError,
+  clearUserMessage,
+  deleteUserAddressAsync,
   selectUser,
   selectUserError,
   selectUserMessage,
@@ -16,11 +18,11 @@ const AddAddress = loadable(() => import("./AddAddress"));
 export default function UserAdrress() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const user = useAppSelector(selectUser) ?? { addresses: [] };
+  const user = useAppSelector(selectUser);
   const message = useAppSelector(selectUserMessage);
   const userError = useAppSelector(selectUserError);
 
-  const { addresses } = user;
+  const { addresses } = user!;
 
   const dispatch = useAppDispatch();
 
@@ -29,17 +31,17 @@ export default function UserAdrress() {
   }
 
   function handleDeleteAddress(addressId: string) {
-    dispatch(deleteUserAddress(addressId));
+    dispatch(deleteUserAddressAsync(addressId));
   }
 
   useEffect(() => {
     if (userError) {
       toast.error(userError);
-      dispatch({ type: "ClearErrors" });
+      dispatch(clearUserError());
     }
     if (message) {
       toast.success(message);
-      dispatch({ type: "ClearMessage" });
+      dispatch(clearUserMessage());
     }
   }, [userError, message]);
 

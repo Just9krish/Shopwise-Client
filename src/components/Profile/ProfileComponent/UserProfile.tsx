@@ -4,10 +4,10 @@ import { host } from "../../../server";
 import style from "../../../styles/style";
 import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { loadUser } from "../../../redux/actions/userActions";
 import axios, { AxiosError } from "axios";
 import { API_URL } from "../../../constant";
 import {
+  fetchUserDetailsAsync,
   selectUser,
   updateUserInfoAsync,
 } from "../../../redux/features/User/userSlice";
@@ -50,7 +50,7 @@ export default function UserProfile() {
           }
         );
 
-        dispatch(loadUser());
+        dispatch(fetchUserDetailsAsync());
       } catch (e: AxiosError | any) {
         if (e.response) {
           toast.error(e.response.data.message);
