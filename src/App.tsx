@@ -2,9 +2,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { getAllProducts } from "./redux/actions/allProductsActions";
-import { loadUser } from "./redux/actions/userActions";
-import { useEffect, useLayoutEffect } from "react";
-import { loadSeller } from "./redux/actions/sellerActions";
+import { useEffect } from "react";
 import { getAllEvents } from "./redux/actions/eventsActions";
 import { useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
@@ -21,8 +19,8 @@ import Loader from "./components/Loader/Loader";
 import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
 import { API_URL } from "./constant";
-import { useAppDispatch } from "./hooks";
 import { fetchUserDetailsAsync } from "./redux/features/User/userSlice";
+import { fetchShopAsync } from "./redux/features/Shop/shopSlice";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -82,7 +80,7 @@ function App() {
   useEffect(() => {
     Promise.all([
       store.dispatch(fetchUserDetailsAsync()),
-      store.dispatch(loadSeller()),
+      store.dispatch(fetchShopAsync()),
       store.dispatch(getAllProducts()),
       store.dispatch(getAllEvents()),
       getStripeSecretKey(),

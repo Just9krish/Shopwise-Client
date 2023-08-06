@@ -13,7 +13,7 @@ interface IProps {
 }
 
 export default function ShopSidebar({ activeTab }: IProps) {
-  const sellerLinks = [
+  const shopLinks = [
     {
       linkName: "dashboard",
       link: "/dashboard",
@@ -79,7 +79,7 @@ export default function ShopSidebar({ activeTab }: IProps) {
   return (
     <aside className="w-fit lg:w-1/4 h-[87vh] overflow-scroll bg-white shadow">
       <div className="w-full py-4">
-        {sellerLinks?.map((link) => (
+        {shopLinks?.map((link) => (
           <Link to={link.link} key={link.id}>
             <div
               key={link.id}

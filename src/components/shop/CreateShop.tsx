@@ -1,51 +1,22 @@
 import { useState } from "react";
-import axios, { AxiosError } from "axios";
-import style from "../../styles/style";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { ICustomResponse } from "../../Interface";
-import { API_URL } from "../../constant";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import logo from "../../assets/shopwise.png";
+import { useAppDispatch } from "../../hooks";
+import { createShopAsync } from "../../redux/features/Shop/shopSlice";
 
 export default function CreateShop() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
+  const dispatch = useAppDispatch();
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-
-  async function handleSignup(
-    fullname: string,
-    email: string,
-    password: string,
-    address: string,
-    phoneNumber: string,
-    zipcode: string
-  ) {
-    try {
-      const config = { headers: { "Content-Type": "application/json" } };
-      const res = await axios.post<ICustomResponse>(
-        API_URL.CREATE_SHOP,
-        { name: fullname, email, password, address, phoneNumber, zipcode },
-        config
-      );
-
-      toast.success(res.data.message);
-      reset();
-    } catch (error: AxiosError | any) {
-      console.error(error);
-      if (error.response) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(error.message);
-      }
-    }
-  }
 
   return (
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -58,15 +29,16 @@ export default function CreateShop() {
           noValidate
           className="space-y-6"
           onSubmit={handleSubmit((data) => {
-            console.log(data);
-            handleSignup(
-              data.fullname,
-              data.email,
-              data.password,
-              data.address,
-              data.phoneNumber,
-              data.zipcode
-            );
+            const shopData = {
+              name: data.fullname,
+              email: data.email,
+              password: data.password,
+              address: data.address,
+              phoneNumber: data.phoneNumber,
+              zipcode: data.zipcode,
+            };
+
+            dispatch(createShopAsync(shopData));
           })}
         >
           <div className="w-full">

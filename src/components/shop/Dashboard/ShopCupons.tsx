@@ -10,6 +10,7 @@ import Loader from "../../Loader/Loader";
 import { getShopAllProducts } from "../../../redux/actions/productActions";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { API_URL } from "../../../constant";
+import { selectShop } from "../../../redux/features/Shop/shopSlice";
 
 type row = {
   id: string;
@@ -20,16 +21,16 @@ type row = {
 
 export default function ShopCupons() {
   const dispatch = useAppDispatch();
-  const { seller } = useAppSelector((state) => state.seller);
+  const shop = useAppSelector(selectShop);
 
   const [coupons, setCoupon] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function getCoupons(sellerId: string) {
+  async function getCoupons(shopId: string) {
     try {
       setIsLoading(true);
-      const res = await axios.get(API_URL.GET_SHOP_COUPONS(sellerId), {
+      const res = await axios.get(API_URL.GET_SHOP_COUPONS(shopId), {
         withCredentials: true,
       });
 
@@ -48,16 +49,16 @@ export default function ShopCupons() {
     }
   }
 
-  async function handleDeleteCoupon(sellerId: string, id: string) {
+  async function handleDeleteCoupon(shopId: string, id: string) {
     try {
       setIsLoading(true);
-      const res = await axios.delete(API_URL.DELETE_SHOP_COUPON(sellerId, id), {
+      const res = await axios.delete(API_URL.DELETE_SHOP_COUPON(shopId, id), {
         withCredentials: true,
       });
       if (res.status == 200) {
         setIsLoading(false);
         toast.success(res.data.message);
-        getCoupons(seller?._id);
+        getCoupons(shop?._id!);
       }
     } catch (err: AxiosError | any) {
       setIsLoading(false);
@@ -85,7 +86,7 @@ export default function ShopCupons() {
     try {
       setIsLoading(true);
       const res = await axios.post(
-        API_URL.CREATE_SHOP_COUPON(seller?._id),
+        API_URL.CREATE_SHOP_COUPON(shop?._id!),
         {
           name: cuponcode,
           value: discountpercentage,
@@ -104,7 +105,7 @@ export default function ShopCupons() {
         setDiscountpercentage(0);
         setMiniAmount(0);
         setSelectedProduct(null);
-        getCoupons(seller?._id);
+        getCoupons(shop?._id!);
         toast.success(res.data.message);
       }
     } catch (e: AxiosError | any) {
@@ -119,9 +120,11 @@ export default function ShopCupons() {
   }
 
   useEffect(() => {
-    dispatch(getShopAllProducts(seller._id));
-    getCoupons(seller?._id);
-  }, [seller._id]);
+    if (shop?._id) {
+      dispatch(getShopAllProducts(shop._id));
+      getCoupons(shop._id);
+    }
+  }, [shop?._id]);
 
   const columns = [
     {
@@ -160,7 +163,7 @@ export default function ShopCupons() {
           <>
             <button
               onClick={() =>
-                handleDeleteCoupon(seller?._id, params.id.toString())
+                handleDeleteCoupon(shop?._id!, params.id.toString())
               }
               className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all"
             >

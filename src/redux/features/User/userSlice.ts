@@ -9,7 +9,7 @@ import {
   updateUserInfo,
 } from "./userAPI";
 import { RootState } from "../../store";
-import { IAddressFrom, IUpdateData, LoginData, UserData } from "./types";
+import { IAddressFrom, IUpdateData, LoginData, UserData } from "./interface";
 
 const initialState: IUserState = {
   isUserAuthenticated: false,

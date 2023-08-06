@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { API_URL } from "../../../constant";
-import { IAddressFrom, IUpdateData, LoginData, UserData } from "./types";
+import { IAddressFrom, IUpdateData, LoginData, UserData } from "./interface";
 
 const config = {
   headers: { "Content-Type": "application/json" },

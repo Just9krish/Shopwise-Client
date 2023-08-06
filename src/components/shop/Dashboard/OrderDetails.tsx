@@ -6,16 +6,17 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { IShopOrder } from "../../../Interface";
 import { getAllOrdersOfSeller } from "../../../redux/actions/ordersActions";
-import { host, server } from "../../../server";
+import { host } from "../../../server";
 import { Country, State } from "country-state-city";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { API_URL } from "../../../constant";
+import { selectShop } from "../../../redux/features/Shop/shopSlice";
 const Loader = loadable(() => import("../../Loader/Loader"));
 
 export default function OrderDetails() {
   const dispatch = useAppDispatch();
-  const { seller } = useAppSelector((state) => state.seller);
+  const shop = useAppSelector(selectShop);
   const { shopOrders, isLoading } = useAppSelector((state) => state.orders);
   const { orderId } = useParams();
   const [selectedOrder, setSelectedOrder] = useState<IShopOrder | null>(null);
@@ -38,10 +39,10 @@ export default function OrderDetails() {
     return country ? country.name : "";
   };
 
-  async function orderUpdateHandler(sellerId: string, orderId: string) {
+  async function orderUpdateHandler(shopId: string, orderId: string) {
     try {
       const res = await axios.put(
-        API_URL.UPDATE_SHOP_ORDERS(sellerId, orderId),
+        API_URL.UPDATE_SHOP_ORDERS(shopId, orderId),
         { orderStatus },
         { withCredentials: true }
       );
@@ -59,8 +60,10 @@ export default function OrderDetails() {
   }
 
   useEffect(() => {
-    dispatch(getAllOrdersOfSeller(seller._id));
-  }, [dispatch, seller._id]);
+    if (shop) {
+      dispatch(getAllOrdersOfSeller(shop._id));
+    }
+  }, [dispatch, shop?._id]);
 
   useEffect(() => {
     const order = shopOrders.find((order) => order._id === orderId);
@@ -274,8 +277,8 @@ export default function OrderDetails() {
 
               <button
                 onClick={() => {
-                  if (selectedOrder)
-                    orderUpdateHandler(seller._id, selectedOrder?._id);
+                  if (selectedOrder && shop)
+                    orderUpdateHandler(shop._id, selectedOrder?._id);
                 }}
                 className="bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-4 rounded mt-4"
               >

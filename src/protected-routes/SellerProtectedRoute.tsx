@@ -1,21 +1,26 @@
 import { Navigate } from "react-router-dom";
 import Loader from "../components/Loader/Loader";
 import { useAppSelector } from "../hooks";
+import {
+  selectShop,
+  selectShopAuthenticated,
+  selectShopLoading,
+} from "../redux/features/Shop/shopSlice";
 
 interface IProps {
   children: JSX.Element;
 }
 
 const SellerProtectedRoute = ({ children }: IProps): JSX.Element => {
-  const { isSellerLoading, isSellerAuthenticate } = useAppSelector(
-    (state) => state.seller
-  );
+  const shop = useAppSelector(selectShop);
+  const isShopLoading = useAppSelector(selectShopLoading);
+  const isShopAuthenticated = useAppSelector(selectShopAuthenticated);
 
-  if (isSellerLoading) {
+  if (isShopLoading) {
     return <Loader />;
   }
 
-  if (!isSellerAuthenticate) {
+  if (!isShopAuthenticated) {
     return <Navigate to="/login-shop" replace />;
   }
 

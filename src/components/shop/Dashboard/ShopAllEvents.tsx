@@ -9,6 +9,7 @@ import {
   getShopAllEvents,
 } from "../../../redux/actions/eventsActions";
 import Loader from "../../Loader/Loader";
+import { selectShop } from "../../../redux/features/Shop/shopSlice";
 
 type row = {
   id: string;
@@ -25,18 +26,20 @@ type row = {
 
 export default function ShopAllEvents() {
   const dispatch = useAppDispatch();
-  const { seller } = useAppSelector((state) => state.seller);
+  const shop = useAppSelector(selectShop);
   const { shopEvents, isEventsLoading } = useAppSelector(
     (state) => state.events
   );
 
-  function deleteEventHandler(eventId: string, sellerId: string) {
-    dispatch(deleteEvent(eventId, sellerId));
+  function deleteEventHandler(eventId: string, shopId: string) {
+    dispatch(deleteEvent(eventId, shopId));
   }
 
   useEffect(() => {
-    dispatch(getShopAllEvents(seller._id));
-  }, [dispatch, seller._id]);
+    if (shop) {
+      dispatch(getShopAllEvents(shop._id));
+    }
+  }, [dispatch, shop?._id]);
 
   const columns = [
     {
@@ -134,7 +137,7 @@ export default function ShopAllEvents() {
           <>
             <button
               onClick={() =>
-                deleteEventHandler(params.id.toString(), seller._id)
+                deleteEventHandler(params.id.toString(), shop?._id!)
               }
               className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all"
             >

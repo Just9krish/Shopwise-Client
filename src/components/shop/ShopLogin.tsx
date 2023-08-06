@@ -1,44 +1,25 @@
 import style from "../../styles/style";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { API_URL } from "../../constant";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import logo from "../../assets/shopwise.png";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import {
+  loginShopAsync,
+  selectShopLoading,
+} from "../../redux/features/Shop/shopSlice";
 
 export default function ShopLogin() {
-  const navigate = useNavigate();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
+  const dispatch = useAppDispatch();
+  const isShopLoading = useAppSelector(selectShopLoading);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-
-  async function handleLogin(email: string, password: string) {
-    try {
-      const res = await axios.post(
-        API_URL.LOGIN_SHOP,
-        {
-          email: email,
-          password: password,
-        },
-        { withCredentials: true }
-      );
-      if (res.status) {
-        toast.success("Login Success!");
-        reset();
-        navigate("/dashboard");
-        window.location.reload();
-      }
-    } catch (error: any) {
-      console.log(error);
-      if (error.response) toast.error(error.response.data.message);
-    }
-  }
 
   return (
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -50,8 +31,11 @@ export default function ShopLogin() {
         <form
           className="space-y-6"
           onSubmit={handleSubmit((data) => {
-            console.log(data);
-            handleLogin(data.email, data.password);
+            const loginData = {
+              email: data.email,
+              password: data.password,
+            };
+            dispatch(loginShopAsync(loginData));
           })}
         >
           <div>
@@ -134,10 +118,13 @@ export default function ShopLogin() {
             </div>
           </div>
           <button
-            className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
+            className={`flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 ${
+              isShopLoading ? "opacity-80" : ""
+            } `}
             type="submit"
+            disabled={isShopLoading}
           >
-            Login
+            {isShopLoading ? "Login..." : "Login"}
           </button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Not have any account?

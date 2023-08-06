@@ -6,6 +6,7 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { getAllOrdersOfSeller } from "../../../redux/actions/ordersActions";
 import Loader from "../../Loader/Loader";
+import { selectShop } from "../../../redux/features/Shop/shopSlice";
 
 type Row = {
   id: string;
@@ -15,7 +16,7 @@ type Row = {
 };
 
 export default function ShopOrders() {
-  const { seller } = useAppSelector((state) => state.seller);
+  const shop = useAppSelector(selectShop);
   const { shopOrders, isLoading } = useAppSelector((state) => state.orders);
   const dispatch = useAppDispatch();
 
@@ -86,8 +87,8 @@ export default function ShopOrders() {
   });
 
   useEffect(() => {
-    dispatch(getAllOrdersOfSeller(seller._id));
-  }, [seller._id]);
+    if (shop) dispatch(getAllOrdersOfSeller(shop._id));
+  }, [shop?._id]);
 
   return (
     <>

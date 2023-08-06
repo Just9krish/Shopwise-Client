@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { getAllOrdersOfSeller } from "../../../redux/actions/ordersActions";
 import { getShopAllProducts } from "../../../redux/actions/productActions";
 import style from "../../../styles/style";
+import { selectShop } from "../../../redux/features/Shop/shopSlice";
 
 type row = {
   id: string;
@@ -19,7 +20,7 @@ type row = {
 export default function ShopDashboardHero() {
   const { shopOrders } = useAppSelector((state) => state.orders);
   const { products } = useAppSelector((state) => state.products);
-  const { seller } = useAppSelector((state) => state.seller);
+  const shop = useAppSelector(selectShop);
   const dispatch = useAppDispatch();
 
   const columns = [
@@ -82,8 +83,10 @@ export default function ShopDashboardHero() {
     });
 
   useEffect(() => {
-    dispatch(getAllOrdersOfSeller(seller._id));
-    dispatch(getShopAllProducts(seller._id));
+    if (shop) {
+      dispatch(getAllOrdersOfSeller(shop._id));
+      dispatch(getShopAllProducts(shop._id));
+    }
   }, [dispatch]);
 
   return (

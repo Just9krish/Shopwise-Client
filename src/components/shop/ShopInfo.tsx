@@ -4,18 +4,19 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import formateDate from "../../helper/formatDate";
 import { useAppSelector } from "../../hooks";
-import { host, server } from "../../server";
+import { host } from "../../server";
 import style from "../../styles/style";
 import { API_URL } from "../../constant";
+import { selectShop } from "../../redux/features/Shop/shopSlice";
 
 interface IProps {
   isOwner: boolean;
 }
 
 export default function ShopInfo({ isOwner }: IProps) {
-  const { seller } = useAppSelector((state) => state.seller);
+  const shop = useAppSelector(selectShop);
 
-  const { name, avatar, address, phoneNumber, createdAt } = seller;
+  const { name, avatar, address, phoneNumber, createdAt } = shop!;
   const navigate = useNavigate();
 
   async function logoutHandler(event: MouseEvent<HTMLElement>) {
@@ -50,7 +51,7 @@ export default function ShopInfo({ isOwner }: IProps) {
           className="object-cover h-36 w-36 rounded-full"
           src={`${host}/${avatar}`}
           loading="lazy"
-          alt="seller profile picture"
+          alt="shop profile picture"
         />
         <h4 className="text-xl">{name}</h4>
         <p className="text-[#000000a6] text-sm">
@@ -72,7 +73,7 @@ export default function ShopInfo({ isOwner }: IProps) {
           <p className="text-[#000000a6] text-sm">10</p>
         </div>
         <div>
-          <h4 className="font-semibold">Seller Ratings</h4>
+          <h4 className="font-semibold"> Ratings</h4>
           <p className="text-[#000000a6] text-sm">4/5</p>
         </div>
         <div>

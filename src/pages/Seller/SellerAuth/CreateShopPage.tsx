@@ -2,23 +2,25 @@ import loadable from "@loadable/component";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAppSelector } from "../../../hooks";
 const CreateShop = loadable(
   () => import("../../../components/shop/CreateShop")
 );
-import { useAppSelector } from "../../../hooks";
-import style from "../../../styles/style";
+import {
+  selectShop,
+  selectShopAuthenticated,
+} from "../../../redux/features/Shop/shopSlice";
 
 export default function CreateShopPage() {
   const navigate = useNavigate();
 
-  const { isSellerAuthenticate, seller } = useAppSelector(
-    (state) => state.seller
-  );
+  const shop = useAppSelector(selectShop);
+  const isShopAuthenticated = useAppSelector(selectShopAuthenticated);
 
   useEffect(() => {
-    if (isSellerAuthenticate) {
+    if (isShopAuthenticated) {
       toast.info("You are already logged in");
-      navigate(`/shop/${seller._id}`);
+      navigate(`/shop/${shop?._id}`);
     }
   }, []);
 

@@ -7,9 +7,10 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { host } from "../../../server";
 import { useAppSelector } from "../../../hooks";
+import { selectShop } from "../../../redux/features/Shop/shopSlice";
 
 export default function ShopHeader() {
-  const { seller } = useAppSelector((state) => state.seller);
+  const shop = useAppSelector(selectShop);
 
   return (
     <header className="shadow w-full sticky top-0 left-0 py-4 px-6 bg-white">
@@ -32,10 +33,10 @@ export default function ShopHeader() {
           <Link to="/shop-orders">
             <FiPackage title="All Orders" size={30} color="#555" />
           </Link>
-          <Link to={`/shop/${seller._id}`}>
+          <Link to={`/shop/${shop?._id}`}>
             <img
-              src={`${host}/${seller.avatar}`}
-              alt="Seller Profile Picture"
+              src={`${host}/${shop?.avatar}`}
+              alt="Shop Profile Picture"
               className="h-11 w-11 rounded-full object-cover"
             />
           </Link>

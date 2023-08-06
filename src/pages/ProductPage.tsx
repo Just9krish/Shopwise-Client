@@ -88,11 +88,11 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
         </h4>
         <h4
           className={`text-base font-medium lg:font-semibold cursor-pointer lg:text-xl relative py-1.5 after:bg-red-400 after:absolute after:left-0 after:bottom-0 after:h-1 ${
-            activeTab === "seller" ? "after:w-full" : "after:w-0"
+            activeTab === "shop" ? "after:w-full" : "after:w-0"
           }`}
-          onClick={() => handleTabClick("seller")}
+          onClick={() => handleTabClick("shop")}
         >
-          Seller Information
+          Shop Information
         </h4>
       </div>
       {activeTab === "productDetails" && (
@@ -113,7 +113,7 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
           <p>No review yet</p>
         </div>
       )}
-      {activeTab === "seller" && (
+      {activeTab === "shop" && (
         <div className="w-full p-5 lg:flex">
           <div className="w-full lg:w-1/2 space-y-3">
             <div className={`${style.flex_normal} gap-3`}>

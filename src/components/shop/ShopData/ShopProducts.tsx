@@ -2,15 +2,16 @@ import loadable from "@loadable/component";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { getShopAllProducts } from "../../../redux/actions/productActions";
+import { selectShop } from "../../../redux/features/Shop/shopSlice";
 const Product = loadable(() => import("../../Product/Product"));
 
 export default function ShopProducts() {
   const { products } = useAppSelector((state) => state.products);
-  const { seller } = useAppSelector((state) => state.seller);
+  const shop = useAppSelector(selectShop);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(getShopAllProducts(seller._id));
+    if (shop) dispatch(getShopAllProducts(shop?._id));
   }, []);
 
   return products.length > 0 ? (
