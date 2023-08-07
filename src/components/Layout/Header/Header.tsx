@@ -15,6 +15,7 @@ import { IProduct } from "../../../Interface";
 import { host } from "../../../server";
 import { toggleCart } from "../../../redux/actions/cartActions";
 import { useAppSelector, useAppDispatch } from "../../../hooks";
+import { selectProducts } from "../../../redux/features/Products/productSlice";
 const Dropdown = loadable(() => import("./Dropdown/Dropdown"));
 const Navbar = loadable(() => import("./Navbar/Navbar"));
 const UserNavigation = loadable(
@@ -34,7 +35,7 @@ export default function Header() {
   const dispatch = useAppDispatch();
 
   const userState = useAppSelector((state) => state.userState);
-  const { allProducts } = useAppSelector((state) => state.allProducts);
+  const allProducts = useAppSelector(selectProducts);
 
   function handleChange(e: ChangeEvent<HTMLInputElement>): void {
     e.preventDefault();

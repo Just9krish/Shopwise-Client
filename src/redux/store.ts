@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { productReducer } from "./reducers/productReducer";
-import { allProductsReducer } from "./reducers/allProductsReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import { wishListReducer } from "./reducers/wishlist";
 import { filterReducer } from "./reducers/filterReducers";
-import { orderReducer } from "./reducers/orders.reducer";
 import userReducer from "./features/User/userSlice";
 import shopReducer from "./features/Shop/shopSlice";
 import eventReducer from "./features/Events/eventSlice";
+import orderReducer from "./features/Orders/orderSlice";
+import allProductsReducer from "./features/Products/productSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,11 +15,11 @@ const store = configureStore({
     shopState: shopReducer,
     products: productReducer,
     eventState: eventReducer,
-    allProducts: allProductsReducer,
+    productsState: allProductsReducer,
     cart: cartReducer,
     wishlists: wishListReducer,
     filteredProducts: filterReducer,
-    orders: orderReducer,
+    orderState: orderReducer,
   },
 });
 

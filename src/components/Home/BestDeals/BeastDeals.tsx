@@ -3,12 +3,13 @@ import style from "../../../styles/style";
 import { useState, useEffect } from "react";
 import { IProduct } from "../../../Interface";
 import { useAppSelector } from "../../../hooks";
+import { selectProducts } from "../../../redux/features/Products/productSlice";
 const Product = loadable(() => import("../../Product/Product"));
 
 export default function BeastDeals() {
   const [products, setProducts] = useState<IProduct[] | null>(null);
 
-  let { allProducts } = useAppSelector((state) => state.allProducts);
+  let allProducts = useAppSelector(selectProducts);
 
   useEffect(() => {
     const bestDealProducts = [...allProducts].sort(

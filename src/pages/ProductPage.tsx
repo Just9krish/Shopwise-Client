@@ -8,6 +8,7 @@ import { useAppSelector } from "../hooks";
 import { host, server } from "../server";
 import axios from "axios";
 import { API_URL } from "../constant";
+import { selectProducts } from "../redux/features/Products/productSlice";
 
 const ProductDetails = loadable(
   () => import("../components/ProductDetails/ProductDetails")
@@ -20,7 +21,7 @@ const RelatedProducts = loadable(
 export default function ProductPage() {
   const { product_id } = useParams();
   const [product, setProduct] = useState<IProduct | null>(null);
-  const { allProducts } = useAppSelector((state) => state.allProducts);
+  const allProducts = useAppSelector(selectProducts);
 
   useEffect(() => {
     if (product_id) {

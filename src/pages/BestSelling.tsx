@@ -4,10 +4,11 @@ import style from "../styles/style";
 import { IProduct } from "../Interface";
 import loadable from "@loadable/component";
 import { useAppSelector } from "../hooks";
+import { selectProducts } from "../redux/features/Products/productSlice";
 
 export default function BestSelling() {
   const [products, setProducts] = useState<IProduct[]>([]);
-  const { allProducts } = useAppSelector((state) => state.allProducts);
+  const allProducts = useAppSelector(selectProducts);
 
   useEffect(() => {
     const sorted = [...allProducts].sort((a, b) => b.sold_out - a.sold_out);

@@ -3,13 +3,14 @@ import loadable from "@loadable/component";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks";
+import { selectProducts } from "../redux/features/Products/productSlice";
 const ProductFilter = loadable(
   () => import("../components/FilterSection/ProductFilter")
 );
 const Product = loadable(() => import("../components/Product/Product"));
 
 export default function ProductsPage() {
-  const { allProducts } = useAppSelector((state) => state.allProducts);
+  const allProducts = useAppSelector(selectProducts);
   const dispatch = useAppDispatch();
   const { filteredProducts, filters, sort_value } = useAppSelector(
     (state) => state.filteredProducts

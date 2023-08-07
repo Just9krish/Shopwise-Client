@@ -2,9 +2,10 @@ import style from "../../../styles/style";
 import loadable from "@loadable/component";
 const Product = loadable(() => import("../../Product/Product"));
 import { useAppSelector } from "../../../hooks";
+import { selectProducts } from "../../../redux/features/Products/productSlice";
 
 export default function FeaturedProducts() {
-  const { allProducts } = useAppSelector((state) => state.allProducts);
+  const allProducts = useAppSelector(selectProducts);
 
   return (
     <section>

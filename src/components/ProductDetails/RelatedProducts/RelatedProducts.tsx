@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppSelector } from "../../../hooks";
 import { IProduct } from "../../../Interface";
 import style from "../../../styles/style";
+import { selectProducts } from "../../../redux/features/Products/productSlice";
 const Product = loadable(() => import("../../Product/Product"));
 
 interface IProps {
@@ -12,7 +13,7 @@ interface IProps {
 export default function RelatedProducts({ product }: IProps) {
   const { category } = product;
 
-  const { allProducts } = useAppSelector((state) => state.allProducts);
+  const allProducts = useAppSelector(selectProducts);
 
   const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]);
 

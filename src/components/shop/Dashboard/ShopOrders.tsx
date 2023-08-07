@@ -4,9 +4,15 @@ import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { getAllOrdersOfSeller } from "../../../redux/actions/ordersActions";
 import Loader from "../../Loader/Loader";
-import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import {
+  selectShop,
+  selectShopLoading,
+} from "../../../redux/features/Shop/shopSlice";
+import {
+  getAllOrdersOfShopAsync,
+  selectShopOrders,
+} from "../../../redux/features/Orders/orderSlice";
 
 type Row = {
   id: string;
@@ -17,7 +23,9 @@ type Row = {
 
 export default function ShopOrders() {
   const shop = useAppSelector(selectShop);
-  const { shopOrders, isLoading } = useAppSelector((state) => state.orders);
+  const isShopLoading = useAppSelector(selectShopLoading);
+  const shopOrders = useAppSelector(selectShopOrders);
+
   const dispatch = useAppDispatch();
 
   const columns = [
@@ -87,12 +95,12 @@ export default function ShopOrders() {
   });
 
   useEffect(() => {
-    if (shop) dispatch(getAllOrdersOfSeller(shop._id));
+    if (shop) dispatch(getAllOrdersOfShopAsync(shop._id));
   }, [shop?._id]);
 
   return (
     <>
-      {isLoading ? (
+      {isShopLoading ? (
         <Loader />
       ) : (
         <>

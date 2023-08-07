@@ -1,15 +1,20 @@
 import "react-toastify/dist/ReactToastify.css";
+
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import { getAllProducts } from "./redux/actions/allProductsActions";
 import { useEffect } from "react";
 import { useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { API_URL } from "./constant";
+import { fetchUserDetailsAsync } from "./redux/features/User/userSlice";
+import { fetchShopAsync } from "./redux/features/Shop/shopSlice";
+import { getAllEventsAsync } from "./redux/features/Events/eventSlice";
+import { getAllProductsAsync } from "./redux/features/Products/productSlice";
+
 import axios from "axios";
 import store from "./redux/store";
 import loadable from "@loadable/component";
-
 import SellerProtectedRoute from "./protected-routes/SellerProtectedRoute";
 import ProtectedRoute from "./protected-routes/Protectedroute";
 import Layout from "./components/Layout/Layout";
@@ -17,10 +22,6 @@ import LoginPage from "./pages/User/LoginPage";
 import Loader from "./components/Loader/Loader";
 import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
-import { API_URL } from "./constant";
-import { fetchUserDetailsAsync } from "./redux/features/User/userSlice";
-import { fetchShopAsync } from "./redux/features/Shop/shopSlice";
-import { getAllEventsAsync } from "./redux/features/Events/eventSlice";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -81,7 +82,7 @@ function App() {
     Promise.all([
       store.dispatch(fetchUserDetailsAsync()),
       store.dispatch(fetchShopAsync()),
-      store.dispatch(getAllProducts()),
+      store.dispatch(getAllProductsAsync()),
       store.dispatch(getAllEventsAsync()),
       getStripeSecretKey(),
     ]).then(() => setAppState(!appState));
