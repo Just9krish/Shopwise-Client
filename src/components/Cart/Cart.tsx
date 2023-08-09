@@ -5,12 +5,19 @@ import style from "../../styles/style";
 const CartItem = loadable(() => import("./CartItem/CartItem"));
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks";
-import { ICartItem } from "../../Interface";
 import { formattedPrice } from "../../helper/formatPrice";
-import { toggleCart } from "../../redux/actions/cartActions";
+import {
+  selectCart,
+  selectCartOpen,
+  selectCartPrice,
+  toggleCart,
+} from "../../redux/features/Cart/cartSlice";
+import { ICartItem } from "../../redux/features/Cart/interface";
 
 export default function Cart() {
-  const { cart, cartPrice, isCartOpen } = useAppSelector((state) => state.cart);
+  const cart = useAppSelector(selectCart);
+  const cartPrice = useAppSelector(selectCartPrice);
+  const isCartOpen = useAppSelector(selectCartOpen);
   const dispatch = useAppDispatch();
 
   return (

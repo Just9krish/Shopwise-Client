@@ -62,4 +62,19 @@ export const API_URL = {
   // Product APIs
   ADD_PRODUCT: `${DOMAIN}/products`,
   GET_ALL_PRODUCTS: `${DOMAIN}/products`,
+
+  // Cart API's
+  ADD_TO_CART: `${DOMAIN}/cart`,
+  REMOVE_FROM_CART: (productId: string) => `${DOMAIN}/cart/${productId}`,
+  UPDATE_CART: `${DOMAIN}/cart/update-quantity`,
+  GET_CART: `${DOMAIN}/cart`,
+
+  // Wishlist API's
+  ADD_TO_WISHLIST: `${DOMAIN}/wishlist`,
+  GET_WISHLIST: `${DOMAIN}/wishlist`,
+  REMOVE_FROM_WISHLIST: (productId: string) =>
+    `${DOMAIN}/wishlist/${productId}`,
 };
+
+export const maxQuantityItem = 4;
+export const minQuantityItem = 1;

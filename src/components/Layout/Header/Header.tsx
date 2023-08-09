@@ -13,9 +13,9 @@ import { IoIosArrowForward } from "react-icons/io";
 import { RiCloseLine } from "react-icons/ri";
 import { IProduct } from "../../../Interface";
 import { host } from "../../../server";
-import { toggleCart } from "../../../redux/actions/cartActions";
 import { useAppSelector, useAppDispatch } from "../../../hooks";
 import { selectProducts } from "../../../redux/features/Products/productSlice";
+import { toggleCart } from "../../../redux/features/Cart/cartSlice";
 const Dropdown = loadable(() => import("./Dropdown/Dropdown"));
 const Navbar = loadable(() => import("./Navbar/Navbar"));
 const UserNavigation = loadable(

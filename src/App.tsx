@@ -22,6 +22,8 @@ import LoginPage from "./pages/User/LoginPage";
 import Loader from "./components/Loader/Loader";
 import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
+import { fetchCartDetailsAsync } from "./redux/features/Cart/cartSlice";
+import { getWishlistAsync } from "./redux/features/Wishlist/wishlistSlice";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -84,6 +86,8 @@ function App() {
       store.dispatch(fetchShopAsync()),
       store.dispatch(getAllProductsAsync()),
       store.dispatch(getAllEventsAsync()),
+      store.dispatch(fetchCartDetailsAsync()),
+      store.dispatch(getWishlistAsync()),
       getStripeSecretKey(),
     ]).then(() => setAppState(!appState));
   }, []);

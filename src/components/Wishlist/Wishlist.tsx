@@ -3,6 +3,7 @@ import loadable from "@loadable/component";
 import { RxCross1 } from "react-icons/rx";
 import { BsBagHeart } from "react-icons/bs";
 import { useAppSelector } from "../../hooks";
+import { selectWishlist } from "../../redux/features/Wishlist/wishlistSlice";
 const ItemCard = loadable(() => import("./WishCard/ItemCard"));
 
 interface IProps {
@@ -11,7 +12,7 @@ interface IProps {
 }
 
 export default function Wishlist({ isWishlistOpen, toggleWishlist }: IProps) {
-  const { wishlists } = useAppSelector((state) => state.wishlists);
+  const wishlists = useAppSelector(selectWishlist);
 
   return (
     <div

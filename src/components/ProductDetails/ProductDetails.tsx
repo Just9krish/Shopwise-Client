@@ -81,7 +81,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
               </div>
             </div>
             <div className={`${style.flex_normal} justify-between`}>
-              <AddtoCart product={product} />
+              <AddtoCart product={product} variant="detail" />
               {isWish ? (
                 <AiFillHeart
                   cursor="pointer"

@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 import { host } from "../../../../server";
 import { IUserState } from "../../../../Interface";
 import { useAppDispatch, useAppSelector } from "../../../../hooks";
-import { toggleCart } from "../../../../redux/actions/cartActions";
+import {
+  selectCart,
+  toggleCart,
+} from "../../../../redux/features/Cart/cartSlice";
+import { selectWishlist } from "../../../../redux/features/Wishlist/wishlistSlice";
 
 interface IProps {
   userState: IUserState;
@@ -14,8 +18,8 @@ interface IProps {
 
 export default function UserNavigation({ userState, toggleWishlist }: IProps) {
   const { user, isUserAuthenticated } = userState;
-  const { cart } = useAppSelector((state) => state.cart);
-  const { wishlists } = useAppSelector((state) => state.wishlists);
+  const cart = useAppSelector(selectCart);
+  const wishlists = useAppSelector(selectWishlist);
 
   const dispatch = useAppDispatch();
 

@@ -4,14 +4,15 @@ import { RxCross1 } from "react-icons/rx";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { useState, useEffect } from "react";
-import { ICartItem, IProduct } from "../../../Interface";
-import { removeFromWishlists } from "../../../redux/actions/wishlistActions";
+import { IProduct } from "../../../redux/features/Products/interface";
 import { host } from "../../../server";
-import { addToCart } from "../../../redux/actions/cartActions";
-import { toast } from "react-toastify";
-import { toggleCart } from "../../../redux/actions/cartActions";
-import { AiOutlineShoppingCart } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import {
+  addToCartAsync,
+  selectCart,
+  toggleCart,
+} from "../../../redux/features/Cart/cartSlice";
+import { removeToWishlistAsync } from "../../../redux/features/Wishlist/wishlistSlice";
 
 interface IProps {
   item: IProduct;
@@ -22,17 +23,8 @@ const ItemCard = ({ item, toggleWishlist }: IProps) => {
   const { name, price, images, discount_price, discount_percentage, _id } =
     item;
   const [isInCart, setIsInCart] = useState(false);
-  const { cart } = useAppSelector((state) => state.cart);
+  const cart = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
-
-  function removeFromWishlistHandler(product: IProduct) {
-    dispatch(removeFromWishlists(product));
-  }
-
-  function addToCartHandler(product: ICartItem) {
-    dispatch(addToCart(product));
-    toast.success("Item added successfully");
-  }
 
   function handleToggleCart() {
     toggleWishlist();
@@ -40,7 +32,7 @@ const ItemCard = ({ item, toggleWishlist }: IProps) => {
   }
 
   useEffect(() => {
-    if (cart?.find((i: IProduct) => i._id === item._id)) {
+    if (cart?.find((i) => i.product._id === item._id)) {
       setIsInCart(true);
     } else {
       setIsInCart(false);
@@ -51,7 +43,7 @@ const ItemCard = ({ item, toggleWishlist }: IProps) => {
     <div
       className={`${style.flex_normal} w-full border-b p-4 justify-between gap-4`}
     >
-      <button onClick={() => removeFromWishlistHandler(item)}>
+      <button onClick={() => dispatch(removeToWishlistAsync(_id))}>
         <RxCross1 className="cursor-pointer" size={10} />
       </button>
       <Link to={`/products/${_id}`}>
@@ -79,7 +71,11 @@ const ItemCard = ({ item, toggleWishlist }: IProps) => {
         </div>
       </div>
       {!isInCart ? (
-        <button onClick={() => addToCartHandler({ ...item, quantity: 1 })}>
+        <button
+          onClick={() =>
+            dispatch(addToCartAsync({ productId: _id, quantity: 1 }))
+          }
+        >
           <BsCartPlus
             size={20}
             className="cursor-pointer"
