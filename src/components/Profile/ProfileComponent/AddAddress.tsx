@@ -63,7 +63,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 address1: data.address1,
                 address2: data.address2,
                 address3: data.address3,
-                zipcode: data.zipcode,
+                zipcode: parseInt(data.zipcode),
                 addressType: data.addressType,
               };
 
@@ -201,10 +201,6 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 aria-invalid={errors.address1 ? "true" : "false"}
                 {...register("address1", {
                   required: "Address 1 is required!",
-                  pattern: {
-                    value: /^([^0-9]*)$/,
-                    message: "Not a valid addresss!",
-                  },
                 })}
               />
               {errors.address1 && (

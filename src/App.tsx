@@ -85,10 +85,10 @@ function App() {
       store.dispatch(fetchUserDetailsAsync()),
       store.dispatch(fetchShopAsync()),
       store.dispatch(getAllProductsAsync()),
-      store.dispatch(getAllEventsAsync()),
+      // store.dispatch(getAllEventsAsync()),
       store.dispatch(fetchCartDetailsAsync()),
       store.dispatch(getWishlistAsync()),
-      getStripeSecretKey(),
+      // getStripeSecretKey(),
     ]).then(() => setAppState(!appState));
   }, []);
 

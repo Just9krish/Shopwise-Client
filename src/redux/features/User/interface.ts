@@ -17,8 +17,8 @@ export interface LoginData {
 export interface IUpdateData {
   password: string;
   name: string;
-  primaryPhoneNumber: string;
-  secondaryPhoneNumber?: string;
+  primaryPhoneNumber: number;
+  secondaryPhoneNumber?: number;
   email: string;
 }
 
@@ -28,6 +28,6 @@ export interface IAddressFrom {
   address1: string;
   address2: string;
   address3: string;
-  zipcode: string;
+  zipcode: number;
   addressType: string;
 }

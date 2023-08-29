@@ -1,8 +1,8 @@
 import axios, { AxiosError } from "axios";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import { API_URL } from "../../../constant";
-import { set, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 export default function UserPasswordChange() {
@@ -18,14 +18,14 @@ export default function UserPasswordChange() {
   } = useForm();
 
   async function handlePasswordChange(
-    oldPassword: string,
+    currentPassword: string,
     newPassword: string,
     confirmNewPassword: string
   ) {
     try {
       const { data } = await axios.post(
         API_URL.USER_PASSWORD_CHANGE,
-        { oldPassword, newPassword, confirmNewPassword },
+        { currentPassword, newPassword, confirmNewPassword },
         { withCredentials: true }
       );
 
@@ -52,7 +52,6 @@ export default function UserPasswordChange() {
         <form
           className="space-y-4 w-full max-w-xl mx-auto"
           onSubmit={handleSubmit((data) => {
-            console.log(data);
             handlePasswordChange(
               data.oldPassword,
               data.newPassword,

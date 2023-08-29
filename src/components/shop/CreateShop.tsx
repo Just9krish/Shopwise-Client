@@ -3,10 +3,14 @@ import { Link } from "react-router-dom";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import logo from "../../assets/shopwise.png";
-import { useAppDispatch } from "../../hooks";
-import { createShopAsync } from "../../redux/features/Shop/shopSlice";
+import { useAppDispatch, useAppSelector } from "../../hooks";
+import {
+  createShopAsync,
+  selectShopLoading,
+} from "../../redux/features/Shop/shopSlice";
 
 export default function CreateShop() {
+  const isShopLoading = useAppSelector(selectShopLoading);
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const [isConfirmPasswordShown, setIsConfirmPasswordShown] = useState(false);
   const dispatch = useAppDispatch();
@@ -33,9 +37,10 @@ export default function CreateShop() {
               name: data.fullname,
               email: data.email,
               password: data.password,
+              confirmPassword: data.confirmPassword,
               address: data.address,
-              phoneNumber: data.phoneNumber,
-              zipcode: data.zipcode,
+              phoneNumber: +data.phoneNumber,
+              zipcode: +data.zipcode,
             };
 
             dispatch(createShopAsync(shopData));
@@ -221,10 +226,37 @@ export default function CreateShop() {
           </div>
 
           <button
-            className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
+            disabled={isShopLoading}
+            className={`flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 ${
+              isShopLoading
+                ? "opacity-75 cursor-not-allowed"
+                : "hover:bg-orange-500"
+            }`}
             type="submit"
           >
-            Submit
+            {isShopLoading && (
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            )}
+            {isShopLoading ? "Creating..." : "Create a Account"}
           </button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Already have shop?

@@ -68,30 +68,28 @@ export default function CreateEvent() {
 
     const form = new FormData();
 
-    productImages.forEach((img) => {
-      form.append("images", img);
-    });
-
-    form.append("name", productName.toString());
-    form.append("description", productDescription.toString());
-    form.append("category", productCategory.toString());
-    form.append("tags", productTags.toString());
-    form.append("price", productPrice.toString());
-    form.append("discount_percentage", productDiscountPercentage.toString());
-    form.append("discount_price", productDiscountPrice.toString());
-    form.append("stock", productStock.toString());
-    if (startDate !== null) form.append("startDate", startDate.toISOString());
-    if (endDate !== null) form.append("endDate", endDate.toISOString());
+    form.append("name", productName);
+    form.append("description", productDescription);
+    form.append("category", productCategory);
+    form.append("tags", productTags);
+    form.append("price", productPrice);
+    form.append("discount_percentage", productDiscountPercentage);
+    form.append("discount_price", productDiscountPrice);
+    form.append("stock", productStock);
+    if (startDate !== null) form.append("startDate", startDate);
+    if (endDate !== null) form.append("endDate", endDate);
 
     try {
-      axios.defaults.withCredentials = true;
-      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const config = {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      };
 
       const res = await axios.post(API_URL.CREATE_SHOP_EVENT, form, config);
 
       if (res.status == 201) {
         toast.success("Event Added Successfully");
-        navigate("/shop-events");
+        // navigate("/shop-events");
       }
     } catch (error: any) {
       console.log(error);

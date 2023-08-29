@@ -2,9 +2,10 @@ export interface IShopData {
   name: string;
   email: string;
   password: string;
+  confirmPassword: string;
   address: string;
-  phoneNumber: string;
-  zipcode: string;
+  phoneNumber: number;
+  zipcode: number;
 }
 
 export interface IShop {
