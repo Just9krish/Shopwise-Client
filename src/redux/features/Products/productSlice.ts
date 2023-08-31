@@ -8,6 +8,7 @@ const initialState: IProductState = {
   isProductLoading: false,
   selectedProduct: null,
   productError: null,
+  totalProducts: 0,
   productMessage: "",
   shopProducts: [],
 };
@@ -43,6 +44,7 @@ const productsSlice = createSlice({
     builder.addCase(getAllProductsByFiltersAsync.fulfilled, (state, action) => {
       state.isProductLoading = false;
       state.allProducts = action.payload.products;
+      state.totalProducts = action.payload.totalDocs;
     });
     builder.addCase(getAllProductsByFiltersAsync.rejected, (state, action) => {
       state.isProductLoading = false;
@@ -79,5 +81,7 @@ export const selectShopProducts = (state: RootState) =>
   state.productsState.shopProducts;
 export const selectSelectedProduct = (state: RootState) =>
   state.productsState.selectedProduct;
+export const selectTotalProducts = (state: RootState) =>
+  state.productsState.totalProducts;
 
 export default productsSlice.reducer;

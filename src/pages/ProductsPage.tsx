@@ -7,11 +7,13 @@ import categories from "../constant/categories.json";
 import {
   getAllProductsByFiltersAsync,
   selectProducts,
+  selectTotalProducts,
 } from "../redux/features/Products/productSlice";
 import { PRODUCT_PER_PAGE } from "../constant";
 import { BsChevronDown } from "react-icons/bs";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { PiFunnelLight } from "react-icons/pi";
+import Pagination from "../components/Pagination/Pagination";
 
 const ProductGrid = loadable(
   () => import("../components/ProductGrid/ProductGrid")
@@ -67,6 +69,7 @@ const filters: filter[] = [
 
 export default function ProductsPage() {
   const products = useAppSelector(selectProducts);
+  const totalProducts = useAppSelector(selectTotalProducts);
   const dispatch = useAppDispatch();
 
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
@@ -220,6 +223,14 @@ export default function ProductsPage() {
             </div>
           </div>
         </section>
+
+        {/* Pagination */}
+        <Pagination
+          page={page}
+          handlePage={handlePage}
+          setPage={setPage}
+          totalProducts={totalProducts}
+        ></Pagination>
       </main>
     </div>
   );
