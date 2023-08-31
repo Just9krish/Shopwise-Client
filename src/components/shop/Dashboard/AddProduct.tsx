@@ -129,7 +129,7 @@ export default function AddProduct() {
               Choose a Category
             </option>
             {categoriesData?.map((category, idx) => (
-              <option value={category.title} key={idx}>
+              <option value={category.value} key={idx}>
                 {category.title}
               </option>
             ))}

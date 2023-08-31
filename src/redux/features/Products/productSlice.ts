@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { IProductState } from "./interface";
-import { getAllProducts } from "./productAPI";
+import { FilterQuery, IProductState } from "./interface";
+import { getAllProductsByFilters } from "./productAPI";
 
 const initialState: IProductState = {
   allProducts: [],
@@ -11,10 +11,14 @@ const initialState: IProductState = {
   shopProducts: [],
 };
 
-export const getAllProductsAsync = createAsyncThunk(
+export const getAllProductsByFiltersAsync = createAsyncThunk(
   "product/getAllProducts",
-  async () => {
-    const res: any = await getAllProducts();
+  async ({ filter, sort, pagination }: FilterQuery) => {
+    const res: any = await getAllProductsByFilters({
+      filter,
+      sort,
+      pagination,
+    });
     return res.data;
   }
 );
@@ -24,14 +28,14 @@ const productsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllProductsAsync.pending, (state) => {
+    builder.addCase(getAllProductsByFiltersAsync.pending, (state) => {
       state.isProductLoading = true;
     });
-    builder.addCase(getAllProductsAsync.fulfilled, (state, action) => {
+    builder.addCase(getAllProductsByFiltersAsync.fulfilled, (state, action) => {
       state.isProductLoading = false;
       state.allProducts = action.payload.products;
     });
-    builder.addCase(getAllProductsAsync.rejected, (state, action) => {
+    builder.addCase(getAllProductsByFiltersAsync.rejected, (state, action) => {
       state.isProductLoading = false;
       state.productError = action.error.message
         ? action.error.message

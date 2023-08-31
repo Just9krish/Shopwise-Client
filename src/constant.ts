@@ -61,7 +61,8 @@ export const API_URL = {
 
   // Product APIs
   ADD_PRODUCT: `${DOMAIN}/products`,
-  GET_ALL_PRODUCTS: `${DOMAIN}/products`,
+  GET_FILTERED_PRODUCTS: (queryString: string) =>
+    `${DOMAIN}/products?${queryString}`,
 
   // Cart API's
   ADD_TO_CART: `${DOMAIN}/cart`,
@@ -78,3 +79,5 @@ export const API_URL = {
 
 export const maxQuantityItem = 4;
 export const minQuantityItem = 1;
+
+export const PRODUCT_PER_PAGE = 10;

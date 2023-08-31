@@ -49,3 +49,9 @@ export interface IProductState {
   productError: null | string;
   productMessage: string;
 }
+
+export interface FilterQuery {
+  filter?: any;
+  sort?: any;
+  pagination?: any;
+}

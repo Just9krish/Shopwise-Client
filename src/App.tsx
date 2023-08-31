@@ -10,7 +10,7 @@ import { API_URL } from "./constant";
 import { fetchUserDetailsAsync } from "./redux/features/User/userSlice";
 import { fetchShopAsync } from "./redux/features/Shop/shopSlice";
 import { getAllEventsAsync } from "./redux/features/Events/eventSlice";
-import { getAllProductsAsync } from "./redux/features/Products/productSlice";
+import { getAllProductsByFiltersAsync } from "./redux/features/Products/productSlice";
 
 import axios from "axios";
 import store from "./redux/store";
@@ -84,7 +84,7 @@ function App() {
     Promise.all([
       store.dispatch(fetchUserDetailsAsync()),
       store.dispatch(fetchShopAsync()),
-      store.dispatch(getAllProductsAsync()),
+      // store.dispatch(getAllProductsAsync({})),
       // store.dispatch(getAllEventsAsync()),
       store.dispatch(fetchCartDetailsAsync()),
       store.dispatch(getWishlistAsync()),

@@ -1,16 +1,39 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { API_URL } from "../../../constant";
-import { IAddProduct, IDeleteProduct } from "./interface";
+import { FilterQuery, IAddProduct, IDeleteProduct } from "./interface";
 
 const config = {
   headers: { "Content-Type": "multipart/form-data" },
   withCredentials: true,
 };
 
-export function getAllProducts() {
+export function getAllProductsByFilters({
+  filter,
+  sort,
+  pagination,
+}: FilterQuery) {
+  let queryString = "";
+
+  for (let key in filter) {
+    const categoryValues = filter[key];
+    if (categoryValues.length) {
+      queryString += `${key}=${categoryValues}&`;
+    }
+  }
+
+  for (let key in sort) {
+    queryString += `${key}=${sort[key]}&`;
+  }
+
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+  }
+
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.get(API_URL.GET_ALL_PRODUCTS);
+      const res: AxiosResponse = await axios.get(
+        API_URL.GET_FILTERED_PRODUCTS(queryString)
+      );
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {

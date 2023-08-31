@@ -7,9 +7,10 @@ import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import { host } from "../../server";
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import {
-  addToWishlists,
-  removeFromWishlists,
-} from "../../redux/actions/wishlistActions";
+  addToWishlistAsync,
+  removeToWishlistAsync,
+  selectWishlist,
+} from "../../redux/features/Wishlist/wishlistSlice";
 const AddtoCart = loadable(() => import("./AddtoCart/AddtoCart"));
 const Carousel = loadable(() => import("./Carousel/Carousel"));
 const Slider = loadable(() => import("./Slider/Slider"));
@@ -25,17 +26,17 @@ export default function ProductDetails({ product }: { product: IProduct }) {
     discount_percentage,
   } = product;
 
-  const { wishlists } = useAppSelector((state) => state.wishlists);
+  const wishlists = useAppSelector(selectWishlist);
   const [isWish, setIsWish] = useState(false);
   const dispatch = useAppDispatch();
 
-  function addToWishlistHandler(product: IProduct) {
-    dispatch(addToWishlists(product));
+  function addToWishlistHandler(productId: string) {
+    dispatch(addToWishlistAsync(productId));
     setIsWish(!isWish);
   }
 
-  function removeFromWishlistHandler(product: IProduct) {
-    dispatch(removeFromWishlists(product));
+  function removeFromWishlistHandler(productId: string) {
+    dispatch(removeToWishlistAsync(productId));
     setIsWish(!isWish);
   }
 
@@ -87,7 +88,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
                   cursor="pointer"
                   title="Remove from wish list"
                   color="red"
-                  onClick={() => removeFromWishlistHandler(product)}
+                  onClick={() => removeFromWishlistHandler(product._id)}
                   size={30}
                 />
               ) : (
@@ -95,7 +96,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
                   cursor="pointer"
                   title="Add to wish list"
                   color="red"
-                  onClick={() => addToWishlistHandler(product)}
+                  onClick={() => addToWishlistHandler(product._id)}
                   size={30}
                 />
               )}
