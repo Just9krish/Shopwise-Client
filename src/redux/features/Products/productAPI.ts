@@ -99,3 +99,20 @@ export function deleteProduct({ productId, shopId }: IDeleteProduct) {
     }
   });
 }
+
+export function getProduct(productId: string) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res: AxiosResponse = await axios.get(
+        API_URL.GET_SINGLE_PRODUCT(productId)
+      );
+      resolve({ data: res.data });
+    } catch (error: AxiosError | any) {
+      if (error.response) {
+        reject(error.response.data);
+      } else {
+        reject(error);
+      }
+    }
+  });
+}

@@ -4,11 +4,15 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { IProduct } from "../Interface";
 import { Link } from "react-router-dom";
-import { useAppSelector } from "../hooks";
+import { useAppDispatch, useAppSelector } from "../hooks";
 import { host, server } from "../server";
 import axios from "axios";
 import { API_URL } from "../constant";
-import { selectProducts } from "../redux/features/Products/productSlice";
+import {
+  getProductAsync,
+  selectProducts,
+  selectSelectedProduct,
+} from "../redux/features/Products/productSlice";
 
 const ProductDetails = loadable(
   () => import("../components/ProductDetails/ProductDetails")
@@ -20,19 +24,14 @@ const RelatedProducts = loadable(
 
 export default function ProductPage() {
   const { product_id } = useParams();
-  const [product, setProduct] = useState<IProduct | null>(null);
-  const allProducts = useAppSelector(selectProducts);
+  const dispatch = useAppDispatch();
+  const product = useAppSelector(selectSelectedProduct);
 
   useEffect(() => {
     if (product_id) {
-      const product = allProducts?.find(
-        (product) => product._id === product_id
-      );
-      if (product !== undefined) {
-        setProduct(product);
-      }
+      dispatch(getProductAsync(product_id));
     }
-  }, [product_id, allProducts]);
+  }, [product_id, dispatch]);
 
   return (
     <>

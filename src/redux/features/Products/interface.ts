@@ -48,6 +48,7 @@ export interface IProductState {
   allProducts: IProduct[];
   productError: null | string;
   productMessage: string;
+  selectedProduct: IProduct | null;
 }
 
 export interface FilterQuery {

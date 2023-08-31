@@ -12,8 +12,16 @@ import { PRODUCT_PER_PAGE } from "../constant";
 import { BsChevronDown } from "react-icons/bs";
 import { HiOutlineSquares2X2 } from "react-icons/hi2";
 import { PiFunnelLight } from "react-icons/pi";
-import ProductGrid from "../components/ProductGrid/ProductGrid";
-import DesktopFilter from "../components/FilterSection/DesktopFilter";
+
+const ProductGrid = loadable(
+  () => import("../components/ProductGrid/ProductGrid")
+);
+const DesktopFilter = loadable(
+  () => import("../components/FilterSection/DesktopFilter")
+);
+const MobileFilter = loadable(
+  () => import("../components/FilterSection/MobileFilter")
+);
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -125,6 +133,12 @@ export default function ProductsPage() {
 
   return (
     <div>
+      <MobileFilter
+        filters={filters}
+        handleFilter={handleFilter}
+        mobileFiltersOpen={mobileFiltersOpen}
+        setMobileFiltersOpen={setMobileFiltersOpen}
+      ></MobileFilter>
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
           <h1 className="text-4xl font-bold tracking-tight text-gray-900">
