@@ -66,6 +66,7 @@ const cartSlice = createSlice({
       })
       .addCase(fetchCartDetailsAsync.pending, (state) => {})
       .addCase(fetchCartDetailsAsync.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.cart = action.payload.cart.items;
         state.cartPrice = action.payload.cart.totalPrice;
       })

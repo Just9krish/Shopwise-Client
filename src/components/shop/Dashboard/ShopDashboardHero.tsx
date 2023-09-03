@@ -5,9 +5,9 @@ import { MdBorderClear } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { getShopAllProducts } from "../../../redux/actions/productActions";
 import style from "../../../styles/style";
 import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import { selectShopProducts } from "../../../redux/features/Products/productSlice";
 
 type row = {
   id: string;
@@ -18,8 +18,8 @@ type row = {
 
 export default function ShopDashboardHero() {
   // const { shopOrders } = useAppSelector((state) => state.orders);
-  const { products } = useAppSelector((state) => state.products);
   const shop = useAppSelector(selectShop);
+  const shopProducts = useAppSelector(selectShopProducts);
   const dispatch = useAppDispatch();
 
   const columns = [
@@ -156,7 +156,7 @@ export default function ShopDashboardHero() {
                 </h4>
               </div>
               <div>
-                <p className="text-2xl font-medium">{products.length}</p>
+                <p className="text-2xl font-medium">{shopProducts.length}</p>
                 <Link to="/shop-products" className="text-[#077f9c]">
                   View Products
                 </Link>

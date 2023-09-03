@@ -1,6 +1,6 @@
 // constants.ts
 
-const SERVER_URL = import.meta.env.VITE_SERVER_DOMAIN;
+export const SERVER_URL = import.meta.env.VITE_SERVER_DOMAIN;
 export const IMAGE_URL = import.meta.env.VITE_IMAGE_URL;
 
 export const DOMAIN = `${SERVER_URL}/api/v2`;

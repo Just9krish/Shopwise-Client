@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { API_URL } from "../../constant";
 
 export default function ActivationPage() {
-  const { activation_token } = useParams();
+  const { verificationToken } = useParams();
 
   const [error, setError] = useState(false);
 
@@ -12,7 +12,7 @@ export default function ActivationPage() {
     const activationEmail = async () => {
       try {
         const res = await axios.post(API_URL.ACTIVATE_USER, {
-          activation_token,
+          verificationToken,
         });
       } catch (error) {
         console.log(error);

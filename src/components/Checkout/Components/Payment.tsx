@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import style from "../../../styles/style";
 import { API_URL } from "../../../constant";
+import { selectCart } from "../../../redux/features/Cart/cartSlice";
+import { selectUser } from "../../../redux/features/User/userSlice";
 
 type SavedAddress = {
   fullName: string;
@@ -35,17 +37,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useAppDispatch();
-  const { cart, couponID } = useAppSelector((state) => state.cart);
-
-  const cartWithIDandQty = cart?.map((item) => ({
-    productId: item._id,
-    productQuantity: item.quantity,
-  }));
-
-  const cartData = {
-    cartWithIDandQty,
-    couponID,
-  };
+  const user = useAppSelector(selectUser);
 
   const shipping_address = localStorage.getItem("shipping_address");
 
@@ -81,7 +73,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
         // creating payment intent
         const { data } = await axios.post(
           API_URL.CREATE_PAYMENT_INTENT,
-          cartData,
+          { userId: user?._id },
           {
             headers: {
               "Content-Type": "application/json",
@@ -98,6 +90,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
             payment_method: { card: cardNumberElement },
           }
         );
+        console.log(paymentIntent);
 
         if (error) {
           toast.error(error.message);
@@ -112,7 +105,6 @@ export default function Payment({ toggleActiveStep }: IProps) {
             const order = {
               paymentInfo,
               shippingAddress,
-              cartWithIDandQty,
               paidPrice: paymentIntent.amount,
             };
 
@@ -124,11 +116,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
             });
 
             toast.success("Order created successfully");
-            localStorage.setItem("cartItems", JSON.stringify([]));
             localStorage.removeItem("shipping_address");
-            localStorage.setItem("cartPrice", JSON.stringify(0));
-            localStorage.setItem("latestorder", JSON.stringify(data));
-            dispatch({ type: "clearCart" });
             toggleActiveStep(2);
           }
         }
@@ -168,9 +156,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
       };
       const order = {
         shippingAddress,
-        cartWithIDandQty,
         paymentInfo,
-        couponID: cartData.couponID,
       };
 
       const { data } = await axios.post(API_URL.CREATE_ORDER, order, {
@@ -180,9 +166,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
         withCredentials: true,
       });
       toast.success("Order created successfully");
-      localStorage.setItem("cartItems", JSON.stringify([]));
       localStorage.removeItem("shipping_address");
-      localStorage.setItem("cartPrice", JSON.stringify(0));
       localStorage.setItem("latestorder", JSON.stringify(data));
       dispatch({ type: "clearCart" });
 

@@ -11,6 +11,8 @@ import {
   updateQuantityAsync,
 } from "../../../redux/features/Cart/cartSlice";
 import { maxQuantityItem, minQuantityItem } from "../../../constant";
+import { useNavigate } from "react-router-dom";
+import { selectIsUserAuthenticate } from "../../../redux/features/User/userSlice";
 
 interface AddtoCartProps {
   product: IProduct;
@@ -20,6 +22,8 @@ interface AddtoCartProps {
 export default function AddtoCart({ product, variant }: AddtoCartProps) {
   const cart = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
+  const navigation = useNavigate();
+  const isUserAuthenticated = useAppSelector(selectIsUserAuthenticate);
 
   const itemInCart = cart?.find((item) => item.product._id === product._id);
   const quantity = itemInCart?.quantity || 1;
@@ -48,12 +52,14 @@ export default function AddtoCart({ product, variant }: AddtoCartProps) {
   }
 
   function handleAddToCart(productId: string) {
-    if (!itemInCart) {
-      dispatch(addToCartAsync({ productId, quantity })).then(() => {
-        toast.success("Item added to cart");
-      });
+    if (isUserAuthenticated) {
+      if (!itemInCart) {
+        dispatch(addToCartAsync({ productId, quantity }));
+      } else {
+        toast.error("Item already in cart");
+      }
     } else {
-      toast.error("Item already in cart");
+      navigation("/login");
     }
   }
 

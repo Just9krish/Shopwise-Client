@@ -1,7 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
-import { FilterQuery, IProductState } from "./interface";
-import { getAllProductsByFilters, getProduct } from "./productAPI";
+import { FilterQuery, IDeleteProduct, IProductState } from "./interface";
+import {
+  deleteProduct,
+  getAllProductsByFilters,
+  getProduct,
+  getShopProducts,
+} from "./productAPI";
 
 const initialState: IProductState = {
   allProducts: [],
@@ -33,6 +38,21 @@ export const getProductAsync = createAsyncThunk(
   }
 );
 
+export const getShopProductsAsync = createAsyncThunk(
+  "product/getShopProducts",
+  async (shopId: string) => {
+    const res: any = await getShopProducts(shopId);
+    return res.data;
+  }
+);
+
+export const deleteShopProductAsync = createAsyncThunk(
+  "product/deleteShopProduct",
+  async ({ productId, shopId }: IDeleteProduct) => {
+    const res: any = await deleteProduct({ productId, shopId });
+  }
+);
+
 const productsSlice = createSlice({
   name: "product",
   initialState,
@@ -60,6 +80,39 @@ const productsSlice = createSlice({
       state.selectedProduct = action.payload.product;
     });
     builder.addCase(getProductAsync.rejected, (state, action) => {
+      state.isProductLoading = false;
+      state.productError = action.error.message
+        ? action.error.message
+        : "Something went wrong";
+      state.selectedProduct = null;
+    });
+    builder.addCase(getShopProductsAsync.pending, (state) => {
+      state.isProductLoading = true;
+    });
+    builder.addCase(getShopProductsAsync.fulfilled, (state, action) => {
+      state.isProductLoading = false;
+      state.shopProducts = action.payload.products;
+    });
+    builder.addCase(getShopProductsAsync.rejected, (state, action) => {
+      state.isProductLoading = false;
+      state.productError = action.error.message
+        ? action.error.message
+        : "Something went wrong";
+      state.selectedProduct = null;
+    });
+    builder.addCase(deleteShopProductAsync.pending, (state) => {
+      state.isProductLoading = true;
+    });
+    builder.addCase(deleteShopProductAsync.fulfilled, (state, action: any) => {
+      state.isProductLoading = false;
+      const deletedProductId = action.payload.deletedProductId;
+      state.shopProducts = state.shopProducts.filter(
+        (product) => product._id !== deletedProductId
+      );
+
+      state.productMessage = action.payload.message;
+    });
+    builder.addCase(deleteShopProductAsync.rejected, (state, action) => {
       state.isProductLoading = false;
       state.productError = action.error.message
         ? action.error.message

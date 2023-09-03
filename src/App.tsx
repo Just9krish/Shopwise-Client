@@ -24,6 +24,7 @@ import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
 import { fetchCartDetailsAsync } from "./redux/features/Cart/cartSlice";
 import { getWishlistAsync } from "./redux/features/Wishlist/wishlistSlice";
+import Checkout from "./components/Checkout/MaterialCheckout";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -72,7 +73,6 @@ const ResetPasswordPage = loadable(
 );
 
 function App() {
-  const [appState, setAppState] = useState(false);
   const [stripeKey, setStripeKey] = useState<string | null>(null);
 
   async function getStripeSecretKey() {
@@ -84,21 +84,12 @@ function App() {
     Promise.all([
       store.dispatch(fetchUserDetailsAsync()),
       store.dispatch(fetchShopAsync()),
-      // store.dispatch(getAllProductsAsync({})),
       // store.dispatch(getAllEventsAsync()),
       store.dispatch(fetchCartDetailsAsync()),
       store.dispatch(getWishlistAsync()),
-      // getStripeSecretKey(),
-    ]).then(() => setAppState(!appState));
+      getStripeSecretKey(),
+    ]);
   }, []);
-
-  if (!appState) {
-    return (
-      <section className="h-screen flex justify-center items-center">
-        <Loader />;
-      </section>
-    );
-  }
 
   return (
     <BrowserRouter>
@@ -135,7 +126,7 @@ function App() {
           element={<ResetPasswordPage />}
         />
         <Route
-          path="/user/verify/:activation_token"
+          path="/user/verify/:verificationToken"
           element={<ActivationPage />}
         />
         <Route

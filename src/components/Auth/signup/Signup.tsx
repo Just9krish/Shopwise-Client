@@ -3,8 +3,11 @@ import logo from "../../../assets/shopwise.png";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useAppDispatch } from "../../../hooks";
-import { createUserAsync } from "../../../redux/features/User/userSlice";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
+import {
+  createUserAsync,
+  selectIsUserLoading,
+} from "../../../redux/features/User/userSlice";
 
 export default function Signup() {
   const dispatch = useAppDispatch();
@@ -15,6 +18,8 @@ export default function Signup() {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const isUserLoading = useAppSelector(selectIsUserLoading);
 
   return (
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -31,6 +36,7 @@ export default function Signup() {
               name: data.fullname,
               email: data.email,
               password: data.password,
+              confirmPassword: data.confirmPassword,
             };
             dispatch(createUserAsync(userData));
           })}
@@ -156,10 +162,37 @@ export default function Signup() {
           </div>
 
           <button
-            className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
+            disabled={isUserLoading}
             type="submit"
+            className={`flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 ${
+              isUserLoading
+                ? "opacity-75 cursor-not-allowed"
+                : "hover:bg-orange-500"
+            }`}
           >
-            Submit
+            {isUserLoading && (
+              <svg
+                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+            )}
+            {isUserLoading ? "Creating..." : "Create a Account"}
           </button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Already have an account?

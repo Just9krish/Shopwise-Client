@@ -12,6 +12,7 @@ import {
   updateUserInfoAsync,
 } from "../../../redux/features/User/userSlice";
 import { useForm } from "react-hook-form";
+import getImageSource from "../../../helper/getImageSource";
 
 export default function UserProfile() {
   const user = useAppSelector(selectUser);
@@ -77,203 +78,207 @@ export default function UserProfile() {
   }, [user]);
 
   return (
-    <div className={`${style.flex_normal} flex-col w-full space-y-10`}>
-      <div className="relative w-fit">
-        <img
-          className="h-36 w-36 rounded-full object-cover"
-          src={`${host}/${user?.avatar}`}
-          alt="User Avatar"
-        />
-        <button className="w-8 h-8 rounded-full flex justify-center items-center absolute bottom-1 right-1 cursor-pointer bg-gray-200">
-          <label htmlFor="avatar">
-            <AiOutlineCamera cursor="pointer" />
-          </label>
-        </button>
-        <input
-          type="file"
-          accept="image/*"
-          name="avatar"
-          id="avatar"
-          onChange={(e) => handleProfilePictureChange(e)}
-          className="hidden"
-        />
-      </div>
-
-      <div className="w-full max-w-4xl mx-auto">
-        <form
-          noValidate
-          onSubmit={handleSubmit((data) => {
-            const updateData = {
-              password: data.password,
-              name: data.name,
-              primaryPhoneNumber: data.primaryPhoneNumber,
-              secondaryPhoneNumber: data.secondaryPhoneNumber,
-              email: data.email,
-            };
-
-            dispatch(updateUserInfoAsync(updateData));
-          })}
-          className="space-y-7 md:space-y-9"
-        >
-          <div className="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
-            <div className="w-full md:w-1/2">
-              <label className="block mb-2" htmlFor="name">
-                Full Name :
-              </label>
-              <input
-                className={`${style.input} w-full`}
-                type="text"
-                id="name"
-                disabled={isDisabled}
-                {...register("name", {
-                  required: "Full name is required!",
-                })}
-              />
-              {errors.name && (
-                <p className="text-red-500">
-                  {errors.name.message?.toString()}
-                </p>
-              )}
-            </div>
-            <div className="w-full md:w-1/2">
-              <label className="block mb-2" htmlFor="email">
-                Email :
-              </label>
-              <input
-                className={`${style.input} w-full`}
-                type="email"
-                id="email"
-                disabled={isDisabled}
-                {...register("email", {
-                  required: "Email is required!",
-                  pattern: {
-                    value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-                    message: "Email not valid!",
-                  },
-                })}
-              />
-              {errors.email && (
-                <p className="text-red-500">
-                  {errors.email.message?.toString()}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
-            <div className="w-full md:w-1/2">
-              <label className="block mb-2" htmlFor="phone">
-                Phone number (Primary) :
-              </label>
-              <input
-                className={`${style.input} w-full`}
-                type="number"
-                id="phone"
-                disabled={isDisabled}
-                {...register("primaryPhoneNumber", {
-                  required: "Primary phone number is required!",
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: "Only numbers are allowed!",
-                  },
-                  maxLength: {
-                    value: 10,
-                    message: "Maximum length is 10!",
-                  },
-                  minLength: {
-                    value: 10,
-                    message: "Minimum length is 10!",
-                  },
-                })}
-              />
-              {errors.primaryPhoneNumber && (
-                <p className="text-red-500">
-                  {errors.primaryPhoneNumber.message?.toString()}
-                </p>
-              )}
-            </div>
-            <div className="w-full md:w-1/2">
-              <label className="block mb-2" htmlFor="alternateNumber">
-                Alternate Number (Secondary) :
-              </label>
-              <input
-                className={`${style.input} w-full`}
-                type="number"
-                id="alternateNumber"
-                disabled={isDisabled}
-                {...register("secondaryPhoneNumber", {
-                  pattern: {
-                    value: /^[0-9]+$/,
-                    message: "Only numbers are allowed!",
-                  },
-                  maxLength: {
-                    value: 10,
-                    message: "Maximum length is 10!",
-                  },
-                  minLength: {
-                    value: 10,
-                    message: "Minimum length is 10!",
-                  },
-                })}
-              />
-              {errors.secondaryPhoneNumber && (
-                <p className="text-red-500">
-                  {errors.secondaryPhoneNumber.message?.toString()}
-                </p>
-              )}
-            </div>
-          </div>
-          <hr />
-          <div className="w-full">
-            <label className="block mb-2" htmlFor="password">
-              Enter Password to update Details:
-            </label>
-            <input
-              className={`${style.input} w-1/2`}
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              disabled={isDisabled}
-              {...register("password", {
-                required: "Password is required!",
-              })}
+    <>
+      {user && (
+        <div className={`${style.flex_normal} flex-col w-full space-y-10`}>
+          <div className="relative w-fit">
+            <img
+              className="h-36 w-36 rounded-full object-cover"
+              src={getImageSource(user?.avatar)}
+              alt="User Avatar"
             />
-            {errors.password && (
-              <p className="text-red-500">
-                {errors.password.message?.toString()}
-              </p>
-            )}
+            <button className="w-8 h-8 rounded-full flex justify-center items-center absolute bottom-1 right-1 cursor-pointer bg-gray-200">
+              <label htmlFor="avatar">
+                <AiOutlineCamera cursor="pointer" />
+              </label>
+            </button>
+            <input
+              type="file"
+              accept="image/*"
+              name="avatar"
+              id="avatar"
+              onChange={(e) => handleProfilePictureChange(e)}
+              className="hidden"
+            />
           </div>
-          <div className={`${style.flex_normal} gap-6`}>
-            {isDisabled && (
-              <button
-                className={`${style.button} text-blue-500 bg-transparent border border-blue-500 transition-all hover:bg-blue-500 hover:text-white focus:text-white focus:bg-blue-500`}
-                type="button"
-                onClick={handleUpdate}
-              >
-                Update Details
-              </button>
-            )}
-            {!isDisabled && (
-              <button
-                className={`${style.button} text-red-500 bg-transparent border border-red-500 transition-all hover:bg-red-500 hover:text-white focus:text-white focus:bg-red-500`}
-                onClick={handleCancel}
-                type="button"
-              >
-                Cancel
-              </button>
-            )}
-            {!isDisabled && (
-              <button
-                className={`${style.button} bg-green-500 text-white transition-all hover:bg-green-600 focus:bg-green-600`}
-                type="submit"
-              >
-                Save Details
-              </button>
-            )}
+
+          <div className="w-full max-w-4xl mx-auto">
+            <form
+              noValidate
+              onSubmit={handleSubmit((data) => {
+                const updateData = {
+                  password: data.password,
+                  name: data.name,
+                  primaryPhoneNumber: parseInt(data.primaryPhoneNumber),
+                  secondaryPhoneNumber: parseInt(data.secondaryPhoneNumber),
+                  email: data.email,
+                };
+
+                dispatch(updateUserInfoAsync(updateData));
+              })}
+              className="space-y-7 md:space-y-9"
+            >
+              <div className="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
+                <div className="w-full md:w-1/2">
+                  <label className="block mb-2" htmlFor="name">
+                    Full Name :
+                  </label>
+                  <input
+                    className={`${style.input} w-full`}
+                    type="text"
+                    id="name"
+                    disabled={isDisabled}
+                    {...register("name", {
+                      required: "Full name is required!",
+                    })}
+                  />
+                  {errors.name && (
+                    <p className="text-red-500">
+                      {errors.name.message?.toString()}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label className="block mb-2" htmlFor="email">
+                    Email :
+                  </label>
+                  <input
+                    className={`${style.input} w-full`}
+                    type="email"
+                    id="email"
+                    disabled={isDisabled}
+                    {...register("email", {
+                      required: "Email is required!",
+                      pattern: {
+                        value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
+                        message: "Email not valid!",
+                      },
+                    })}
+                  />
+                  {errors.email && (
+                    <p className="text-red-500">
+                      {errors.email.message?.toString()}
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
+                <div className="w-full md:w-1/2">
+                  <label className="block mb-2" htmlFor="phone">
+                    Phone number (Primary) :
+                  </label>
+                  <input
+                    className={`${style.input} w-full`}
+                    type="number"
+                    id="phone"
+                    disabled={isDisabled}
+                    {...register("primaryPhoneNumber", {
+                      required: "Primary phone number is required!",
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "Only numbers are allowed!",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "Maximum length is 10!",
+                      },
+                      minLength: {
+                        value: 10,
+                        message: "Minimum length is 10!",
+                      },
+                    })}
+                  />
+                  {errors.primaryPhoneNumber && (
+                    <p className="text-red-500">
+                      {errors.primaryPhoneNumber.message?.toString()}
+                    </p>
+                  )}
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label className="block mb-2" htmlFor="alternateNumber">
+                    Alternate Number (Secondary) :
+                  </label>
+                  <input
+                    className={`${style.input} w-full`}
+                    type="number"
+                    id="alternateNumber"
+                    disabled={isDisabled}
+                    {...register("secondaryPhoneNumber", {
+                      pattern: {
+                        value: /^[0-9]+$/,
+                        message: "Only numbers are allowed!",
+                      },
+                      maxLength: {
+                        value: 10,
+                        message: "Maximum length is 10!",
+                      },
+                      minLength: {
+                        value: 10,
+                        message: "Minimum length is 10!",
+                      },
+                    })}
+                  />
+                  {errors.secondaryPhoneNumber && (
+                    <p className="text-red-500">
+                      {errors.secondaryPhoneNumber.message?.toString()}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <hr />
+              <div className="w-full">
+                <label className="block mb-2" htmlFor="password">
+                  Enter Password to update Details:
+                </label>
+                <input
+                  className={`${style.input} w-1/2`}
+                  type="password"
+                  id="password"
+                  placeholder="Enter your password"
+                  disabled={isDisabled}
+                  {...register("password", {
+                    required: "Password is required!",
+                  })}
+                />
+                {errors.password && (
+                  <p className="text-red-500">
+                    {errors.password.message?.toString()}
+                  </p>
+                )}
+              </div>
+              <div className={`${style.flex_normal} gap-6`}>
+                {isDisabled && (
+                  <button
+                    className={`${style.button} text-blue-500 bg-transparent border border-blue-500 transition-all hover:bg-blue-500 hover:text-white focus:text-white focus:bg-blue-500`}
+                    type="button"
+                    onClick={handleUpdate}
+                  >
+                    Update Details
+                  </button>
+                )}
+                {!isDisabled && (
+                  <button
+                    className={`${style.button} text-red-500 bg-transparent border border-red-500 transition-all hover:bg-red-500 hover:text-white focus:text-white focus:bg-red-500`}
+                    onClick={handleCancel}
+                    type="button"
+                  >
+                    Cancel
+                  </button>
+                )}
+                {!isDisabled && (
+                  <button
+                    className={`${style.button} bg-green-500 text-white transition-all hover:bg-green-600 focus:bg-green-600`}
+                    type="submit"
+                  >
+                    Save Details
+                  </button>
+                )}
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   );
 }

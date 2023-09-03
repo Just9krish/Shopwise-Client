@@ -4,12 +4,14 @@ import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
-import {
-  deleteProduct,
-  getShopAllProducts,
-} from "../../../redux/actions/productActions";
 import Loader from "../../Loader/Loader";
 import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import {
+  deleteShopProductAsync,
+  getShopProductsAsync,
+  selectProductLoading,
+  selectShopProducts,
+} from "../../../redux/features/Products/productSlice";
 
 type row = {
   id: string;
@@ -24,16 +26,15 @@ type row = {
 export default function ShopAllProducts() {
   const dispatch = useAppDispatch();
   const shop = useAppSelector(selectShop);
-  const { products, isProductsLoading } = useAppSelector(
-    (state) => state.products
-  );
+  const isProductLoading = useAppSelector(selectProductLoading);
+  const shopProducts = useAppSelector(selectShopProducts);
 
   function deleteProductHandler(productId: string, shopId: string) {
-    dispatch(deleteProduct(productId, shopId));
+    dispatch(deleteShopProductAsync({ productId, shopId }));
   }
 
   useEffect(() => {
-    if (shop) dispatch(getShopAllProducts(shop._id));
+    if (shop) dispatch(getShopProductsAsync(shop._id));
   }, [dispatch, shop?._id]);
 
   const columns = [
@@ -137,7 +138,7 @@ export default function ShopAllProducts() {
 
   const row: row[] = [];
 
-  products?.forEach((item) => {
+  shopProducts?.forEach((item) => {
     row.push({
       id: item._id,
       name: item.name,
@@ -151,7 +152,7 @@ export default function ShopAllProducts() {
 
   return (
     <>
-      {isProductsLoading ? (
+      {isProductLoading ? (
         <Loader />
       ) : (
         <div className="w-full lg:mx-8 pt-1 lg:mt-10 bg-white overflow-x-scroll">

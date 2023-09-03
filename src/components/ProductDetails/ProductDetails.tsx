@@ -1,7 +1,6 @@
 import loadable from "@loadable/component";
 import style from "../../styles/style";
 import { IProduct } from "../../Interface";
-import { useEffect, useState } from "react";
 import { formattedPrice } from "../../helper/formatPrice";
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import { host } from "../../server";
@@ -10,7 +9,11 @@ import {
   addToWishlistAsync,
   removeToWishlistAsync,
   selectWishlist,
+  selectWishlistLoading,
 } from "../../redux/features/Wishlist/wishlistSlice";
+import { useEffect, useState } from "react";
+import { selectIsUserAuthenticate } from "../../redux/features/User/userSlice";
+import { useNavigate } from "react-router-dom";
 const AddtoCart = loadable(() => import("./AddtoCart/AddtoCart"));
 const Carousel = loadable(() => import("./Carousel/Carousel"));
 const Slider = loadable(() => import("./Slider/Slider"));
@@ -25,19 +28,24 @@ export default function ProductDetails({ product }: { product: IProduct }) {
     shop,
     discount_percentage,
   } = product;
-
-  const wishlists = useAppSelector(selectWishlist);
   const [isWish, setIsWish] = useState(false);
+  const wishlists = useAppSelector(selectWishlist);
+  const isWishlistLoading = useAppSelector(selectWishlistLoading);
+  const isUserAuthenticated = useAppSelector(selectIsUserAuthenticate);
+
   const dispatch = useAppDispatch();
+  const navigation = useNavigate();
 
   function addToWishlistHandler(productId: string) {
-    dispatch(addToWishlistAsync(productId));
-    setIsWish(!isWish);
+    if (isUserAuthenticated) {
+      dispatch(addToWishlistAsync(productId));
+    } else {
+      navigation("/login");
+    }
   }
 
   function removeFromWishlistHandler(productId: string) {
     dispatch(removeToWishlistAsync(productId));
-    setIsWish(!isWish);
   }
 
   useEffect(() => {
@@ -46,8 +54,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
     } else {
       setIsWish(false);
     }
-    window.scrollTo(0, 0);
-  }, []);
+  }, [wishlists]);
 
   return (
     <div className="w-full py-5 mt-8">
@@ -84,21 +91,29 @@ export default function ProductDetails({ product }: { product: IProduct }) {
             <div className={`${style.flex_normal} justify-between`}>
               <AddtoCart product={product} variant="detail" />
               {isWish ? (
-                <AiFillHeart
-                  cursor="pointer"
-                  title="Remove from wish list"
-                  color="red"
+                <button
+                  type="button"
+                  disabled={isWishlistLoading}
                   onClick={() => removeFromWishlistHandler(product._id)}
-                  size={30}
-                />
+                >
+                  <AiFillHeart
+                    title="Remove from wish list"
+                    color="red"
+                    size={30}
+                  />
+                </button>
               ) : (
-                <AiOutlineHeart
-                  cursor="pointer"
-                  title="Add to wish list"
-                  color="red"
+                <button
+                  disabled={isWishlistLoading}
+                  type="button"
                   onClick={() => addToWishlistHandler(product._id)}
-                  size={30}
-                />
+                >
+                  <AiOutlineHeart
+                    title="Add to wish list"
+                    color="red"
+                    size={30}
+                  />
+                </button>
               )}
             </div>
             <div className={`${style.flex_normal} flex-col md:flex-row gap-8`}>

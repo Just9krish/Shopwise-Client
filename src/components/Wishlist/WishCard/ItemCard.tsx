@@ -56,7 +56,7 @@ const ItemCard = ({ item, toggleWishlist }: IProps) => {
       </Link>
       <div className="flex-grow">
         <Link to={`/products/${_id}`}>
-          <h4 className="text-lg font-medium text-[#333333] hover:text-blue-400 transition-all">
+          <h4 className="text-xs font-medium text-[#333333] hover:text-blue-400 transition-all">
             {name}
           </h4>
         </Link>

@@ -1,8 +1,9 @@
 import { useAppSelector } from "../../../hooks";
+import { selectShopEvents } from "../../../redux/features/Events/eventSlice";
 import { host } from "../../../server";
 
 export default function OngoingShopEvents() {
-  const { shopEvents } = useAppSelector((state) => state.events);
+  const shopEvents = useAppSelector(selectShopEvents);
 
   return (
     <div>

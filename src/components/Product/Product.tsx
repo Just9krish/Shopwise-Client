@@ -1,6 +1,6 @@
 import loadable from "@loadable/component";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { formattedPrice } from "../../helper/formatPrice";
 import style from "../../styles/style";
 const Stars = loadable(() => import("./Stars/Stars"));
@@ -15,17 +15,21 @@ import {
   selectWishlist,
   selectWishlistLoading,
 } from "../../redux/features/Wishlist/wishlistSlice";
+import { selectIsUserAuthenticate } from "../../redux/features/User/userSlice";
 export interface IProps {
   product: IProduct;
 }
 
 export default function Product({ product }: IProps) {
-  const { name, category, description, price, discount_price, images, _id } =
+  const { name, category, rating, price, discount_price, images, _id } =
     product;
   const wishlists = useAppSelector(selectWishlist);
   const isWishlistLoading = useAppSelector(selectWishlistLoading);
+  const isUserAuthenticated = useAppSelector(selectIsUserAuthenticate);
+
   const [isWish, setIsWish] = useState(false);
   const dispatch = useAppDispatch();
+  const navigation = useNavigate();
 
   // const productSlug = product.name.replace(/\s+/g, "-");
 
@@ -39,7 +43,7 @@ export default function Product({ product }: IProps) {
 
   return (
     <>
-      <div className="border p-4 bg-white relative overflow-visible shadow-lg rounded-md">
+      <div className="border p-4 bg-white relative overflow-visible shadow rounded-md">
         <Link
           className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
           to={`/products/${_id}`}
@@ -62,7 +66,7 @@ export default function Product({ product }: IProps) {
           <span className="capitalize inline-block bg-red-300 text-white text-xs px-1.5 rounded-xl">
             {category}
           </span>
-          <Stars stars={5} />
+          <Stars stars={rating} />
         </div>
         <div className="space-y-3 border-t border-[#ddd] pt-3">
           <div className={`${style.flex_normal} justify-between`}>
@@ -90,7 +94,13 @@ export default function Product({ product }: IProps) {
               <button
                 disabled={isWishlistLoading}
                 type="button"
-                onClick={() => dispatch(addToWishlistAsync(product._id))}
+                onClick={() => {
+                  if (isUserAuthenticated) {
+                    dispatch(addToWishlistAsync(product._id));
+                  } else {
+                    navigation("/login");
+                  }
+                }}
               >
                 <AiOutlineHeart
                   title="Add to wish list"
@@ -100,7 +110,6 @@ export default function Product({ product }: IProps) {
               </button>
             )}
           </div>
-          {/* <p className="text-xs">{description.slice(0, 110)}...</p> */}
           <AddtoCart product={product} variant="card" />
         </div>
       </div>
