@@ -116,19 +116,6 @@ export default function ProductsPage() {
     setPage(page);
   }
 
-  // useEffect(() => {
-  //   if (categoryData === null) {
-  //     const sorted = [...allProducts]?.sort((a, b) => a.sold_out - b.sold_out);
-  //     setProducts(sorted);
-  //   } else {
-  //     const sorted = allProducts?.filter(
-  //       (product) => product.category == categoryData
-  //     );
-  //     setProducts(sorted);
-  //   }
-  //   window.scrollTo(0, 0);
-  // }, [categoryData]);
-
   useEffect(() => {
     const pagination = { _page: page, _limit: PRODUCT_PER_PAGE };
     dispatch(getAllProductsByFiltersAsync({ filter, sort, pagination }));

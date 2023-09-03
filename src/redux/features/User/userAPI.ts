@@ -1,6 +1,12 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { API_URL } from "../../../constant";
-import { IAddressFrom, IUpdateData, LoginData, UserData } from "./interface";
+import {
+  IAddressFrom,
+  IUpdateData,
+  IUserPasswordChange,
+  LoginData,
+  UserData,
+} from "./interface";
 
 const config = {
   headers: { "Content-Type": "application/json" },
@@ -108,6 +114,30 @@ export function deleteUserAddress(addressId: string) {
     try {
       const res: AxiosResponse = await axios.delete(
         API_URL.DELETE_USER_ADDRESS(addressId),
+        config
+      );
+
+      resolve({ data: res.data });
+    } catch (error: AxiosError | any) {
+      if (error.response) {
+        reject(error.response.data);
+      } else {
+        reject(error);
+      }
+    }
+  });
+}
+
+export function changeUserPassword({
+  currentPassword,
+  newPassword,
+  confirmNewPassword,
+}: IUserPasswordChange) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res: AxiosResponse = await axios.post(
+        API_URL.USER_PASSWORD_CHANGE,
+        { currentPassword, newPassword, confirmNewPassword },
         config
       );
 

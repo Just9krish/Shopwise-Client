@@ -4,6 +4,7 @@ import { useAppSelector } from "../../../hooks";
 import { IProduct, IShippingAddress } from "../../../Interface";
 import { host } from "../../../server";
 import { selectUser } from "../../../redux/features/User/userSlice";
+import getImageSource from "../../../helper/getImageSource";
 
 type Iorder = {
   orders: {
@@ -74,7 +75,7 @@ export default function PlacedProduct() {
                 >
                   <div className="w-[66px] h-[66px] rounded overflow-hidden">
                     <img
-                      src={`${host}/${orderProduct.product.images[0].url}`}
+                      src={getImageSource(orderProduct.product.images[0].url)}
                       className="w-full h-full object-cover"
                       alt={orderProduct.product.images[0].name}
                     />

@@ -12,7 +12,6 @@ import { toast } from "react-toastify";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import style from "../../../styles/style";
 import { API_URL } from "../../../constant";
-import { selectCart } from "../../../redux/features/Cart/cartSlice";
 import { selectUser } from "../../../redux/features/User/userSlice";
 
 type SavedAddress = {
@@ -90,7 +89,6 @@ export default function Payment({ toggleActiveStep }: IProps) {
             payment_method: { card: cardNumberElement },
           }
         );
-        console.log(paymentIntent);
 
         if (error) {
           toast.error(error.message);
@@ -117,6 +115,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
 
             toast.success("Order created successfully");
             localStorage.removeItem("shipping_address");
+            localStorage.setItem("latestorder", JSON.stringify(data));
             toggleActiveStep(2);
           }
         }

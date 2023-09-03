@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IUserState } from "../../../Interface";
 import {
+  changeUserPassword,
   createUser,
   deleteUserAddress,
   fetchUserDetails,
@@ -9,7 +10,13 @@ import {
   updateUserInfo,
 } from "./userAPI";
 import { RootState } from "../../store";
-import { IAddressFrom, IUpdateData, LoginData, UserData } from "./interface";
+import {
+  IAddressFrom,
+  IUpdateData,
+  IUserPasswordChange,
+  LoginData,
+  UserData,
+} from "./interface";
 
 const initialState: IUserState = {
   isUserAuthenticated: false,
@@ -63,6 +70,22 @@ export const deleteUserAddressAsync = createAsyncThunk(
   "user/deleteUserAddress",
   async (addressId: string) => {
     const res: any = await deleteUserAddress(addressId);
+    return res.data;
+  }
+);
+
+export const changeUserPasswordAsync = createAsyncThunk(
+  "user/changeUserPassword",
+  async ({
+    confirmNewPassword,
+    currentPassword,
+    newPassword,
+  }: IUserPasswordChange) => {
+    const res: any = await changeUserPassword({
+      confirmNewPassword,
+      currentPassword,
+      newPassword,
+    });
     return res.data;
   }
 );
@@ -162,6 +185,19 @@ export const userSlice = createSlice({
         state.userMessage = action.payload.message;
       })
       .addCase(deleteUserAddressAsync.rejected, (state, action) => {
+        // state.isUserLoading = false;
+        state.userError = action.error.message
+          ? action.error.message
+          : "Something went wrong";
+      })
+      .addCase(changeUserPasswordAsync.pending, (state) => {
+        state.isUserLoading = true;
+      })
+      .addCase(changeUserPasswordAsync.fulfilled, (state, action) => {
+        state.isUserLoading = false;
+        state.userMessage = action.payload.message;
+      })
+      .addCase(changeUserPasswordAsync.rejected, (state, action) => {
         // state.isUserLoading = false;
         state.userError = action.error.message
           ? action.error.message

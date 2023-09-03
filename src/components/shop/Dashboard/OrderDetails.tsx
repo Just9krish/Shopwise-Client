@@ -5,19 +5,22 @@ import { Link, useParams } from "react-router-dom";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { IShopOrder } from "../../../Interface";
-import { getAllOrdersOfSeller } from "../../../redux/actions/ordersActions";
 import { host } from "../../../server";
 import { Country, State } from "country-state-city";
-import axios, { AxiosError } from "axios";
-import { toast } from "react-toastify";
-import { API_URL } from "../../../constant";
+
 import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import {
+  getAllOrdersOfShopAsync,
+  selectShopOrders,
+  updateOrderStatusAsync,
+} from "../../../redux/features/Orders/orderSlice";
+import getImageSource from "../../../helper/getImageSource";
 const Loader = loadable(() => import("../../Loader/Loader"));
 
 export default function OrderDetails() {
   const dispatch = useAppDispatch();
   const shop = useAppSelector(selectShop);
-  const { shopOrders, isLoading } = useAppSelector((state) => state.orders);
+  const shopOrders = useAppSelector(selectShopOrders);
   const { orderId } = useParams();
   const [selectedOrder, setSelectedOrder] = useState<IShopOrder | null>(null);
   const [orderStatus, setOrderStatus] = useState("");
@@ -39,29 +42,9 @@ export default function OrderDetails() {
     return country ? country.name : "";
   };
 
-  async function orderUpdateHandler(shopId: string, orderId: string) {
-    try {
-      const res = await axios.put(
-        API_URL.UPDATE_SHOP_ORDERS(shopId, orderId),
-        { orderStatus },
-        { withCredentials: true }
-      );
-
-      if (res.status == 200) {
-        toast.success("Order status updated successfully");
-      }
-    } catch (e: AxiosError | any) {
-      if (e.response) {
-        toast.error(e.response.data.message);
-      } else {
-        toast.error(e.message);
-      }
-    }
-  }
-
   useEffect(() => {
     if (shop) {
-      dispatch(getAllOrdersOfSeller(shop._id));
+      dispatch(getAllOrdersOfShopAsync(shop._id));
     }
   }, [dispatch, shop?._id]);
 
@@ -73,221 +56,212 @@ export default function OrderDetails() {
   }, [orderId, shopOrders]);
 
   return (
-    <>
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-4">
-              <BsBagFill className="text-orange-500" size="30" />
-              <h1 className="text-2xl font-bold">Order Details</h1>
-            </div>
-            <a href="/shop-orders">
-              <button className="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded">
-                Order List
-              </button>
-            </a>
-          </div>
+    <div className="container mx-auto px-4 py-8">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-4">
+          <BsBagFill className="text-orange-500" size="30" />
+          <h1 className="text-2xl font-bold">Order Details</h1>
+        </div>
+        <Link to="/shop-orders">
+          <button className="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded">
+            Order List
+          </button>
+        </Link>
+      </div>
 
-          <section className="shadow p-4 md:p-8 bg-white rounded-md">
-            <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-7">
-              <article className="mb-8 md:mb-0 space-y-2">
-                <div>
-                  <h2 className="text-lg text-[#201f13]">Order Id:</h2>
-                  <span className="text-[#4a4a4a]">{selectedOrder?._id}</span>
-                </div>
-                <div>
-                  <h2 className="text-lg  text-[#201f13]">Placed on:</h2>
-                  <span className="text-[#4a4a4a]">
-                    {selectedOrder &&
-                      new Date(selectedOrder.createdAt).toLocaleString()}
-                  </span>
-                </div>
-              </article>
-
-              <article className="md:w-2/5">
-                {selectedOrder?.cart.map((item) => {
-                  const { _id, product, quantity } = item;
-                  const { name, price, images, category, discount_price } =
-                    product;
-
-                  return (
-                    <div
-                      key={_id}
-                      className="flex items-center gap-4 py-4 border-b border-gray-300"
-                    >
-                      <Link to={`/products/${product._id}`}>
-                        <img
-                          src={`${host}/${images[0].url}`}
-                          alt={images[0]?.name || "Product image"}
-                          className="w-16 h-16 object-cover rounded-lg"
-                        />
-                      </Link>
-                      <div>
-                        <Link to={`/products/${product._id}`}>
-                          <h3 className="text-xl font-semibold  text-[#201f13] hover:underline hover:text-orange-500 transition-all">
-                            {name}
-                          </h3>
-                        </Link>
-                        <div className="flex items-center justify-between">
-                          <span className="text-[#4a4a4a] tracking-wider">
-                            {formattedPrice(discount_price)} x {quantity}
-                          </span>
-                          <span className="bg-orange-200 py-1 px-2 rounded text-[#201f13] text-xs md:text-sm">
-                            {category}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
-
-                <div className="mt-6 flex items-center gap-2 justify-end">
-                  <span className="text-lg text-[#201f13]">Total Price:</span>
-                  <span className="tracking-wide">
-                    <strong>
-                      {selectedOrder &&
-                        formattedPrice(selectedOrder.totalPrice)}
-                    </strong>
-                  </span>
-                </div>
-              </article>
-
-              <article className="md:w-2/5">
-                <div className="mt-6 md:mt-0 md:ml-6">
-                  <h2 className="text-lg font-semibold text-[#201f13]">
-                    Shipping Address:
-                  </h2>
-                  <h3 className="text-[#4a4a4a]">
-                    {selectedOrder && selectedOrder.shippingAddress?.fullname}
-                  </h3>
-                  <h3 className="text-[#4a4a4a]">
-                    {selectedOrder &&
-                      `${selectedOrder.shippingAddress.address1}, ${selectedOrder.shippingAddress.address2}, ${selectedOrder.shippingAddress?.address3}`}
-                  </h3>
-
-                  <h3 className="text-[#4a4a4a]">
-                    {selectedOrder &&
-                      getStateName(
-                        selectedOrder?.shippingAddress?.state,
-                        selectedOrder?.shippingAddress?.country
-                      )}
-                  </h3>
-                  <h3 className="text-[#4a4a4a]">
-                    {selectedOrder &&
-                      getCountryName(selectedOrder?.shippingAddress?.country)}
-                  </h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#201f13]">Pincode:</span>
-                    <span className="text-[#4a4a4a]">
-                      {selectedOrder?.shippingAddress?.zipcode}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#201f13]">Contacts Number:</span>
-                    <div className="space-x-1 text-[#4a4a4a]">
-                      <span>
-                        {selectedOrder?.shippingAddress?.primaryNumber}
-                      </span>
-                      <span>/</span>
-                      <span>
-                        {selectedOrder?.shippingAddress?.alternateNumber}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mt-6 md:ml-6">
-                  <h2 className="text-lg font-semibold text-[#201f13]">
-                    Payment Info
-                  </h2>
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#201f13] font-extralight">
-                      Total Price:
-                    </span>
-                    <span className="font-extrabold tracking-wide">
-                      {selectedOrder &&
-                        formattedPrice(selectedOrder.totalPrice)}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#201f13] font-extralight">
-                      Payment Status:
-                    </span>
-                    <span>
-                      {selectedOrder?.paymentInfo?.status || "Not Paid"}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-[#201f13] font-extralight">
-                      Payment Mode:
-                    </span>
-                    <span
-                      className={`${
-                        selectedOrder?.paymentInfo?.status === "succeeded"
-                          ? "text-[#19e50b]"
-                          : selectedOrder?.paymentInfo?.status === "canceled"
-                          ? "text-[#f75e68]"
-                          : "text-orange-500"
-                      } font-Poppins font-semibold`}
-                    >
-                      {selectedOrder?.paymentInfo?.paymentMethod === "COD"
-                        ? "Cash on Delivery"
-                        : "Online Payment"}
-                    </span>
-                  </div>
-                </div>
-              </article>
-            </div>
-
+      <section className="shadow p-4 md:p-8 bg-white rounded-md">
+        <div className="flex flex-col md:flex-row justify-between gap-4 md:gap-7">
+          <article className="mb-8 md:mb-0 space-y-2">
             <div>
-              <p>Change product status:</p>
-              <div className="flex items-center gap-4 mt-4">
-                <select
-                  value={orderStatus}
-                  onChange={(e) => setOrderStatus(e.target.value)}
-                  className="w-56 mt-2 border rounded py-1.5 px-3"
-                >
-                  {orderStatusList.map((status, index) => (
-                    <option key={index} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
+              <h2 className="text-lg text-[#201f13]">Order Id:</h2>
+              <span className="text-[#4a4a4a]">{selectedOrder?._id}</span>
+            </div>
+            <div>
+              <h2 className="text-lg  text-[#201f13]">Placed on:</h2>
+              <span className="text-[#4a4a4a]">
+                {selectedOrder &&
+                  new Date(selectedOrder.createdAt).toLocaleString()}
+              </span>
+            </div>
+          </article>
 
-                <select
-                  className="w-56 mt-2 border rounded py-1.5 px-3"
-                  name=""
-                  id="refund"
+          <article className="md:w-2/5">
+            {selectedOrder?.cart.map((item) => {
+              const { _id, product, quantity } = item;
+              const { name, price, images, category, discount_price } = product;
+
+              return (
+                <div
+                  key={_id}
+                  className="flex items-center gap-4 py-4 border-b border-gray-300"
                 >
-                  {refundStatusList.map((status, index) => (
-                    <option key={index} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-                <label className="text-[#4a4a4a] text-sm" htmlFor="refund">
-                  *This feature is not working right now.
-                </label>
+                  <Link to={`/products/${product._id}`}>
+                    <img
+                      src={getImageSource(images[0].url)}
+                      alt={images[0]?.name || "Product image"}
+                      className="w-16 h-16 object-cover rounded-lg"
+                    />
+                  </Link>
+                  <div>
+                    <Link to={`/products/${product._id}`}>
+                      <h3 className="text-xl font-semibold  text-[#201f13] hover:underline hover:text-orange-500 transition-all">
+                        {name}
+                      </h3>
+                    </Link>
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#4a4a4a] tracking-wider">
+                        {formattedPrice(discount_price)} x {quantity}
+                      </span>
+                      <span className="bg-orange-200 py-1 px-2 rounded text-[#201f13] text-xs md:text-sm">
+                        {category}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+
+            <div className="mt-6 flex items-center gap-2 justify-end">
+              <span className="text-lg text-[#201f13]">Total Price:</span>
+              <span className="tracking-wide">
+                <strong>
+                  {selectedOrder && formattedPrice(selectedOrder.totalPrice)}
+                </strong>
+              </span>
+            </div>
+          </article>
+
+          <article className="md:w-2/5">
+            <div className="mt-6 md:mt-0 md:ml-6">
+              <h2 className="text-lg font-semibold text-[#201f13]">
+                Shipping Address:
+              </h2>
+              <h3 className="text-[#4a4a4a]">
+                {selectedOrder && selectedOrder.shippingAddress?.fullname}
+              </h3>
+              <h3 className="text-[#4a4a4a]">
+                {selectedOrder &&
+                  `${selectedOrder.shippingAddress.address1}, ${selectedOrder.shippingAddress.address2}, ${selectedOrder.shippingAddress?.address3}`}
+              </h3>
+
+              <h3 className="text-[#4a4a4a]">
+                {selectedOrder &&
+                  getStateName(
+                    selectedOrder?.shippingAddress?.state,
+                    selectedOrder?.shippingAddress?.country
+                  )}
+              </h3>
+              <h3 className="text-[#4a4a4a]">
+                {selectedOrder &&
+                  getCountryName(selectedOrder?.shippingAddress?.country)}
+              </h3>
+              <div className="flex items-center gap-2">
+                <span className="text-[#201f13]">Pincode:</span>
+                <span className="text-[#4a4a4a]">
+                  {selectedOrder?.shippingAddress?.zipcode}
+                </span>
               </div>
 
-              <button
-                onClick={() => {
-                  if (selectedOrder && shop)
-                    orderUpdateHandler(shop._id, selectedOrder?._id);
-                }}
-                className="bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-4 rounded mt-4"
-              >
-                Update Status
-              </button>
+              <div className="flex items-center gap-2">
+                <span className="text-[#201f13]">Contacts Number:</span>
+                <div className="space-x-1 text-[#4a4a4a]">
+                  <span>{selectedOrder?.shippingAddress?.primaryNumber}</span>
+                  <span>/</span>
+                  <span>{selectedOrder?.shippingAddress?.alternateNumber}</span>
+                </div>
+              </div>
             </div>
-          </section>
+
+            <div className="mt-6 md:ml-6">
+              <h2 className="text-lg font-semibold text-[#201f13]">
+                Payment Info
+              </h2>
+              <div className="flex items-center gap-2">
+                <span className="text-[#201f13] font-extralight">
+                  Total Price:
+                </span>
+                <span className="font-extrabold tracking-wide">
+                  {selectedOrder && formattedPrice(selectedOrder.totalPrice)}
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-[#201f13] font-extralight">
+                  Payment Status:
+                </span>
+                <span>{selectedOrder?.paymentInfo?.status || "Not Paid"}</span>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <span className="text-[#201f13] font-extralight">
+                  Payment Mode:
+                </span>
+                <span
+                  className={`${
+                    selectedOrder?.paymentInfo?.status === "succeeded"
+                      ? "text-[#19e50b]"
+                      : selectedOrder?.paymentInfo?.status === "canceled"
+                      ? "text-[#f75e68]"
+                      : "text-orange-500"
+                  } font-Poppins font-semibold`}
+                >
+                  {selectedOrder?.paymentInfo?.paymentMethod === "COD"
+                    ? "Cash on Delivery"
+                    : "Online Payment"}
+                </span>
+              </div>
+            </div>
+          </article>
         </div>
-      )}
-    </>
+
+        <div>
+          <p>Change product status:</p>
+          <div className="flex items-center gap-4 mt-4">
+            <select
+              value={orderStatus}
+              onChange={(e) => setOrderStatus(e.target.value)}
+              className="w-56 mt-2 border rounded py-1.5 px-3"
+            >
+              {orderStatusList.map((status, index) => (
+                <option key={index} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
+
+            <select
+              className="w-56 mt-2 border rounded py-1.5 px-3"
+              name=""
+              id="refund"
+            >
+              {refundStatusList.map((status, index) => (
+                <option key={index} value={status}>
+                  {status}
+                </option>
+              ))}
+            </select>
+            <label className="text-[#4a4a4a] text-sm" htmlFor="refund">
+              *This feature is not working right now.
+            </label>
+          </div>
+
+          <button
+            onClick={() => {
+              if (selectedOrder && shop)
+                dispatch(
+                  updateOrderStatusAsync({
+                    shopId: shop._id,
+                    orderId: selectedOrder?._id,
+                    orderStatus,
+                  })
+                );
+            }}
+            className="bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-4 rounded mt-4"
+          >
+            Update Status
+          </button>
+        </div>
+      </section>
+    </div>
   );
 }

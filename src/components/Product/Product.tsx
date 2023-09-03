@@ -16,6 +16,7 @@ import {
   selectWishlistLoading,
 } from "../../redux/features/Wishlist/wishlistSlice";
 import { selectIsUserAuthenticate } from "../../redux/features/User/userSlice";
+import getImageSource from "../../helper/getImageSource";
 export interface IProps {
   product: IProduct;
 }
@@ -50,7 +51,7 @@ export default function Product({ product }: IProps) {
         >
           <div className="h-40 overflow-hidden rounded-lg">
             <img
-              src={`${host}/${images[0]?.url}`}
+              src={getImageSource(images[0].url)}
               loading="lazy"
               className="object-cover h-full w-full hover:scale-110 transition-all duration-300"
             />

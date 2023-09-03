@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from "react";
 import { selectIsUserAuthenticate } from "../../redux/features/User/userSlice";
 import { useNavigate } from "react-router-dom";
+import getImageSource from "../../helper/getImageSource";
 const AddtoCart = loadable(() => import("./AddtoCart/AddtoCart"));
 const Carousel = loadable(() => import("./Carousel/Carousel"));
 const Slider = loadable(() => import("./Slider/Slider"));
@@ -120,7 +121,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
               <div className={`${style.flex_normal} gap-3`}>
                 <img
                   className="h-12 w-12 rounded-full"
-                  src={`${host}/${shop.avatar}`}
+                  src={getImageSource(shop.avatar)}
                   loading="lazy"
                   alt="Shop Profile"
                 />

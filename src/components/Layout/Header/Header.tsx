@@ -16,6 +16,7 @@ import { host } from "../../../server";
 import { useAppSelector, useAppDispatch } from "../../../hooks";
 import { selectProducts } from "../../../redux/features/Products/productSlice";
 import { toggleCart } from "../../../redux/features/Cart/cartSlice";
+import getImageSource from "../../../helper/getImageSource";
 const Dropdown = loadable(() => import("./Dropdown/Dropdown"));
 const Navbar = loadable(() => import("./Navbar/Navbar"));
 const UserNavigation = loadable(
@@ -113,7 +114,7 @@ export default function Header() {
                             <img
                               className="w-11 h-10 mr-8"
                               loading="lazy"
-                              src={`${host}/${product.images[0].url}`}
+                              src={getImageSource(product.images[0].url)}
                             />
                             <h1>{product.name}</h1>
                           </div>
@@ -233,7 +234,7 @@ export default function Header() {
                             <img
                               className="w-11 h-10 mr-8"
                               loading="lazy"
-                              src={`${host}/${product.images[0].url}`}
+                              src={getImageSource(product.images[0].url)}
                             />
                             <h4 className="text-sm">
                               {product.name.slice(0, 30)}...
@@ -274,7 +275,7 @@ export default function Header() {
               >
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={`${host}/${userState?.user?.avatar}`}
+                  src={getImageSource(userState?.user?.avatar!)}
                   alt=""
                 />
                 <span>{userState?.user?.name}</span>

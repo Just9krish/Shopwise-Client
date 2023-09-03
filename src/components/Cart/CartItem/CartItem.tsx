@@ -14,6 +14,7 @@ import {
   selectCartLoading,
   updateQuantityAsync,
 } from "../../../redux/features/Cart/cartSlice";
+import getImageSource from "../../../helper/getImageSource";
 
 interface IProps {
   item: ICartItem;
@@ -86,7 +87,7 @@ export default function CartItem({ item }: IProps) {
           to={`/products/${_id}`}
         >
           <img
-            src={`${host}/${images[0].url}`}
+            src={getImageSource(images[0].url)}
             className="w-16 rounded-md h-16 ml-2"
             loading="lazy"
           />

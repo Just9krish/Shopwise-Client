@@ -1,12 +1,12 @@
 import style from "../../../styles/style";
 import categoriesData from "../../../constant/categories.json";
 import { useNavigate } from "react-router-dom";
-import { ICategory } from "../../../Interface";
+import { Category } from "../../../pages/ProductsPage";
 
 export default function Categories() {
   const navigate = useNavigate();
 
-  function handleSubmit(category: ICategory) {
+  function handleSubmit(category: Category) {
     navigate(`products?category=${category.title}`);
     window.location.reload();
   }

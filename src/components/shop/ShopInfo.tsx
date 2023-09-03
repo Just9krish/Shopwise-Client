@@ -8,6 +8,7 @@ import { host } from "../../server";
 import style from "../../styles/style";
 import { API_URL } from "../../constant";
 import { selectShop } from "../../redux/features/Shop/shopSlice";
+import getImageSource from "../../helper/getImageSource";
 
 interface IProps {
   isOwner: boolean;
@@ -49,7 +50,7 @@ export default function ShopInfo({ isOwner }: IProps) {
       >
         <img
           className="object-cover h-36 w-36 rounded-full"
-          src={`${host}/${avatar}`}
+          src={getImageSource(avatar)}
           loading="lazy"
           alt="shop profile picture"
         />

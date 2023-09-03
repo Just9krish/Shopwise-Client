@@ -8,6 +8,7 @@ import { FiPackage, FiShoppingBag } from "react-icons/fi";
 import { host } from "../../../server";
 import { useAppSelector } from "../../../hooks";
 import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import getImageSource from "../../../helper/getImageSource";
 
 export default function ShopHeader() {
   const shop = useAppSelector(selectShop);
@@ -35,7 +36,7 @@ export default function ShopHeader() {
           </Link>
           <Link to={`/shop/${shop?._id}`}>
             <img
-              src={`${host}/${shop?.avatar}`}
+              src={getImageSource(shop?.avatar!)}
               alt="Shop Profile Picture"
               className="h-11 w-11 rounded-full object-cover"
             />

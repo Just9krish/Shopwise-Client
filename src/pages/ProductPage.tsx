@@ -13,6 +13,7 @@ import {
   selectProducts,
   selectSelectedProduct,
 } from "../redux/features/Products/productSlice";
+import getImageSource from "../helper/getImageSource";
 
 const ProductDetails = loadable(
   () => import("../components/ProductDetails/ProductDetails")
@@ -119,7 +120,8 @@ const ProductDetailsInfo = ({ product }: { product: IProduct }) => {
             <div className={`${style.flex_normal} gap-3`}>
               <img
                 className="h-12 w-12 rounded-full"
-                src={`${host}/${shop.avatar}`}
+                src={getImageSource(shop?.avatar)}
+                loading="lazy"
               />
               <div>
                 <h4 className={`${style.shop_name} text-xl`}>{shop.name}</h4>

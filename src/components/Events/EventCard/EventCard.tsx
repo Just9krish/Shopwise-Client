@@ -3,6 +3,7 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { IEvent } from "../../../Interface";
 import { host } from "../../../server";
 import style from "../../../styles/style";
+import getImageSource from "../../../helper/getImageSource";
 const Countdown = loadable(() => import("../CountDown/Countdown"));
 
 type Props = {

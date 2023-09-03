@@ -13,6 +13,7 @@ import {
   toggleCart,
 } from "../../../redux/features/Cart/cartSlice";
 import { removeToWishlistAsync } from "../../../redux/features/Wishlist/wishlistSlice";
+import getImageSource from "../../../helper/getImageSource";
 
 interface IProps {
   item: IProduct;
@@ -48,7 +49,7 @@ const ItemCard = ({ item, toggleWishlist }: IProps) => {
       </button>
       <Link to={`/products/${_id}`}>
         <img
-          src={`${host}/${images[0].url}`}
+          src={getImageSource(images[0].url)}
           className="w-12 rounded-md h-12"
           loading="lazy"
           alt={images[0].name}

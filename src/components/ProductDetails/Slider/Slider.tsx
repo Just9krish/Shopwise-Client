@@ -2,6 +2,7 @@ import { useState } from "react";
 import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 import { host } from "../../../server";
 import { ImageProps } from "../Carousel/Carousel";
+import getImageSource from "../../../helper/getImageSource";
 
 export default function Slider({ images }: { images: ImageProps[] }) {
   const [slide, setSlide] = useState(0);
@@ -29,7 +30,7 @@ export default function Slider({ images }: { images: ImageProps[] }) {
         {images?.map((image) => (
           <div key={image.id} className="w-[100vw]">
             <img
-              src={`${host}/${image.url}`}
+              src={getImageSource(image.url)}
               className="object-center"
               loading="lazy"
               alt={image.name}

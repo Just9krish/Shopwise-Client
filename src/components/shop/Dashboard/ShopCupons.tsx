@@ -7,10 +7,13 @@ import { toast } from "react-toastify";
 import { formattedPrice } from "../../../helper/formatPrice";
 import { ICoupon } from "../../../Interface";
 import Loader from "../../Loader/Loader";
-import { getShopAllProducts } from "../../../redux/actions/productActions";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { API_URL } from "../../../constant";
 import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import {
+  getShopProductsAsync,
+  selectShopProducts,
+} from "../../../redux/features/Products/productSlice";
 
 type row = {
   id: string;
@@ -77,8 +80,8 @@ export default function ShopCupons() {
   const [discountpercentage, setDiscountpercentage] = useState(0);
   const [miniamount, setMiniAmount] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
-
-  const { products } = useAppSelector((state) => state.products);
+  const shopProducts = useAppSelector(selectShopProducts);
+  // const { products } = useAppSelector((state) => state.products);
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -121,7 +124,7 @@ export default function ShopCupons() {
 
   useEffect(() => {
     if (shop?._id) {
-      dispatch(getShopAllProducts(shop._id));
+      dispatch(getShopProductsAsync(shop._id));
       getCoupons(shop._id);
     }
   }, [shop?._id]);
@@ -307,7 +310,7 @@ export default function ShopCupons() {
                         <option disabled selected>
                           Choose a Product
                         </option>
-                        {products?.map((product, idx) => (
+                        {shopProducts?.map((product, idx) => (
                           <option value={product._id} key={idx}>
                             {product.name}
                           </option>

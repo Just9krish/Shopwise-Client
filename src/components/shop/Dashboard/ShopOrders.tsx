@@ -26,6 +26,8 @@ export default function ShopOrders() {
   const isShopLoading = useAppSelector(selectShopLoading);
   const shopOrders = useAppSelector(selectShopOrders);
 
+  console.log(shopOrders);
+
   const dispatch = useAppDispatch();
 
   const columns = [
@@ -88,7 +90,7 @@ export default function ShopOrders() {
   shopOrders.forEach((order) => {
     row.push({
       id: order._id,
-      itemsQty: order.cart.length,
+      itemsQty: order.cart.reduce((acc, item) => acc + item.quantity, 0),
       total: formattedPrice(order.totalPrice),
       status: order.orderStatus,
     });

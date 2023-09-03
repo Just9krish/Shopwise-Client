@@ -7,7 +7,14 @@ import { formattedPrice } from "../../../helper/formatPrice";
 import { useAppDispatch, useAppSelector } from "../../../hooks";
 import style from "../../../styles/style";
 import { selectShop } from "../../../redux/features/Shop/shopSlice";
-import { selectShopProducts } from "../../../redux/features/Products/productSlice";
+import {
+  getShopProductsAsync,
+  selectShopProducts,
+} from "../../../redux/features/Products/productSlice";
+import {
+  getAllOrdersOfShopAsync,
+  selectShopOrders,
+} from "../../../redux/features/Orders/orderSlice";
 
 type row = {
   id: string;
@@ -17,7 +24,7 @@ type row = {
 };
 
 export default function ShopDashboardHero() {
-  // const { shopOrders } = useAppSelector((state) => state.orders);
+  const shopOrders = useAppSelector(selectShopOrders);
   const shop = useAppSelector(selectShop);
   const shopProducts = useAppSelector(selectShopProducts);
   const dispatch = useAppDispatch();
@@ -71,22 +78,22 @@ export default function ShopDashboardHero() {
 
   const row: row[] = [];
 
-  // shopOrders &&
-  //   shopOrders.forEach((order) => {
-  //     row.push({
-  //       id: order._id,
-  //       quantity: order.cart.reduce((acc, item) => acc + item.quantity, 0),
-  //       total: formattedPrice(order.totalPrice),
-  //       status: order.orderStatus,
-  //     });
-  //   });
+  shopOrders &&
+    shopOrders.forEach((order) => {
+      row.push({
+        id: order._id,
+        quantity: order.cart.reduce((acc, item) => acc + item.quantity, 0),
+        total: formattedPrice(order.totalPrice),
+        status: order.orderStatus,
+      });
+    });
 
-  // useEffect(() => {
-  //   if (shop) {
-  //     dispatch(getAllOrdersOfSeller(shop._id));
-  //     dispatch(getShopAllProducts(shop._id));
-  //   }
-  // }, [dispatch]);
+  useEffect(() => {
+    if (shop) {
+      dispatch(getAllOrdersOfShopAsync(shop._id));
+      dispatch(getShopProductsAsync(shop._id));
+    }
+  }, [dispatch]);
 
   return (
     <div className="p-8 w-full space-y-12">
@@ -133,7 +140,7 @@ export default function ShopDashboardHero() {
                 </h4>
               </div>
               <div>
-                {/* <p className="text-2xl font-medium">{shopOrders.length}</p> */}
+                <p className="text-2xl font-medium">{shopOrders.length}</p>
                 <Link to="/shop-orders" className="text-[#077f9c]">
                   View Orders
                 </Link>

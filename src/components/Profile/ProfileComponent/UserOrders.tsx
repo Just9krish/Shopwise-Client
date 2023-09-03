@@ -1,45 +1,26 @@
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import axios, { AxiosError } from "axios";
-import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../hooks";
-import { toast } from "react-toastify";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../../hooks";
 import { DataGrid, GridCellParams } from "@mui/x-data-grid";
 import { formattedPrice } from "../../../helper/formatPrice";
-import { IOrder } from "../../../Interface";
-import Loader from "../../Loader/Loader";
-import { API_URL } from "../../../constant";
 import { selectUser } from "../../../redux/features/User/userSlice";
+import {
+  getAllOrdersOfUserAsnyc,
+  selectUserOrders,
+} from "../../../redux/features/Orders/orderSlice";
 
 export default function UserOrders() {
-  const [userOrders, setUserOrders] = useState<IOrder[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const user = useAppSelector(selectUser);
 
-  const loadUserOrders = async () => {
-    try {
-      setIsLoading(true);
-      if (user) {
-        const { data } = await axios.get(
-          API_URL.GET_ALL_USER_ORDERS(user?._id),
-          {
-            withCredentials: true,
-          }
-        );
-
-        setUserOrders(data.orders);
-      }
-      setIsLoading(false);
-    } catch (e: AxiosError | any) {
-      setIsLoading(false);
-      const error = e.response ? e.response : e.message;
-      toast.error(error);
-    }
-  };
+  const dispatch = useAppDispatch();
+  const userOrders = useAppSelector(selectUserOrders);
 
   useEffect(() => {
-    loadUserOrders();
-  }, []);
+    if (user) {
+      dispatch(getAllOrdersOfUserAsnyc(user?._id));
+    }
+  }, [user?._id]);
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
@@ -106,10 +87,6 @@ export default function UserOrders() {
         status: item.orderStatus,
       });
     });
-
-  if (isLoading) {
-    return <Loader />;
-  }
 
   return (
     <div>

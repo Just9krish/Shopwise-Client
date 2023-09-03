@@ -5,6 +5,7 @@ import style from "../../../../styles/style";
 import categories from "../../../../constant/categories.json";
 import { useNavigate } from "react-router-dom";
 import { ICategory } from "../../../../Interface";
+import { Category } from "../../../../pages/ProductsPage";
 
 export default function Dropdown() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -15,7 +16,7 @@ export default function Dropdown() {
     setIsDropdownOpen((prev) => !prev);
   }
 
-  function handleSubmit(category: ICategory) {
+  function handleSubmit(category: Category) {
     navigate(`/products?category=${category.title}`);
     setIsDropdownOpen((prev) => !prev);
     window.location.reload();

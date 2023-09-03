@@ -31,3 +31,9 @@ export interface IAddressFrom {
   zipcode: number;
   addressType: string;
 }
+
+export interface IUserPasswordChange {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}

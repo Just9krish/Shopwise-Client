@@ -20,7 +20,7 @@ export const API_URL = {
   DELETE_USER_ADDRESS: (addressId: string) =>
     `${DOMAIN}/users/address/${addressId}`,
   USER_PASSWORD_CHANGE: `${DOMAIN}/users/password-change`,
-  GET_ALL_USER_ORDERS: (userId: string) => `${DOMAIN}/users/${userId}/orders`,
+  GET_USER_ORDERS: (userId: string) => `${DOMAIN}/users/${userId}/orders`,
   LOGOUT_USER: `${DOMAIN}/users/logout`,
 
   // Shop APIs

@@ -1,9 +1,8 @@
-import axios, { AxiosError } from "axios";
 import { useState } from "react";
-import { toast } from "react-toastify";
-import { API_URL } from "../../../constant";
 import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useAppDispatch } from "../../../hooks";
+import { changeUserPasswordAsync } from "../../../redux/features/User/userSlice";
 
 export default function UserPasswordChange() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -16,29 +15,7 @@ export default function UserPasswordChange() {
     reset,
     formState: { errors },
   } = useForm();
-
-  async function handlePasswordChange(
-    currentPassword: string,
-    newPassword: string,
-    confirmNewPassword: string
-  ) {
-    try {
-      const { data } = await axios.post(
-        API_URL.USER_PASSWORD_CHANGE,
-        { currentPassword, newPassword, confirmNewPassword },
-        { withCredentials: true }
-      );
-
-      toast.success(data.message);
-      reset();
-    } catch (error: AxiosError | any) {
-      if (error.response) {
-        toast.error(error.response);
-      } else {
-        toast.error(error.message);
-      }
-    }
-  }
+  const dispatch = useAppDispatch();
 
   return (
     <div className="w-full px-5">
@@ -52,10 +29,12 @@ export default function UserPasswordChange() {
         <form
           className="space-y-4 w-full max-w-xl mx-auto"
           onSubmit={handleSubmit((data) => {
-            handlePasswordChange(
-              data.oldPassword,
-              data.newPassword,
-              data.confirmNewPassword
+            dispatch(
+              changeUserPasswordAsync({
+                currentPassword: data.oldPassword,
+                newPassword: data.newPassword,
+                confirmNewPassword: data.confirmNewPassword,
+              })
             );
           })}
         >
