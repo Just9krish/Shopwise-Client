@@ -4,6 +4,8 @@ import { FilterQuery, IDeleteProduct, IProductState } from "./interface";
 import {
   deleteProduct,
   getAllProductsByFilters,
+  getBestDealsProducts,
+  getFeaturedProducts,
   getProduct,
   getShopProducts,
 } from "./productAPI";
@@ -16,6 +18,8 @@ const initialState: IProductState = {
   totalProducts: 0,
   productMessage: "",
   shopProducts: [],
+  bestDealsProducts: [],
+  featuredProducts: [],
 };
 
 export const getAllProductsByFiltersAsync = createAsyncThunk(
@@ -50,6 +54,23 @@ export const deleteShopProductAsync = createAsyncThunk(
   "product/deleteShopProduct",
   async ({ productId, shopId }: IDeleteProduct) => {
     const res: any = await deleteProduct({ productId, shopId });
+    return res.data;
+  }
+);
+
+export const getBestDealsProductsAsync = createAsyncThunk(
+  "product/getBestDealsProducts",
+  async () => {
+    const res: any = await getBestDealsProducts();
+    return res.data;
+  }
+);
+
+export const getFeaturedProductsAsync = createAsyncThunk(
+  "product/getFeaturedProducts",
+  async () => {
+    const res: any = await getFeaturedProducts();
+    return res.data;
   }
 );
 
@@ -119,6 +140,20 @@ const productsSlice = createSlice({
         : "Something went wrong";
       state.selectedProduct = null;
     });
+    builder.addCase(getBestDealsProductsAsync.pending, (state) => {
+      state.isProductLoading = true;
+    });
+    builder.addCase(getBestDealsProductsAsync.fulfilled, (state, action) => {
+      state.isProductLoading = false;
+      state.bestDealsProducts = action.payload.bestDealProducts;
+    });
+    builder.addCase(getFeaturedProductsAsync.pending, (state) => {
+      state.isProductLoading = true;
+    });
+    builder.addCase(getFeaturedProductsAsync.fulfilled, (state, action) => {
+      state.isProductLoading = false;
+      state.featuredProducts = action.payload.featuredProducts;
+    });
   },
 });
 
@@ -136,5 +171,9 @@ export const selectSelectedProduct = (state: RootState) =>
   state.productsState.selectedProduct;
 export const selectTotalProducts = (state: RootState) =>
   state.productsState.totalProducts;
+export const selectBestDealsProducts = (state: RootState) =>
+  state.productsState.bestDealsProducts;
+export const selectFeaturedProducts = (state: RootState) =>
+  state.productsState.featuredProducts;
 
 export default productsSlice.reducer;

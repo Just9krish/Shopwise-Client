@@ -50,6 +50,8 @@ export interface IProductState {
   productMessage: string;
   totalProducts: number;
   selectedProduct: IProduct | null;
+  featuredProducts: IProduct[];
+  bestDealsProducts: IProduct[];
 }
 
 export interface FilterQuery {

@@ -5,12 +5,10 @@ import { useState, useEffect } from "react";
 import { IProduct } from "../Interface";
 import { Link } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { host, server } from "../server";
 import axios from "axios";
 import { API_URL } from "../constant";
 import {
   getProductAsync,
-  selectProducts,
   selectSelectedProduct,
 } from "../redux/features/Products/productSlice";
 import getImageSource from "../helper/getImageSource";

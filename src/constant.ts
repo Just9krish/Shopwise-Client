@@ -64,6 +64,8 @@ export const API_URL = {
   GET_FILTERED_PRODUCTS: (queryString: string) =>
     `${DOMAIN}/products?${queryString}`,
   GET_SINGLE_PRODUCT: (productId: string) => `${DOMAIN}/products/${productId}`,
+  GET_BEST_DEALS: `${DOMAIN}/products/best-deals`,
+  GET_FEATURED_PRODUCTS: `${DOMAIN}/products/featured`,
 
   // Cart API's
   ADD_TO_CART: `${DOMAIN}/cart`,
