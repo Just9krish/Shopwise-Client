@@ -275,7 +275,7 @@ export default function Header() {
               >
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={getImageSource(userState?.user?.avatar!)}
+                  src={getImageSource(userState?.user?.avatar! || "")}
                   alt=""
                 />
                 <span>{userState?.user?.name}</span>

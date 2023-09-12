@@ -38,7 +38,7 @@ export interface IOrder {
   paymentInfo: IPaymentInfo;
   _id: string;
   cart: {
-    product: string;
+    product: IProduct;
     quantity: number;
     _id: string;
   }[];
@@ -55,6 +55,7 @@ export interface IOrderState {
   isOrderLoading: boolean;
   shopOrders: IShopOrder[];
   userOrders: IOrder[];
+  selectedOrder: IOrder | null;
   orderError: string | null;
   orderMessage: string;
 }

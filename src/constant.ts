@@ -54,6 +54,7 @@ export const API_URL = {
   // Order APIs
   CREATE_ORDER: `${DOMAIN}/orders`,
   GET_ALL_ORDERS: `${DOMAIN}/orders`,
+  GET_SINGLE_USER_ORDER: (orderId: string) => `${DOMAIN}/orders/${orderId}`,
 
   // Payment APIs
   CREATE_PAYMENT_INTENT: `${DOMAIN}/payments/create-payment-intent`,

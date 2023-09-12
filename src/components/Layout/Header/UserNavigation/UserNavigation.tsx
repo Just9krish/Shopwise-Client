@@ -22,49 +22,49 @@ export default function UserNavigation({ userState, toggleWishlist }: IProps) {
   const cart = useAppSelector(selectCart);
   const wishlists = useAppSelector(selectWishlist);
 
+  console.log("dsdfsdfs");
+
   const dispatch = useAppDispatch();
 
   return (
     <>
-      {user && (
-        <div className={`${style.flex_normal} gap-6`}>
-          <button className="relative cursor-pointer" onClick={toggleWishlist}>
-            <AiOutlineHeart color="white" size={30} />
-            <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
-              {wishlists.length}
-            </span>
-          </button>
-          <button
-            className="relative cursor-pointer"
-            onClick={() => dispatch(toggleCart())}
-          >
-            <AiOutlineShoppingCart color="white" size={30} />
-            <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
-              {cart?.length}
-            </span>
-          </button>
-          <div className="relative cursor-pointer">
-            {isUserAuthenticated ? (
-              <Link to="/profile">
-                <img
-                  className="h-7 w-7 rounded-full"
-                  src={getImageSource(user?.avatar)}
-                  alt={user?.name}
-                />
-              </Link>
-            ) : (
-              <Link to="/login">
-                <BiUserCircle
-                  color="white"
-                  size={30}
-                  title="Login to account"
-                  className="hover:fill-gray-900 transition-all"
-                />
-              </Link>
-            )}
-          </div>
+      <div className={`${style.flex_normal} gap-6`}>
+        <button className="relative cursor-pointer" onClick={toggleWishlist}>
+          <AiOutlineHeart color="white" size={30} />
+          <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
+            {wishlists.length}
+          </span>
+        </button>
+        <button
+          className="relative cursor-pointer"
+          onClick={() => dispatch(toggleCart())}
+        >
+          <AiOutlineShoppingCart color="white" size={30} />
+          <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
+            {cart?.length}
+          </span>
+        </button>
+        <div className="relative cursor-pointer">
+          {isUserAuthenticated ? (
+            <Link to="/profile">
+              <img
+                className="h-7 w-7 rounded-full"
+                src={getImageSource(user?.avatar || "")}
+                alt={user?.name || "User"}
+              />
+            </Link>
+          ) : (
+            <Link to="/login">
+              <BiUserCircle
+                color="white"
+                size={30}
+                title="Login to account"
+                className="hover:fill-gray-900 transition-all"
+              />
+            </Link>
+          )}
         </div>
-      )}
+      </div>
     </>
   );
 }

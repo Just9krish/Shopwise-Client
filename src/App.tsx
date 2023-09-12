@@ -9,8 +9,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { API_URL } from "./constant";
 import { fetchUserDetailsAsync } from "./redux/features/User/userSlice";
 import { fetchShopAsync } from "./redux/features/Shop/shopSlice";
-import { getAllEventsAsync } from "./redux/features/Events/eventSlice";
-import { getAllProductsByFiltersAsync } from "./redux/features/Products/productSlice";
 
 import axios from "axios";
 import store from "./redux/store";
@@ -24,7 +22,6 @@ import HomePage from "./pages/HomePage";
 import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
 import { fetchCartDetailsAsync } from "./redux/features/Cart/cartSlice";
 import { getWishlistAsync } from "./redux/features/Wishlist/wishlistSlice";
-import Checkout from "./components/Checkout/MaterialCheckout";
 
 const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
@@ -71,6 +68,8 @@ const ForgotPasswordPage = loadable(
 const ResetPasswordPage = loadable(
   () => import("./pages/User/ResetPasswordPage")
 );
+
+import UserOrderDetailsPage from "./pages/User/UserOrderDetailsPage";
 
 function App() {
   const [stripeKey, setStripeKey] = useState<string | null>(null);
@@ -184,6 +183,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+        <Route path="order/:orderId" element={<UserOrderDetailsPage />} />
 
         {/* shop routes */}
         <Route path="/create-shop" element={<CreateShop />} />

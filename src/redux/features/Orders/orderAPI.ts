@@ -65,3 +65,21 @@ export function updateOrderStatus({
     }
   });
 }
+
+export function getOrderOfUser(orderId: string) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res: AxiosResponse = await axios.get(
+        API_URL.GET_SINGLE_USER_ORDER(orderId),
+        config
+      );
+      resolve({ data: res.data });
+    } catch (error: AxiosError | any) {
+      if (error.response) {
+        reject(error.response.data);
+      } else {
+        reject(error);
+      }
+    }
+  });
+}

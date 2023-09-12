@@ -4,6 +4,7 @@ import { RootState } from "../../store";
 import {
   getAllOrdersOfShop,
   getAllOrdersOfUser,
+  getOrderOfUser,
   updateOrderStatus,
 } from "./orderAPI";
 
@@ -12,6 +13,7 @@ const initialState: IOrderState = {
   orderError: null,
   shopOrders: [],
   userOrders: [],
+  selectedOrder: null,
   orderMessage: "",
 };
 
@@ -27,6 +29,14 @@ export const getAllOrdersOfUserAsnyc = createAsyncThunk(
   "order/getAllOrdersOfUser",
   async (userId: string) => {
     const res: any = await getAllOrdersOfUser(userId);
+    return res.data;
+  }
+);
+
+export const getSingleUserOrderAsync = createAsyncThunk(
+  "order/getOrderOfUser",
+  async (orderId: string) => {
+    const res: any = await getOrderOfUser(orderId);
     return res.data;
   }
 );
@@ -90,6 +100,19 @@ const orderSlice = createSlice({
         ? action.error.message
         : "Something went wrong";
     });
+    builder.addCase(getSingleUserOrderAsync.pending, (state) => {
+      state.isOrderLoading = true;
+    });
+    builder.addCase(getSingleUserOrderAsync.fulfilled, (state, action) => {
+      state.isOrderLoading = false;
+      state.selectedOrder = action.payload.order;
+    });
+    builder.addCase(getSingleUserOrderAsync.rejected, (state, action) => {
+      state.isOrderLoading = false;
+      state.orderError = action.error.message
+        ? action.error.message
+        : "Something went wrong";
+    });
   },
 });
 
@@ -103,6 +126,8 @@ export const selectOrdersLoading = (state: RootState) =>
   state.orderState.isOrderLoading;
 export const selectUserOrders = (state: RootState) =>
   state.orderState.userOrders;
+export const selectSelectedOrder = (state: RootState) =>
+  state.orderState.selectedOrder;
 
 export const { clearOrderError, clearOrderMessage } = orderSlice.actions;
 

@@ -5,7 +5,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useAppDispatch } from "../../../hooks";
-import { loginUserAsync } from "../../../redux/features/User/userSlice";
+import {
+  fetchUserDetailsAsync,
+  loginUserAsync,
+  userSlice,
+} from "../../../redux/features/User/userSlice";
 
 export default function Login() {
   const dispatch = useAppDispatch();
@@ -31,7 +35,9 @@ export default function Login() {
               email: data.email,
               password: data.password,
             };
-            dispatch(loginUserAsync(loginData));
+            dispatch(loginUserAsync(loginData)).then(() => {
+              dispatch(fetchUserDetailsAsync());
+            });
           })}
         >
           <div>
