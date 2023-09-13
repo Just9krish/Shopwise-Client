@@ -6,6 +6,7 @@ import {
   deleteUserAddress,
   fetchUserDetails,
   loginUser,
+  logoutUser,
   updateUserAddress,
   updateUserInfo,
 } from "./userAPI";
@@ -38,6 +39,14 @@ export const loginUserAsync = createAsyncThunk(
   "user/loginUserAsync",
   async (loginData: LoginData) => {
     const res: any = await loginUser(loginData);
+    return res.data;
+  }
+);
+
+export const logoutUserAsync = createAsyncThunk(
+  "user/logoutUserAsync",
+  async () => {
+    const res: any = await logoutUser();
     return res.data;
   }
 );
@@ -199,6 +208,16 @@ export const userSlice = createSlice({
       })
       .addCase(changeUserPasswordAsync.rejected, (state, action) => {
         // state.isUserLoading = false;
+        state.userError = action.error.message
+          ? action.error.message
+          : "Something went wrong";
+      })
+      .addCase(logoutUserAsync.fulfilled, (state, action) => {
+        state.isUserAuthenticated = false;
+        state.user = null;
+        state.userMessage = action.payload.message;
+      })
+      .addCase(logoutUserAsync.rejected, (state, action) => {
         state.userError = action.error.message
           ? action.error.message
           : "Something went wrong";

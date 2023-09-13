@@ -27,7 +27,6 @@ const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
 const ProductsPage = loadable(() => import("./pages/ProductsPage"));
 const ProductPage = loadable(() => import("./pages/ProductPage"));
 const SignupPage = loadable(() => import("./pages/User/SignupPage"));
-const BestSelling = loadable(() => import("./pages/BestSelling"));
 const EventsPage = loadable(() => import("./pages/EventsPage"));
 const FAQ = loadable(() => import("./pages/FAQPage"));
 const ProfilePage = loadable(() => import("./pages/User/ProfilePage"));
@@ -149,14 +148,6 @@ function App() {
           }
         />
 
-        <Route
-          path="/best-selling"
-          element={
-            <Layout>
-              <BestSelling />
-            </Layout>
-          }
-        />
         <Route
           path="/events"
           element={

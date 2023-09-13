@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "../../../hooks";
 import style from "../../../styles/style";
 import { API_URL } from "../../../constant";
 import { selectUser } from "../../../redux/features/User/userSlice";
+import { fetchCartDetailsAsync } from "../../../redux/features/Cart/cartSlice";
 
 type SavedAddress = {
   fullName: string;
@@ -113,6 +114,8 @@ export default function Payment({ toggleActiveStep }: IProps) {
               withCredentials: true,
             });
 
+            dispatch(fetchCartDetailsAsync());
+
             toast.success("Order created successfully");
             localStorage.removeItem("shipping_address");
             localStorage.setItem("latestorder", JSON.stringify(data));
@@ -164,10 +167,10 @@ export default function Payment({ toggleActiveStep }: IProps) {
         },
         withCredentials: true,
       });
+      dispatch(fetchCartDetailsAsync());
       toast.success("Order created successfully");
       localStorage.removeItem("shipping_address");
       localStorage.setItem("latestorder", JSON.stringify(data));
-      dispatch({ type: "clearCart" });
 
       toggleActiveStep(2);
     } catch (err: AxiosError | any) {

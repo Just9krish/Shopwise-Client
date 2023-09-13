@@ -12,10 +12,9 @@ import { CgMenuLeft } from "react-icons/cg";
 import { IoIosArrowForward } from "react-icons/io";
 import { RiCloseLine } from "react-icons/ri";
 import { IProduct } from "../../../Interface";
-import { host } from "../../../server";
 import { useAppSelector, useAppDispatch } from "../../../hooks";
 import { selectProducts } from "../../../redux/features/Products/productSlice";
-import { toggleCart } from "../../../redux/features/Cart/cartSlice";
+import { selectCart, toggleCart } from "../../../redux/features/Cart/cartSlice";
 import getImageSource from "../../../helper/getImageSource";
 const Dropdown = loadable(() => import("./Dropdown/Dropdown"));
 const Navbar = loadable(() => import("./Navbar/Navbar"));
@@ -34,6 +33,7 @@ export default function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState<boolean>(false);
 
   const dispatch = useAppDispatch();
+  const cart = useAppSelector(selectCart);
 
   const userState = useAppSelector((state) => state.userState);
   const allProducts = useAppSelector(selectProducts);
@@ -174,7 +174,7 @@ export default function Header() {
                 onClick={() => dispatch(toggleCart())}
               />
               <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
-                0
+                {cart?.length}
               </span>
             </div>
           </div>

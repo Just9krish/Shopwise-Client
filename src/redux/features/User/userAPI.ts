@@ -53,6 +53,22 @@ export function loginUser(loginData: LoginData) {
   });
 }
 
+export function logoutUser() {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res: AxiosResponse = await axios.get(API_URL.LOGOUT_USER, config);
+
+      resolve({ data: res.data });
+    } catch (error: AxiosError | any) {
+      if (error.response) {
+        reject(error.response.data);
+      } else {
+        reject(error);
+      }
+    }
+  });
+}
+
 export function fetchUserDetails() {
   return new Promise(async (resolve, reject) => {
     try {

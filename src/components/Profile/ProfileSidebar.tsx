@@ -3,11 +3,9 @@ import { RxPerson } from "react-icons/rx";
 import { HiOutlineShoppingBag, HiReceiptRefund } from "react-icons/hi";
 import { AiOutlineLogout } from "react-icons/ai";
 import { TbAddressBook } from "react-icons/tb";
-import { useNavigate } from "react-router-dom";
 import { MdOutlinePassword, MdOutlineTrackChanges } from "react-icons/md";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { API_URL } from "../../constant";
+import { useAppDispatch } from "../../hooks";
+import { logoutUserAsync } from "../../redux/features/User/userSlice";
 
 interface IProps {
   setActiveTab: (prev: number) => void;
@@ -15,8 +13,6 @@ interface IProps {
 }
 
 export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
-  const navigate = useNavigate();
-
   const userLinks = [
     { linkName: "Profile", icon: <RxPerson title="Profile" />, id: 1 },
     {
@@ -38,20 +34,7 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
     { linkName: "address", icon: <TbAddressBook title="Address" />, id: 6 },
   ];
 
-  async function handleLogout() {
-    try {
-      const res = await axios.get(API_URL.LOGOUT_USER, {
-        withCredentials: true,
-      });
-
-      toast.success(res.data.message);
-      window.location.reload();
-      navigate("/");
-    } catch (error) {
-      console.log(error);
-      toast.error("Error occured!");
-    }
-  }
+  const dispatch = useAppDispatch();
 
   return (
     <div className="bg-white shadow rounded-lg py-8 flex flex-col items-center md:items-start lg:block">
@@ -77,7 +60,7 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
       ))}
       <div
         className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-5 py-4 lg:px-12 hover:bg-orange-200`}
-        onClick={handleLogout}
+        onClick={() => dispatch(logoutUserAsync())}
       >
         <span
           className={`${
