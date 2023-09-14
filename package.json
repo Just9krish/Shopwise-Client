@@ -7,12 +7,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
-  },
-  "prettier": {
-    "ignore": [
-      "./tailwind.config.js"
-    ]
+    "preview": "vite preview",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -23,10 +21,10 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@stripe/react-stripe-js": "^2.2.0",
     "@stripe/stripe-js": "^2.1.2",
-    "@types/loadable__component": "^5.13.5",
-    "@types/react-redux": "^7.1.26",
     "axios": "^1.5.0",
     "country-state-city": "^3.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-hook-form": "^7.46.1",
     "react-icons": "^4.11.0",
     "react-redux": "^8.1.2",
@@ -37,14 +35,28 @@
     "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
+    "@types/loadable__component": "^5.13.5",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "@types/react-redux": "^7.1.26",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-slick": "^0.23.10",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0",
     "@vitejs/plugin-react": "^4.0.4",
     "autoprefixer": "^10.4.15",
+    "eslint": "^8.2.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-prettier": "^5.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "postcss": "^8.4.29",
+    "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
     "vite": "^4.4.9"

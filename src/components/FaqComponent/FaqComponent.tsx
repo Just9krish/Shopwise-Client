@@ -1,19 +1,14 @@
-import { useState } from "react";
-import { IQuestion } from "../../Interface";
-import {
-  MdOutlineKeyboardArrowUp,
-  MdOutlineKeyboardArrowDown,
-} from "react-icons/md";
-import style from "../../styles/style";
+import { useState } from 'react';
+import { IQuestion } from '../../Interface';
+import { MdOutlineKeyboardArrowUp, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import style from '../../styles/style';
 
 interface IProps {
   questions: IQuestion[];
 }
 
 function FaqComponent({ questions }: IProps) {
-  const [expandedQuestionIndex, setExpandedQuestionIndex] = useState<
-    number | null
-  >(null);
+  const [expandedQuestionIndex, setExpandedQuestionIndex] = useState<number | null>(null);
 
   const handleQuestionClick = (index: number) => {
     if (expandedQuestionIndex === index) {

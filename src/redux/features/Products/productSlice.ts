@@ -1,6 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
-import { FilterQuery, IDeleteProduct, IProductState } from "./interface";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { FilterQuery, IDeleteProduct, IProductState } from './interface';
 import {
   deleteProduct,
   getAllProductsByFilters,
@@ -8,7 +7,8 @@ import {
   getFeaturedProducts,
   getProduct,
   getShopProducts,
-} from "./productAPI";
+} from './productAPI';
+import { RootState } from '../../type';
 
 const initialState: IProductState = {
   allProducts: [],
@@ -16,14 +16,14 @@ const initialState: IProductState = {
   selectedProduct: null,
   productError: null,
   totalProducts: 0,
-  productMessage: "",
+  productMessage: '',
   shopProducts: [],
   bestDealsProducts: [],
   featuredProducts: [],
 };
 
 export const getAllProductsByFiltersAsync = createAsyncThunk(
-  "product/getAllProducts",
+  'product/getAllProducts',
   async ({ filter, sort, pagination }: FilterQuery) => {
     const res: any = await getAllProductsByFilters({
       filter,
@@ -34,16 +34,13 @@ export const getAllProductsByFiltersAsync = createAsyncThunk(
   }
 );
 
-export const getProductAsync = createAsyncThunk(
-  "product/getProduct",
-  async (productId: string) => {
-    const res: any = await getProduct(productId);
-    return res.data;
-  }
-);
+export const getProductAsync = createAsyncThunk('product/getProduct', async (productId: string) => {
+  const res: any = await getProduct(productId);
+  return res.data;
+});
 
 export const getShopProductsAsync = createAsyncThunk(
-  "product/getShopProducts",
+  'product/getShopProducts',
   async (shopId: string) => {
     const res: any = await getShopProducts(shopId);
     return res.data;
@@ -51,7 +48,7 @@ export const getShopProductsAsync = createAsyncThunk(
 );
 
 export const deleteShopProductAsync = createAsyncThunk(
-  "product/deleteShopProduct",
+  'product/deleteShopProduct',
   async ({ productId, shopId }: IDeleteProduct) => {
     const res: any = await deleteProduct({ productId, shopId });
     return res.data;
@@ -59,7 +56,7 @@ export const deleteShopProductAsync = createAsyncThunk(
 );
 
 export const getBestDealsProductsAsync = createAsyncThunk(
-  "product/getBestDealsProducts",
+  'product/getBestDealsProducts',
   async () => {
     const res: any = await getBestDealsProducts();
     return res.data;
@@ -67,7 +64,7 @@ export const getBestDealsProductsAsync = createAsyncThunk(
 );
 
 export const getFeaturedProductsAsync = createAsyncThunk(
-  "product/getFeaturedProducts",
+  'product/getFeaturedProducts',
   async () => {
     const res: any = await getFeaturedProducts();
     return res.data;
@@ -75,7 +72,7 @@ export const getFeaturedProductsAsync = createAsyncThunk(
 );
 
 const productsSlice = createSlice({
-  name: "product",
+  name: 'product',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -89,9 +86,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(getAllProductsByFiltersAsync.rejected, (state, action) => {
       state.isProductLoading = false;
-      state.productError = action.error.message
-        ? action.error.message
-        : "Something went wrong";
+      state.productError = action.error.message ? action.error.message : 'Something went wrong';
     });
     builder.addCase(getProductAsync.pending, (state) => {
       state.isProductLoading = true;
@@ -102,9 +97,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(getProductAsync.rejected, (state, action) => {
       state.isProductLoading = false;
-      state.productError = action.error.message
-        ? action.error.message
-        : "Something went wrong";
+      state.productError = action.error.message ? action.error.message : 'Something went wrong';
       state.selectedProduct = null;
     });
     builder.addCase(getShopProductsAsync.pending, (state) => {
@@ -116,9 +109,7 @@ const productsSlice = createSlice({
     });
     builder.addCase(getShopProductsAsync.rejected, (state, action) => {
       state.isProductLoading = false;
-      state.productError = action.error.message
-        ? action.error.message
-        : "Something went wrong";
+      state.productError = action.error.message ? action.error.message : 'Something went wrong';
       state.selectedProduct = null;
     });
     builder.addCase(deleteShopProductAsync.pending, (state) => {
@@ -127,17 +118,13 @@ const productsSlice = createSlice({
     builder.addCase(deleteShopProductAsync.fulfilled, (state, action: any) => {
       state.isProductLoading = false;
       const deletedProductId = action.payload.deletedProductId;
-      state.shopProducts = state.shopProducts.filter(
-        (product) => product._id !== deletedProductId
-      );
+      state.shopProducts = state.shopProducts.filter((product) => product._id !== deletedProductId);
 
       state.productMessage = action.payload.message;
     });
     builder.addCase(deleteShopProductAsync.rejected, (state, action) => {
       state.isProductLoading = false;
-      state.productError = action.error.message
-        ? action.error.message
-        : "Something went wrong";
+      state.productError = action.error.message ? action.error.message : 'Something went wrong';
       state.selectedProduct = null;
     });
     builder.addCase(getBestDealsProductsAsync.pending, (state) => {
@@ -157,23 +144,14 @@ const productsSlice = createSlice({
   },
 });
 
-export const selectProducts = (state: RootState) =>
-  state.productsState.allProducts;
-export const selectProductLoading = (state: RootState) =>
-  state.productsState.isProductLoading;
-export const selectProductError = (state: RootState) =>
-  state.productsState.productError;
-export const selectProductMessage = (state: RootState) =>
-  state.productsState.productMessage;
-export const selectShopProducts = (state: RootState) =>
-  state.productsState.shopProducts;
-export const selectSelectedProduct = (state: RootState) =>
-  state.productsState.selectedProduct;
-export const selectTotalProducts = (state: RootState) =>
-  state.productsState.totalProducts;
-export const selectBestDealsProducts = (state: RootState) =>
-  state.productsState.bestDealsProducts;
-export const selectFeaturedProducts = (state: RootState) =>
-  state.productsState.featuredProducts;
+export const selectProducts = (state: RootState) => state.productsState.allProducts;
+export const selectProductLoading = (state: RootState) => state.productsState.isProductLoading;
+export const selectProductError = (state: RootState) => state.productsState.productError;
+export const selectProductMessage = (state: RootState) => state.productsState.productMessage;
+export const selectShopProducts = (state: RootState) => state.productsState.shopProducts;
+export const selectSelectedProduct = (state: RootState) => state.productsState.selectedProduct;
+export const selectTotalProducts = (state: RootState) => state.productsState.totalProducts;
+export const selectBestDealsProducts = (state: RootState) => state.productsState.bestDealsProducts;
+export const selectFeaturedProducts = (state: RootState) => state.productsState.featuredProducts;
 
 export default productsSlice.reducer;

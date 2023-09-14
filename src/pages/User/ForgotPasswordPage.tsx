@@ -1,6 +1,7 @@
-import loadable from "@loadable/component";
+import loadable from '@loadable/component';
+
 const ForgotPassword = loadable(
-  () => import("../../components/Auth/forgotpassword/ForgotPassword")
+  () => import('../../components/Auth/forgotpassword/ForgotPassword')
 );
 
 export default function ForgotPasswordPage() {

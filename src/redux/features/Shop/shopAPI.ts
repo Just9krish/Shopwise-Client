@@ -1,22 +1,18 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { API_URL } from "../../../constant";
-import { IShopData, IShopLoginData } from "./interface";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { API_URL } from '../../../constant';
+import { IShopData, IShopLoginData } from './interface';
 
 const config = {
-  headers: { "Content-Type": "application/json" },
+  headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 };
 
 export function createShop(shopData: IShopData) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.post(
-        API_URL.CREATE_SHOP,
-        shopData,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const res: AxiosResponse = await axios.post(API_URL.CREATE_SHOP, shopData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {
@@ -31,11 +27,7 @@ export function createShop(shopData: IShopData) {
 export async function loginShop(loginData: IShopLoginData) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.post(
-        API_URL.LOGIN_SHOP,
-        loginData,
-        config
-      );
+      const res: AxiosResponse = await axios.post(API_URL.LOGIN_SHOP, loginData, config);
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {

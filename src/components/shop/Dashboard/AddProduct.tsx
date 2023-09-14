@@ -1,22 +1,22 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import generateProductName from "../../../helper/generateRandomProductName";
-import categoriesData from "../../../constant/categories.json";
-import calculateDiscountPrice from "../../../helper/calculateDiscountPrice";
-import { IoAddCircleOutline } from "react-icons/io5";
-import { RxCross2 } from "react-icons/rx";
-import { toast } from "react-toastify";
-import axios from "axios";
-import { API_URL } from "../../../constant";
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import generateProductName from '../../../helper/generateRandomProductName';
+import categoriesData from '../../../constant/categories.json';
+import calculateDiscountPrice from '../../../helper/calculateDiscountPrice';
+import { IoAddCircleOutline } from 'react-icons/io5';
+import { RxCross2 } from 'react-icons/rx';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { API_URL } from '../../../constant';
 
 export default function AddProduct() {
   const navigate = useNavigate();
 
   const [productName, setProductName] = useState(generateProductName);
-  const [productDescription, setProductDescription] = useState("");
+  const [productDescription, setProductDescription] = useState('');
   const [productImages, setProductImages] = useState<File[]>([]);
-  const [productCategory, setProductCategory] = useState("");
-  const [productTags, setProductTags] = useState("");
+  const [productCategory, setProductCategory] = useState('');
+  const [productTags, setProductTags] = useState('');
   const [productPrice, setProductPrice] = useState(0);
   const [productDiscountPercentage, setproductDiscountPercentage] = useState(0);
   const [productDiscountPrice, setProductDiscountPrice] = useState(0);
@@ -40,27 +40,27 @@ export default function AddProduct() {
     const form = new FormData();
 
     productImages.forEach((img) => {
-      form.append("images", img);
+      form.append('images', img);
     });
 
-    form.append("name", productName.toString());
-    form.append("description", productDescription.toString());
-    form.append("category", productCategory.toString());
-    form.append("tags", productTags.toString());
-    form.append("price", productPrice.toString());
-    form.append("discount_percentage", productDiscountPercentage.toString());
-    form.append("discount_price", productDiscountPrice.toString());
-    form.append("stock", productStock.toString());
+    form.append('name', productName.toString());
+    form.append('description', productDescription.toString());
+    form.append('category', productCategory.toString());
+    form.append('tags', productTags.toString());
+    form.append('price', productPrice.toString());
+    form.append('discount_percentage', productDiscountPercentage.toString());
+    form.append('discount_price', productDiscountPrice.toString());
+    form.append('stock', productStock.toString());
 
     try {
       axios.defaults.withCredentials = true;
-      const config = { headers: { "Content-Type": "multipart/form-data" } };
+      const config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
       const res = await axios.post(API_URL.ADD_PRODUCT, form, config);
 
       if (res.status == 201) {
-        toast.success("Product Added Successfully");
-        navigate("/shop-products");
+        toast.success('Product Added Successfully');
+        navigate('/shop-products');
       }
     } catch (error: any) {
       console.log(error);
@@ -73,9 +73,7 @@ export default function AddProduct() {
   }
 
   useEffect(() => {
-    setProductDiscountPrice(
-      calculateDiscountPrice(productPrice, productDiscountPercentage)
-    );
+    setProductDiscountPrice(calculateDiscountPrice(productPrice, productDiscountPercentage));
   }, [productPrice, productDiscountPercentage]);
 
   return (
@@ -169,10 +167,7 @@ export default function AddProduct() {
         </div>
 
         <div>
-          <label
-            className="text-sm md:text-base"
-            htmlFor="produtdiscountpercentage"
-          >
+          <label className="text-sm md:text-base" htmlFor="produtdiscountpercentage">
             Product Discount (between 1-90 in percentage(%))
           </label>
           <input
@@ -183,9 +178,7 @@ export default function AddProduct() {
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="produtdiscountpercentage"
             name="productDiscountPercentage"
-            onChange={(e) =>
-              setproductDiscountPercentage(parseInt(e.target.value))
-            }
+            onChange={(e) => setproductDiscountPercentage(parseInt(e.target.value))}
             value={productDiscountPercentage}
             placeholder="Enter your product discount percentage"
           />

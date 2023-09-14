@@ -1,8 +1,8 @@
-import loadable from "@loadable/component";
-import { useAppSelector } from "../../hooks";
-import style from "../../styles/style";
-import { selectAllEvents } from "../../redux/features/Events/eventSlice";
-const EventCard = loadable(() => import("./EventCard/EventCard"));
+import loadable from '@loadable/component';
+import { useAppSelector } from '../../hooks';
+import style from '../../styles/style';
+import { selectAllEvents } from '../../redux/features/Events/eventSlice';
+const EventCard = loadable(() => import('./EventCard/EventCard'));
 
 export default function Events() {
   const events = useAppSelector(selectAllEvents);
@@ -15,10 +15,7 @@ export default function Events() {
     const endDate = new Date(currentEvent.endDate);
     const closestEndDate = new Date(closestEvent.endDate);
 
-    if (
-      endDate > currentDate &&
-      (closestEndDate === null || endDate < closestEndDate)
-    ) {
+    if (endDate > currentDate && (closestEndDate === null || endDate < closestEndDate)) {
       return currentEvent;
     }
 

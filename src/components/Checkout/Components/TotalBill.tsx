@@ -1,22 +1,19 @@
-import axios, { AxiosError } from "axios";
-import { FormEvent, useEffect, useState } from "react";
-import { RxCross2 } from "react-icons/rx";
-import { toast } from "react-toastify";
-import { formattedPrice } from "../../../helper/formatPrice";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { ICoupon } from "../../../Interface";
-import style from "../../../styles/style";
-import { getCartItemPrice } from "../../../helper/getCartItemPrice";
-import { API_URL } from "../../../constant";
-import {
-  selectCart,
-  selectCartPrice,
-} from "../../../redux/features/Cart/cartSlice";
+import axios, { AxiosError } from 'axios';
+import { FormEvent, useEffect, useState } from 'react';
+import { RxCross2 } from 'react-icons/rx';
+import { toast } from 'react-toastify';
+import { formattedPrice } from '../../../helper/formatPrice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { ICoupon } from '../../../Interface';
+import style from '../../../styles/style';
+import { getCartItemPrice } from '../../../helper/getCartItemPrice';
+import { API_URL } from '../../../constant';
+import { selectCart, selectCartPrice } from '../../../redux/features/Cart/cartSlice';
 
 export default function TotalBill() {
   const cart = useAppSelector(selectCart);
   const cartPrice = useAppSelector(selectCartPrice);
-  const [enterCouponCode, setEnterCouponCode] = useState("");
+  const [enterCouponCode, setEnterCouponCode] = useState('');
   const dispatch = useAppDispatch();
 
   // to show difference between the mrp price and selling price
@@ -33,9 +30,7 @@ export default function TotalBill() {
       `}
       >
         <p className="text-[#000000a4]">Cart MRP Value:</p>
-        <p className="font-semibold text-lg line-through">
-          {formattedPrice(mrpCartPrice)}
-        </p>
+        <p className="font-semibold text-lg line-through">{formattedPrice(mrpCartPrice)}</p>
       </div>
       <div
         className={`${style.flex_normal} justify-between  

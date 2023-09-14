@@ -1,19 +1,16 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { API_URL } from "../../../constant";
-import { IUpdateOrderStatus } from "./interface";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { API_URL } from '../../../constant';
+import { IUpdateOrderStatus } from './interface';
 
 const config = {
-  headers: { "Content-Type": "application/json" },
+  headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 };
 
 export function getAllOrdersOfShop(shopId: string) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.get(
-        API_URL.GET_SHOP_ORDERS(shopId),
-        config
-      );
+      const res: AxiosResponse = await axios.get(API_URL.GET_SHOP_ORDERS(shopId), config);
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {
@@ -28,10 +25,7 @@ export function getAllOrdersOfShop(shopId: string) {
 export function getAllOrdersOfUser(userId: string) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.get(
-        API_URL.GET_USER_ORDERS(userId),
-        config
-      );
+      const res: AxiosResponse = await axios.get(API_URL.GET_USER_ORDERS(userId), config);
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {
@@ -43,11 +37,7 @@ export function getAllOrdersOfUser(userId: string) {
   });
 }
 
-export function updateOrderStatus({
-  orderId,
-  orderStatus,
-  shopId,
-}: IUpdateOrderStatus) {
+export function updateOrderStatus({ orderId, orderStatus, shopId }: IUpdateOrderStatus) {
   return new Promise(async (resolve, reject) => {
     try {
       const res: AxiosResponse = await axios.put(
@@ -69,10 +59,7 @@ export function updateOrderStatus({
 export function getOrderOfUser(orderId: string) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.get(
-        API_URL.GET_SINGLE_USER_ORDER(orderId),
-        config
-      );
+      const res: AxiosResponse = await axios.get(API_URL.GET_SINGLE_USER_ORDER(orderId), config);
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {

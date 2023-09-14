@@ -1,15 +1,15 @@
-import logo from "../../../assets/shopwise.png";
-import { useState } from "react";
-import style from "../../../styles/style";
-import { Link, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useAppDispatch } from "../../../hooks";
+import logo from '../../../assets/shopwise.png';
+import { useState } from 'react';
+import style from '../../../styles/style';
+import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { useAppDispatch } from '../../../hooks';
 import {
   fetchUserDetailsAsync,
   loginUserAsync,
   userSlice,
-} from "../../../redux/features/User/userSlice";
+} from '../../../redux/features/User/userSlice';
 
 export default function Login() {
   const dispatch = useAppDispatch();
@@ -50,18 +50,16 @@ export default function Login() {
               autoComplete="email"
               placeholder="Email"
               className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-              {...register("email", {
-                required: "Email is required!",
+              {...register('email', {
+                required: 'Email is required!',
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: "Email is not Valid!",
+                  message: 'Email is not Valid!',
                 },
               })}
             />
             {errors?.email && (
-              <span className="text-red-500 text-sm">
-                {errors.email.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors.email.message?.toString()}</span>
             )}
           </div>
 
@@ -71,10 +69,10 @@ export default function Login() {
             </label>
             <div className="relative">
               <input
-                type={isPasswordShown ? "text" : "password"}
+                type={isPasswordShown ? 'text' : 'password'}
                 className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-                {...register("password", {
-                  required: "Password is requried!",
+                {...register('password', {
+                  required: 'Password is requried!',
                 })}
               />
               <div
@@ -89,9 +87,7 @@ export default function Login() {
               </div>
             </div>
             {errors?.password && (
-              <span className="text-red-500 text-sm">
-                {errors?.password.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors?.password.message?.toString()}</span>
             )}
           </div>
 
@@ -102,10 +98,7 @@ export default function Login() {
                 id="remeberme"
                 className="h-4 w-4 text-[#ff7d1a] focus:ring-orange-500 border-gray-300 rounded"
               />
-              <label
-                htmlFor="remeberme"
-                className="ml-2 block text-sm text-gray-900"
-              >
+              <label htmlFor="remeberme" className="ml-2 block text-sm text-gray-900">
                 Remeber me
               </label>
             </div>

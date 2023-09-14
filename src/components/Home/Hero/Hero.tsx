@@ -1,10 +1,10 @@
-import loadable from "@loadable/component";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useState } from "react";
-import { sliderItems } from "../../../constant/data";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import Slider from "react-slick";
+import loadable from '@loadable/component';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { useState } from 'react';
+import { sliderItems } from '../../../constant/data';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import Slider from 'react-slick';
 
 export default function Hero() {
   const [sliderRef, setSliderRef] = useState<Slider | null>(null);
@@ -41,11 +41,7 @@ export default function Hero() {
       <Slider {...settings} className="w-full h-full" ref={setSliderRef}>
         {sliderItems?.map((i) => (
           <div key={i.id}>
-            <img
-              className="lg:h-[80vh] w-full md:object-cover"
-              loading="lazy"
-              src={i.img}
-            />
+            <img className="lg:h-[80vh] w-full md:object-cover" loading="lazy" src={i.img} />
           </div>
         ))}
       </Slider>

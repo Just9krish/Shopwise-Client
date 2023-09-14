@@ -1,17 +1,17 @@
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import { useEffect } from "react";
-import { AiOutlineDelete, AiOutlineEye } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { formattedPrice } from "../../../helper/formatPrice";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import Loader from "../../Loader/Loader";
-import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import { DataGrid, GridCellParams } from '@mui/x-data-grid';
+import { useEffect } from 'react';
+import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import { formattedPrice } from '../../../helper/formatPrice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import Loader from '../../Loader/Loader';
+import { selectShop } from '../../../redux/features/Shop/shopSlice';
 import {
   deleteShopProductAsync,
   getShopProductsAsync,
   selectProductLoading,
   selectShopProducts,
-} from "../../../redux/features/Products/productSlice";
+} from '../../../redux/features/Products/productSlice';
 
 type row = {
   id: string;
@@ -39,67 +39,67 @@ export default function ShopAllProducts() {
 
   const columns = [
     {
-      field: "id",
-      headerName: "Product Id",
+      field: 'id',
+      headerName: 'Product Id',
       minWidth: 150,
       flex: 0.7,
       maxWidth: 250,
     },
     {
-      field: "name",
-      headerName: "Name",
+      field: 'name',
+      headerName: 'Name',
       minWidth: 180,
       flex: 1.4,
       maxWidth: 350,
     },
     {
-      field: "price",
-      headerName: "Price",
+      field: 'price',
+      headerName: 'Price',
       minWidth: 80,
       flex: 0.6,
       maxWidth: 120,
     },
     {
-      field: "discountpercentage",
-      headerName: "Discount Percentage",
+      field: 'discountpercentage',
+      headerName: 'Discount Percentage',
       minWidth: 80,
       flex: 0.6,
       maxWidth: 100,
     },
     {
-      field: "discountprice",
-      headerName: "Discount Price",
+      field: 'discountprice',
+      headerName: 'Discount Price',
       minWidth: 80,
       flex: 0.6,
       maxWidth: 120,
     },
     {
-      field: "stock",
-      headerName: "Stock",
-      type: "number",
+      field: 'stock',
+      headerName: 'Stock',
+      type: 'number',
       minWidth: 80,
       flex: 0.6,
       maxWidth: 120,
     },
     {
-      field: "sold",
-      headerName: "Sold out",
-      type: "number",
+      field: 'sold',
+      headerName: 'Sold out',
+      type: 'number',
       minWidth: 100,
       flex: 0.6,
       maxWidth: 150,
     },
     {
-      field: "Preview",
+      field: 'Preview',
       flex: 0.8,
       minWidth: 100,
-      headerName: "",
-      type: "number",
+      headerName: '',
+      type: 'number',
       sortable: false,
       maxWidth: 100,
       renderCell: (params: GridCellParams) => {
         const d = params.row.name;
-        const product_name = d.replace(/\s+/g, "-");
+        const product_name = d.replace(/\s+/g, '-');
         return (
           <>
             <Link to={`/products/${product_name}`}>
@@ -112,20 +112,18 @@ export default function ShopAllProducts() {
       },
     },
     {
-      field: "Delete",
+      field: 'Delete',
       flex: 0.8,
       minWidth: 100,
-      headerName: "",
-      type: "number",
+      headerName: '',
+      type: 'number',
       sortable: false,
       maxWidth: 100,
       renderCell: (params: GridCellParams) => {
         return (
           <>
             <button
-              onClick={() =>
-                deleteProductHandler(params.id.toString(), shop?._id!)
-              }
+              onClick={() => deleteProductHandler(params.id.toString(), shop?._id!)}
               className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all"
             >
               <AiOutlineDelete size={20} />
@@ -156,12 +154,7 @@ export default function ShopAllProducts() {
         <Loader />
       ) : (
         <div className="w-full lg:mx-8 pt-1 lg:mt-10 bg-white overflow-x-scroll">
-          <DataGrid
-            rows={row}
-            columns={columns}
-            autoHeight
-            disableRowSelectionOnClick
-          />
+          <DataGrid rows={row} columns={columns} autoHeight disableRowSelectionOnClick />
         </div>
       )}
     </>

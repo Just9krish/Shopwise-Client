@@ -1,11 +1,11 @@
-import { BiMenuAltLeft } from "react-icons/bi";
-import { IoIosArrowDown } from "react-icons/io";
-import { useState, useEffect, useRef, MouseEvent } from "react";
-import style from "../../../../styles/style";
-import categories from "../../../../constant/categories.json";
-import { useNavigate } from "react-router-dom";
-import { ICategory } from "../../../../Interface";
-import { Category } from "../../../../pages/ProductsPage";
+import { BiMenuAltLeft } from 'react-icons/bi';
+import { IoIosArrowDown } from 'react-icons/io';
+import { useState, useEffect, useRef, MouseEvent } from 'react';
+import style from '../../../../styles/style';
+import categories from '../../../../constant/categories.json';
+import { useNavigate } from 'react-router-dom';
+import { ICategory } from '../../../../Interface';
+import { Category } from '../../../../pages/ProductsPage';
 
 export default function Dropdown() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -29,19 +29,16 @@ export default function Dropdown() {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
 
   return (
     <div onClick={handleClick} ref={ref}>
       <div className="relative h-[60px] w-[270px] hidden lg:block">
-        <BiMenuAltLeft
-          size={30}
-          className="absolute left-2 top-1/2 -translate-y-1/2"
-        />
+        <BiMenuAltLeft size={30} className="absolute left-2 top-1/2 -translate-y-1/2" />
         <button
           className={`font-medium w-full h-full mt-[10px] text-[17px] bg-white ${style.flex_normal} justify-between pl-10 rounded-t-md`}
         >
@@ -50,7 +47,7 @@ export default function Dropdown() {
         <IoIosArrowDown
           size={20}
           className="absolute top-1/2 -translate-y-1/2 right-2"
-          color={isDropdownOpen ? "orange" : "black"}
+          color={isDropdownOpen ? 'orange' : 'black'}
         />
 
         {isDropdownOpen ? (

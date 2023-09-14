@@ -1,6 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { addToWishlist, getWishlist, removeFromWishlist } from "./wishlistAPI";
-import { RootState } from "../../store";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { addToWishlist, getWishlist, removeFromWishlist } from './wishlistAPI';
+import { RootState } from '../../type';
 
 const initialState = {
   wishlist: [],
@@ -8,7 +8,7 @@ const initialState = {
 };
 
 export const addToWishlistAsync = createAsyncThunk(
-  "wishlist/addToWishlist",
+  'wishlist/addToWishlist',
   async (productId: string) => {
     const response: any = await addToWishlist(productId);
     return response.data;
@@ -16,23 +16,20 @@ export const addToWishlistAsync = createAsyncThunk(
 );
 
 export const removeToWishlistAsync = createAsyncThunk(
-  "wishlist/removeToWishlist",
+  'wishlist/removeToWishlist',
   async (productId: string) => {
     const response: any = await removeFromWishlist(productId);
     return response.data;
   }
 );
 
-export const getWishlistAsync = createAsyncThunk(
-  "wishlist/getWishlist",
-  async () => {
-    const response: any = await getWishlist();
-    return response.data;
-  }
-);
+export const getWishlistAsync = createAsyncThunk('wishlist/getWishlist', async () => {
+  const response: any = await getWishlist();
+  return response.data;
+});
 
 export const wishlistSlice = createSlice({
-  name: "wishlist",
+  name: 'wishlist',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -70,9 +67,7 @@ export const wishlistSlice = createSlice({
   },
 });
 
-export const selectWishlist = (state: RootState) =>
-  state.wishlistState.wishlist;
-export const selectWishlistLoading = (state: RootState) =>
-  state.wishlistState.isWishlistLoading;
+export const selectWishlist = (state: RootState) => state.wishlistState.wishlist;
+export const selectWishlistLoading = (state: RootState) => state.wishlistState.isWishlistLoading;
 
 export default wishlistSlice.reducer;

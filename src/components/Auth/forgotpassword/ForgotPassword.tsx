@@ -1,9 +1,9 @@
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import logo from "../../../assets/shopwise.png";
-import axios from "axios";
-import { API_URL } from "../../../constant";
-import { toast } from "react-toastify";
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import logo from '../../../assets/shopwise.png';
+import axios from 'axios';
+import { API_URL } from '../../../constant';
+import { toast } from 'react-toastify';
 
 export default function ForgotPassword() {
   const {
@@ -41,30 +41,23 @@ export default function ForgotPassword() {
           className="space-y-6"
         >
           <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
+            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
             </label>
             <div className="mt-2">
               <input
                 id="email"
-                {...register("email", {
-                  required: "email is required",
+                {...register('email', {
+                  required: 'email is required',
                   pattern: {
                     value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-                    message: "email not valid",
+                    message: 'email not valid',
                   },
                 })}
                 type="email"
                 className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
               />
-              {errors.email && (
-                <p className="text-red-500">
-                  {errors.email.message?.toString()}
-                </p>
-              )}
+              {errors.email && <p className="text-red-500">{errors.email.message?.toString()}</p>}
             </div>
           </div>
 
@@ -79,7 +72,7 @@ export default function ForgotPassword() {
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Send me back to{" "}
+          Send me back to{' '}
           <Link
             to="/login"
             className="font-semibold leading-6 text-[#ff7d1a] hover:text-orange-500"

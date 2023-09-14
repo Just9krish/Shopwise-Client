@@ -1,14 +1,14 @@
-import axios, { AxiosError } from "axios";
-import { MouseEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import formateDate from "../../helper/formatDate";
-import { useAppSelector } from "../../hooks";
-import { host } from "../../server";
-import style from "../../styles/style";
-import { API_URL } from "../../constant";
-import { selectShop } from "../../redux/features/Shop/shopSlice";
-import getImageSource from "../../helper/getImageSource";
+import axios, { AxiosError } from 'axios';
+import { MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import formateDate from '../../helper/formatDate';
+import { useAppSelector } from '../../hooks';
+import { host } from '../../server';
+import style from '../../styles/style';
+import { API_URL } from '../../constant';
+import { selectShop } from '../../redux/features/Shop/shopSlice';
+import getImageSource from '../../helper/getImageSource';
 
 interface IProps {
   isOwner: boolean;
@@ -30,7 +30,7 @@ export default function ShopInfo({ isOwner }: IProps) {
 
       if (res.status == 201) {
         toast.success(res.data.message);
-        navigate("/login-shop");
+        navigate('/login-shop');
         window.location.reload();
       }
     } catch (error: AxiosError | any) {
@@ -45,9 +45,7 @@ export default function ShopInfo({ isOwner }: IProps) {
 
   return (
     <div className="p-5">
-      <div
-        className={`${style.flex_normal} justify-center flex-col space-y-3 border-b py-3`}
-      >
+      <div className={`${style.flex_normal} justify-center flex-col space-y-3 border-b py-3`}>
         <img
           className="object-cover h-36 w-36 rounded-full"
           src={getImageSource(avatar)}
@@ -56,8 +54,8 @@ export default function ShopInfo({ isOwner }: IProps) {
         />
         <h4 className="text-xl">{name}</h4>
         <p className="text-[#000000a6] text-sm">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur,
-          sed totam? Ex consectetur quasi, accusamus illum illo fugiat deleniti
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur, sed totam? Ex
+          consectetur quasi, accusamus illum illo fugiat deleniti
         </p>
       </div>
       <div className="space-y-3 py-3">
@@ -85,10 +83,7 @@ export default function ShopInfo({ isOwner }: IProps) {
         {isOwner && (
           <div className="flex gap-4 pt-5">
             <button className={`${style.button} text-white`}>Edit Shop</button>
-            <button
-              onClick={logoutHandler}
-              className={`${style.button} text-white`}
-            >
+            <button onClick={logoutHandler} className={`${style.button} text-white`}>
               Logout
             </button>
           </div>

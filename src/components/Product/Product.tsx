@@ -1,29 +1,28 @@
-import loadable from "@loadable/component";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { Link, useNavigate } from "react-router-dom";
-import { formattedPrice } from "../../helper/formatPrice";
-import style from "../../styles/style";
-const Stars = loadable(() => import("./Stars/Stars"));
-import { IProduct } from "../../Interface";
-import { host } from "../../server";
-import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import AddtoCart from "../ProductDetails/AddtoCart/AddtoCart";
+import loadable from '@loadable/component';
+import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { Link, useNavigate } from 'react-router-dom';
+import { formattedPrice } from '../../helper/formatPrice';
+import style from '../../styles/style';
+const Stars = loadable(() => import('./Stars/Stars'));
+import { IProduct } from '../../Interface';
+import { host } from '../../server';
+import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import AddtoCart from '../ProductDetails/AddtoCart/AddtoCart';
 import {
   addToWishlistAsync,
   removeToWishlistAsync,
   selectWishlist,
   selectWishlistLoading,
-} from "../../redux/features/Wishlist/wishlistSlice";
-import { selectIsUserAuthenticate } from "../../redux/features/User/userSlice";
-import getImageSource from "../../helper/getImageSource";
+} from '../../redux/features/Wishlist/wishlistSlice';
+import { selectIsUserAuthenticate } from '../../redux/features/User/userSlice';
+import getImageSource from '../../helper/getImageSource';
 export interface IProps {
   product: IProduct;
 }
 
 export default function Product({ product }: IProps) {
-  const { name, category, rating, price, discount_price, images, _id } =
-    product;
+  const { name, category, rating, price, discount_price, images, _id } = product;
   const wishlists = useAppSelector(selectWishlist);
   const isWishlistLoading = useAppSelector(selectWishlistLoading);
   const isUserAuthenticated = useAppSelector(selectIsUserAuthenticate);
@@ -62,7 +61,7 @@ export default function Product({ product }: IProps) {
             className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
             to={`/products/${_id}`}
           >
-            {name.length > 55 ? name.slice(0, 55) + "..." : name}
+            {name.length > 55 ? name.slice(0, 55) + '...' : name}
           </Link>
           <span className="capitalize inline-block bg-red-300 text-white text-xs px-1.5 rounded-xl">
             {category}
@@ -85,11 +84,7 @@ export default function Product({ product }: IProps) {
                 type="button"
                 onClick={() => dispatch(removeToWishlistAsync(product._id))}
               >
-                <AiFillHeart
-                  title="Remove from wish list"
-                  color="red"
-                  size={25}
-                />
+                <AiFillHeart title="Remove from wish list" color="red" size={25} />
               </button>
             ) : (
               <button
@@ -99,15 +94,11 @@ export default function Product({ product }: IProps) {
                   if (isUserAuthenticated) {
                     dispatch(addToWishlistAsync(product._id));
                   } else {
-                    navigation("/login");
+                    navigation('/login');
                   }
                 }}
               >
-                <AiOutlineHeart
-                  title="Add to wish list"
-                  color="red"
-                  size={25}
-                />
+                <AiOutlineHeart title="Add to wish list" color="red" size={25} />
               </button>
             )}
           </div>

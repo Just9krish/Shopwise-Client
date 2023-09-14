@@ -1,31 +1,25 @@
-import loadable from "@loadable/component";
-import logo from "../../../assets/shopwise.png";
-import style from "../../../styles/style";
-import {
-  AiOutlineHeart,
-  AiOutlineSearch,
-  AiOutlineShoppingCart,
-} from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { useState, ChangeEvent, useEffect, useRef } from "react";
-import { CgMenuLeft } from "react-icons/cg";
-import { IoIosArrowForward } from "react-icons/io";
-import { RiCloseLine } from "react-icons/ri";
-import { IProduct } from "../../../Interface";
-import { useAppSelector, useAppDispatch } from "../../../hooks";
-import { selectProducts } from "../../../redux/features/Products/productSlice";
-import { selectCart, toggleCart } from "../../../redux/features/Cart/cartSlice";
-import getImageSource from "../../../helper/getImageSource";
-const Dropdown = loadable(() => import("./Dropdown/Dropdown"));
-const Navbar = loadable(() => import("./Navbar/Navbar"));
-const UserNavigation = loadable(
-  () => import("./UserNavigation/UserNavigation")
-);
-const Cart = loadable(() => import("../../Cart/Cart"));
-const Wishlist = loadable(() => import("../../Wishlist/Wishlist"));
+import loadable from '@loadable/component';
+import logo from '../../../assets/shopwise.png';
+import style from '../../../styles/style';
+import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import { useState, ChangeEvent, useEffect, useRef } from 'react';
+import { CgMenuLeft } from 'react-icons/cg';
+import { IoIosArrowForward } from 'react-icons/io';
+import { RiCloseLine } from 'react-icons/ri';
+import { IProduct } from '../../../Interface';
+import { useAppSelector, useAppDispatch } from '../../../hooks';
+import { selectProducts } from '../../../redux/features/Products/productSlice';
+import { selectCart, toggleCart } from '../../../redux/features/Cart/cartSlice';
+import getImageSource from '../../../helper/getImageSource';
+const Dropdown = loadable(() => import('./Dropdown/Dropdown'));
+const Navbar = loadable(() => import('./Navbar/Navbar'));
+const UserNavigation = loadable(() => import('./UserNavigation/UserNavigation'));
+const Cart = loadable(() => import('../../Cart/Cart'));
+const Wishlist = loadable(() => import('../../Wishlist/Wishlist'));
 
 export default function Header() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [searchedProduct, setSearchedProduct] = useState<IProduct[]>([]);
   const ref = useRef<HTMLInputElement>(null);
 
@@ -60,7 +54,7 @@ export default function Header() {
   useEffect(() => {
     function handleClickOutside(event: any) {
       if (ref.current && !ref.current.contains(event.target as Node)) {
-        const isLink = (event.target as HTMLElement).closest("a");
+        const isLink = (event.target as HTMLElement).closest('a');
 
         // if the clicked element is a link, return without clearing the state
         if (isLink) {
@@ -70,18 +64,16 @@ export default function Header() {
       }
     }
 
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
 
   return (
     <>
       <header className="hidden lg:block">
-        <div
-          className={`${style.flex_normal} ${style.section} py-7  justify-between`}
-        >
+        <div className={`${style.flex_normal} ${style.section} py-7  justify-between`}>
           <div>
             <Link to="/" className={`${style.flex_normal}`}>
               <img className="h-11 w-32" src={logo} alt="Logo" loading="lazy" />
@@ -139,20 +131,14 @@ export default function Header() {
             <div className={`relative ${style.flex_normal} justify-between `}>
               <Dropdown />
               <Navbar mobile={false} toggleMobileNav={toggleMobileNav} />
-              <UserNavigation
-                userState={userState}
-                toggleWishlist={toggleWishlist}
-              />
+              <UserNavigation userState={userState} toggleWishlist={toggleWishlist} />
             </div>
           </div>
         </div>
         {/* cart model */}
         <Cart />
         {/* wishlist model */}
-        <Wishlist
-          toggleWishlist={toggleWishlist}
-          isWishlistOpen={isWishlistOpen}
-        />
+        <Wishlist toggleWishlist={toggleWishlist} isWishlistOpen={isWishlistOpen} />
       </header>
 
       {/* mobile header  */}
@@ -182,7 +168,7 @@ export default function Header() {
 
         <div
           className={`fixed top-0 min-h-screen left-0 shadow-md transition-all duration-300 w-3/4 bg-white z-20 ${
-            isMobileOpen ? "translate-x-0" : "-translate-x-full"
+            isMobileOpen ? 'translate-x-0' : '-translate-x-full'
           }`}
         >
           <div
@@ -220,13 +206,9 @@ export default function Header() {
               {searchedProduct.length !== 0 ? (
                 <div className="absolute bg-slate-50 shadow-md z-50 max-h-[73vh] overflow-scroll mt-4 rounded-md py-2">
                   {searchedProduct?.map((product, idx) => {
-                    const productSlug = product.name.replace(/\s+/g, "-");
+                    const productSlug = product.name.replace(/\s+/g, '-');
                     return (
-                      <Link
-                        to={`/products/${productSlug}`}
-                        onClick={toggleMobileNav}
-                        key={idx}
-                      >
+                      <Link to={`/products/${productSlug}`} onClick={toggleMobileNav} key={idx}>
                         <div
                           className={`w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
                         >
@@ -236,9 +218,7 @@ export default function Header() {
                               loading="lazy"
                               src={getImageSource(product.images[0].url)}
                             />
-                            <h4 className="text-sm">
-                              {product.name.slice(0, 30)}...
-                            </h4>
+                            <h4 className="text-sm">{product.name.slice(0, 30)}...</h4>
                           </div>
                         </div>
                       </Link>
@@ -275,7 +255,7 @@ export default function Header() {
               >
                 <img
                   className="h-8 w-8 rounded-full"
-                  src={getImageSource(userState?.user?.avatar! || "")}
+                  src={getImageSource(userState?.user?.avatar! || '')}
                   alt=""
                 />
                 <span>{userState?.user?.name}</span>

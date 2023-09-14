@@ -1,12 +1,12 @@
-import loadable from "@loadable/component";
-import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import loadable from '@loadable/component';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { selectShop } from '../../../redux/features/Shop/shopSlice';
 import {
   getShopProductsAsync,
   selectShopProducts,
-} from "../../../redux/features/Products/productSlice";
-const Product = loadable(() => import("../../Product/Product"));
+} from '../../../redux/features/Products/productSlice';
+const Product = loadable(() => import('../../Product/Product'));
 
 export default function ShopProducts() {
   const shop = useAppSelector(selectShop);
@@ -19,9 +19,7 @@ export default function ShopProducts() {
 
   return shopProducts.length > 0 ? (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-y-10 md:gap-x-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-4 xl:gap-y-10">
-      {shopProducts?.map((product, idx) => (
-        <Product product={product} key={idx} />
-      ))}
+      {shopProducts?.map((product, idx) => <Product product={product} key={idx} />)}
     </div>
   ) : (
     <div className="h-full w-full">

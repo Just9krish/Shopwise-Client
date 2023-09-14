@@ -1,7 +1,7 @@
-import style from "../../../styles/style";
-import { FaShippingFast } from "react-icons/fa";
-import { MdLocalOffer } from "react-icons/md";
-import { RiSecurePaymentLine } from "react-icons/ri";
+import style from '../../../styles/style';
+import { FaShippingFast } from 'react-icons/fa';
+import { MdLocalOffer } from 'react-icons/md';
+import { RiSecurePaymentLine } from 'react-icons/ri';
 
 export default function Branding() {
   return (
@@ -32,9 +32,7 @@ export default function Branding() {
           <RiSecurePaymentLine color="#ff7d1a" size={40} />
           <div>
             <h4 className="font-semibold">Secure Payments</h4>
-            <p className="text-gray-800 text-sm">
-              100% protected and secure payments
-            </p>
+            <p className="text-gray-800 text-sm">100% protected and secure payments</p>
           </div>
         </div>
       </div>

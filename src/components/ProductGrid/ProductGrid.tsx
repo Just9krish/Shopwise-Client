@@ -1,5 +1,5 @@
-import { IProduct } from "../../Interface";
-import Product from "../Product/Product";
+import { IProduct } from '../../Interface';
+import Product from '../Product/Product';
 
 export default function ProductGrid({ products }: { products: IProduct[] }) {
   return (

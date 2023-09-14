@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react";
-import { BsFillBagFill } from "react-icons/bs";
-import { Link, useParams } from "react-router-dom";
-import styles from "../../../styles/style";
-import { RxCross1 } from "react-icons/rx";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import { useEffect, useState } from 'react';
+import { BsFillBagFill } from 'react-icons/bs';
+import { Link, useParams } from 'react-router-dom';
+import styles from '../../../styles/style';
+import { RxCross1 } from 'react-icons/rx';
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   getSingleUserOrderAsync,
   selectSelectedOrder,
-} from "../../../redux/features/Orders/orderSlice";
-import { formattedPrice } from "../../../helper/formatPrice";
-import formateDate from "../../../helper/formatDate";
-import getImageSource from "../../../helper/getImageSource";
+} from '../../../redux/features/Orders/orderSlice';
+import { formattedPrice } from '../../../helper/formatPrice';
+import formateDate from '../../../helper/formatDate';
+import getImageSource from '../../../helper/getImageSource';
 
 export default function UserOrderDetails() {
   const [open, setOpen] = useState(false);
@@ -63,8 +63,7 @@ export default function UserOrderDetails() {
                   <div className="w-full">
                     <h5 className="pl-3 text-[20px]">{item.product.name}</h5>
                     <h5 className="pl-3 text-[20px] text-[#00000091]">
-                      {formattedPrice(item.product.discount_price)} x{" "}
-                      {item.quantity}
+                      {formattedPrice(item.product.discount_price)} x {item.quantity}
                     </h5>
                   </div>
                   {/* {!item.isReviewed && data?.status === "Delivered" ? (
@@ -84,15 +83,9 @@ export default function UserOrderDetails() {
             <div className="w-full fixed top-0 left-0 h-screen bg-[#0005] z-50 flex items-center justify-center">
               <div className="w-[50%] h-min bg-[#fff] shadow rounded-md p-3">
                 <div className="w-full flex justify-end p-3">
-                  <RxCross1
-                    size={30}
-                    onClick={() => setOpen(false)}
-                    className="cursor-pointer"
-                  />
+                  <RxCross1 size={30} onClick={() => setOpen(false)} className="cursor-pointer" />
                 </div>
-                <h2 className="text-[30px] font-[500] font-Poppins text-center">
-                  Give a Review
-                </h2>
+                <h2 className="text-[30px] font-[500] font-Poppins text-center">Give a Review</h2>
                 <br />
                 <div className="w-full flex">
                   {/* <img
@@ -140,9 +133,7 @@ export default function UserOrderDetails() {
                 <div className="w-full ml-3">
                   <label className="block text-[20px] font-[500]">
                     Write a comment
-                    <span className="ml-1 font-[400] text-[16px] text-[#00000052]">
-                      (optional)
-                    </span>
+                    <span className="ml-1 font-[400] text-[16px] text-[#00000052]">(optional)</span>
                   </label>
                   <textarea
                     name="comment"
@@ -173,29 +164,20 @@ export default function UserOrderDetails() {
             <div className="w-full 800px:w-[60%]">
               <h4 className="pt-3 text-[20px] font-[600]">Shipping Address:</h4>
               <h4 className="pt-3 text-[20px]">
-                {order?.shippingAddress.address1 +
-                  " " +
-                  order?.shippingAddress.address2}
+                {order?.shippingAddress.address1 + ' ' + order?.shippingAddress.address2}
               </h4>
               <h4 className=" text-[20px]">{order?.shippingAddress.country}</h4>
               <h4 className=" text-[20px]">{order?.shippingAddress.state}</h4>
-              <h4 className=" text-[20px]">
-                {order.shippingAddress.primaryNumber}
-              </h4>
+              <h4 className=" text-[20px]">{order.shippingAddress.primaryNumber}</h4>
             </div>
             <div className="w-full 800px:w-[40%]">
               <h4 className="pt-3 text-[20px]">Payment Info:</h4>
               <h4>
-                Status:{" "}
-                {order?.paymentInfo?.status
-                  ? order?.paymentInfo?.status
-                  : "Not Paid"}
+                Status: {order?.paymentInfo?.status ? order?.paymentInfo?.status : 'Not Paid'}
               </h4>
               <br />
-              {order?.orderStatus === "Delivered" && (
-                <div className={`${styles.button} text-white`}>
-                  Give a Refund
-                </div>
+              {order?.orderStatus === 'Delivered' && (
+                <div className={`${styles.button} text-white`}>Give a Refund</div>
               )}
             </div>
           </div>

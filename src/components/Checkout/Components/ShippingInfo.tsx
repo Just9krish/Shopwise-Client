@@ -1,8 +1,8 @@
-import style from "../../../styles/style";
-import { Country, State } from "country-state-city";
-import { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import { useAppSelector } from "../../../hooks";
-import { selectUser } from "../../../redux/features/User/userSlice";
+import style from '../../../styles/style';
+import { Country, State } from 'country-state-city';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useAppSelector } from '../../../hooks';
+import { selectUser } from '../../../redux/features/User/userSlice';
 
 type IProps = {
   toggleActiveStep: (para: number) => void;
@@ -15,25 +15,23 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
   const { addresses } = user;
 
   const initialFormState = {
-    fullName: "",
-    email: "",
-    primaryNumber: "",
-    alternateNumber: "",
-    zipCode: "",
-    selectedCountry: "",
-    selectedState: "",
-    address1: "",
-    address2: "",
-    address3: "",
+    fullName: '',
+    email: '',
+    primaryNumber: '',
+    alternateNumber: '',
+    zipCode: '',
+    selectedCountry: '',
+    selectedState: '',
+    address1: '',
+    address2: '',
+    address3: '',
   };
 
   const [formState, setFormState] = useState(initialFormState);
 
   useEffect(() => {
     if (selectedAddress) {
-      const address = addresses?.find(
-        (address) => address._id === selectedAddress
-      );
+      const address = addresses?.find((address) => address._id === selectedAddress);
 
       if (address) {
         setFormState({
@@ -54,23 +52,19 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
     }
   }, [selectedAddress]);
 
-  function handleFormInputChange(
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) {
+  function handleFormInputChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target;
     setFormState((prevState) => ({ ...prevState, [name]: value }));
   }
 
   function handleAddressChange(e: ChangeEvent<HTMLInputElement>) {
-    setSelectedAddress(
-      e.target.value === selectedAddress ? null : e.target.value
-    );
+    setSelectedAddress(e.target.value === selectedAddress ? null : e.target.value);
   }
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    localStorage.setItem("shipping_address", JSON.stringify(formState));
+    localStorage.setItem('shipping_address', JSON.stringify(formState));
     toggleActiveStep(1);
   }
 
@@ -114,10 +108,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
 
           <div className={`${style.flex_normal} gap-8 flex-wrap`}>
             <div className="w-2/5">
-              <label
-                className="mb-1 text-sm hidden md:block"
-                htmlFor="primary-number"
-              >
+              <label className="mb-1 text-sm hidden md:block" htmlFor="primary-number">
                 Primary Number:
               </label>
               <input
@@ -165,10 +156,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
               />
             </div>
             <div className="w-2/5">
-              <label
-                className="mb-1 text-sm hidden md:block"
-                htmlFor="selectedCountry"
-              >
+              <label className="mb-1 text-sm hidden md:block" htmlFor="selectedCountry">
                 Select Country:
               </label>
               <select
@@ -195,10 +183,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
 
           <div className={`${style.flex_normal} gap-8 flex-wrap`}>
             <div className="w-2/5">
-              <label
-                className="mb-1 text-sm hidden md:block"
-                htmlFor="selectedState"
-              >
+              <label className="mb-1 text-sm hidden md:block" htmlFor="selectedState">
                 Select State:
               </label>
               <select
@@ -222,10 +207,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
               </select>
             </div>
             <div className="w-2/5">
-              <label
-                className="mb-1 text-sm hidden md:block"
-                htmlFor="address1"
-              >
+              <label className="mb-1 text-sm hidden md:block" htmlFor="address1">
                 Address 1:
               </label>
               <input
@@ -243,10 +225,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
 
           <div className={`${style.flex_normal} gap-8 flex-wrap`}>
             <div className="w-2/5">
-              <label
-                className="mb-1 text-sm hidden md:block"
-                htmlFor="address2"
-              >
+              <label className="mb-1 text-sm hidden md:block" htmlFor="address2">
                 Address 2:
               </label>
               <input
@@ -261,10 +240,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
               />
             </div>
             <div className="w-2/5">
-              <label
-                className="mb-1 text-sm hidden md:block"
-                htmlFor="address3"
-              >
+              <label className="mb-1 text-sm hidden md:block" htmlFor="address3">
                 Address 3:
               </label>
               <input

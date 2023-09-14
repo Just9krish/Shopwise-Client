@@ -1,32 +1,25 @@
-import loadable from "@loadable/component";
-import { ChangeEvent, Fragment, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { Menu, Transition } from "@headlessui/react";
-import categories from "../constant/categories.json";
+import loadable from '@loadable/component';
+import { ChangeEvent, Fragment, useEffect, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { BsChevronDown } from 'react-icons/bs';
+import { HiOutlineSquares2X2 } from 'react-icons/hi2';
+import { PiFunnelLight } from 'react-icons/pi';
+import { useAppDispatch, useAppSelector } from '../hooks';
+import categories from '../constant/categories.json';
 import {
   getAllProductsByFiltersAsync,
   selectProducts,
   selectTotalProducts,
-} from "../redux/features/Products/productSlice";
-import { PRODUCT_PER_PAGE } from "../constant";
-import { BsChevronDown } from "react-icons/bs";
-import { HiOutlineSquares2X2 } from "react-icons/hi2";
-import { PiFunnelLight } from "react-icons/pi";
-import Pagination from "../components/Pagination/Pagination";
+} from '../redux/features/Products/productSlice';
+import { PRODUCT_PER_PAGE } from '../constant';
+import Pagination from '../components/Pagination/Pagination';
 
-const ProductGrid = loadable(
-  () => import("../components/ProductGrid/ProductGrid")
-);
-const DesktopFilter = loadable(
-  () => import("../components/FilterSection/DesktopFilter")
-);
-const MobileFilter = loadable(
-  () => import("../components/FilterSection/MobileFilter")
-);
+const ProductGrid = loadable(() => import('../components/ProductGrid/ProductGrid'));
+const DesktopFilter = loadable(() => import('../components/FilterSection/DesktopFilter'));
+const MobileFilter = loadable(() => import('../components/FilterSection/MobileFilter'));
 
 function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 export type Category = {
@@ -54,15 +47,15 @@ export type filter = {
 };
 
 const sortOptions = [
-  { name: "Best Rating", sort: "rating", order: "desc", current: false },
-  { name: "Price: Low to High", sort: "price", order: "asc", current: false },
-  { name: "Price: High to Low", sort: "price", order: "desc", current: false },
+  { name: 'Best Rating', sort: 'rating', order: 'desc', current: false },
+  { name: 'Price: Low to High', sort: 'price', order: 'asc', current: false },
+  { name: 'Price: High to Low', sort: 'price', order: 'desc', current: false },
 ];
 
 const filters: filter[] = [
   {
-    id: "category",
-    name: "Category",
+    id: 'category',
+    name: 'Category',
     options: categories,
   },
 ];
@@ -77,21 +70,12 @@ export default function ProductsPage() {
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
 
-  const [searchParams] = useSearchParams();
-  const categoryData = searchParams.get("category");
-
-  function handleSort(e: any, option: { sort: string; order: string }) {
-    console.log(option);
-    const sort = { _sort: option.sort, _order: option.order };
-    console.log({ sort });
-    setSort(sort);
+  function handleSort(option: { sort: string; order: string }) {
+    const newSort = { _sort: option.sort, _order: option.order };
+    setSort(newSort);
   }
 
-  const handleFilter = (
-    e: ChangeEvent<HTMLInputElement>,
-    section: Section,
-    option: Category
-  ) => {
+  const handleFilter = (e: ChangeEvent<HTMLInputElement>, section: Section, option: Category) => {
     const newFilter: Filter = { ...filter };
 
     if (e.target.checked) {
@@ -112,10 +96,6 @@ export default function ProductsPage() {
     setFilter(newFilter);
   };
 
-  function handlePage(page: number) {
-    setPage(page);
-  }
-
   useEffect(() => {
     const pagination = { _page: page, _limit: PRODUCT_PER_PAGE };
     dispatch(getAllProductsByFiltersAsync({ filter, sort, pagination }));
@@ -128,12 +108,10 @@ export default function ProductsPage() {
         handleFilter={handleFilter}
         mobileFiltersOpen={mobileFiltersOpen}
         setMobileFiltersOpen={setMobileFiltersOpen}
-      ></MobileFilter>
+      />
       <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-            All Products
-          </h1>
+          <h1 className="text-4xl font-bold tracking-tight text-gray-900">All Products</h1>
 
           <div className="flex items-center">
             <Menu as="div" className="relative inline-block text-left">
@@ -161,18 +139,22 @@ export default function ProductsPage() {
                     {sortOptions.map((option) => (
                       <Menu.Item key={option.name}>
                         {({ active }) => (
-                          <p
-                            onClick={(e) => handleSort(e, option)}
+                          <button
+                            type="button"
+                            onClick={() => handleSort(option)}
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                handleSort(option);
+                              }
+                            }}
                             className={classNames(
-                              option.current
-                                ? "font-medium text-gray-900"
-                                : "text-gray-500",
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm"
+                              option.current ? 'font-medium text-gray-900' : 'text-gray-500',
+                              active ? 'bg-gray-100' : '',
+                              'block px-4 py-2 text-sm cursor-pointer w-full text-left'
                             )}
                           >
                             {option.name}
-                          </p>
+                          </button>
                         )}
                       </Menu.Item>
                     ))}
@@ -214,10 +196,10 @@ export default function ProductsPage() {
         {/* Pagination */}
         <Pagination
           page={page}
-          handlePage={handlePage}
+          handlePage={() => setPage(page)}
           setPage={setPage}
           totalProducts={totalProducts}
-        ></Pagination>
+        />
       </main>
     </div>
   );

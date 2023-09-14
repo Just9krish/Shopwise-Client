@@ -1,18 +1,18 @@
-import { AiOutlineCamera } from "react-icons/ai";
-import { ChangeEvent, useState, useEffect } from "react";
-import { host } from "../../../server";
-import style from "../../../styles/style";
-import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import axios, { AxiosError } from "axios";
-import { API_URL } from "../../../constant";
+import { AiOutlineCamera } from 'react-icons/ai';
+import { ChangeEvent, useState, useEffect } from 'react';
+import { host } from '../../../server';
+import style from '../../../styles/style';
+import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import axios, { AxiosError } from 'axios';
+import { API_URL } from '../../../constant';
 import {
   fetchUserDetailsAsync,
   selectUser,
   updateUserInfoAsync,
-} from "../../../redux/features/User/userSlice";
-import { useForm } from "react-hook-form";
-import getImageSource from "../../../helper/getImageSource";
+} from '../../../redux/features/User/userSlice';
+import { useForm } from 'react-hook-form';
+import getImageSource from '../../../helper/getImageSource';
 
 export default function UserProfile() {
   const user = useAppSelector(selectUser);
@@ -30,7 +30,7 @@ export default function UserProfile() {
   function handleUpdate() {
     setIsDisabled((prev) => !prev);
     window.scrollTo(0, 176);
-    toast.info("Now you can make change.");
+    toast.info('Now you can make change.');
   }
 
   async function handleProfilePictureChange(e: ChangeEvent<HTMLInputElement>) {
@@ -39,17 +39,13 @@ export default function UserProfile() {
       setProfilePic(file);
 
       const formData = new FormData();
-      formData.append("file", e.target.files[0]);
+      formData.append('file', e.target.files[0]);
 
       try {
-        const { data } = await axios.put(
-          API_URL.UPDATE_USER_PROFILE,
-          formData,
-          {
-            headers: { "Content-Type": "multipart/form-data" },
-            withCredentials: true,
-          }
-        );
+        const { data } = await axios.put(API_URL.UPDATE_USER_PROFILE, formData, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+          withCredentials: true,
+        });
 
         dispatch(fetchUserDetailsAsync());
       } catch (e: AxiosError | any) {
@@ -65,15 +61,15 @@ export default function UserProfile() {
   function handleCancel() {
     setIsDisabled((prev) => !prev);
     clearErrors();
-    toast.info("No changes made.");
+    toast.info('No changes made.');
   }
 
   useEffect(() => {
     if (user) {
-      setValue("name", user.name);
-      setValue("email", user.email);
-      setValue("primaryPhoneNumber", user.primaryPhoneNumber);
-      setValue("secondaryPhoneNumber", user.secondaryPhoneNumber);
+      setValue('name', user.name);
+      setValue('email', user.email);
+      setValue('primaryPhoneNumber', user.primaryPhoneNumber);
+      setValue('secondaryPhoneNumber', user.secondaryPhoneNumber);
     }
   }, [user]);
 
@@ -128,15 +124,11 @@ export default function UserProfile() {
                     type="text"
                     id="name"
                     disabled={isDisabled}
-                    {...register("name", {
-                      required: "Full name is required!",
+                    {...register('name', {
+                      required: 'Full name is required!',
                     })}
                   />
-                  {errors.name && (
-                    <p className="text-red-500">
-                      {errors.name.message?.toString()}
-                    </p>
-                  )}
+                  {errors.name && <p className="text-red-500">{errors.name.message?.toString()}</p>}
                 </div>
                 <div className="w-full md:w-1/2">
                   <label className="block mb-2" htmlFor="email">
@@ -147,18 +139,16 @@ export default function UserProfile() {
                     type="email"
                     id="email"
                     disabled={isDisabled}
-                    {...register("email", {
-                      required: "Email is required!",
+                    {...register('email', {
+                      required: 'Email is required!',
                       pattern: {
                         value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-                        message: "Email not valid!",
+                        message: 'Email not valid!',
                       },
                     })}
                   />
                   {errors.email && (
-                    <p className="text-red-500">
-                      {errors.email.message?.toString()}
-                    </p>
+                    <p className="text-red-500">{errors.email.message?.toString()}</p>
                   )}
                 </div>
               </div>
@@ -173,26 +163,24 @@ export default function UserProfile() {
                     type="number"
                     id="phone"
                     disabled={isDisabled}
-                    {...register("primaryPhoneNumber", {
-                      required: "Primary phone number is required!",
+                    {...register('primaryPhoneNumber', {
+                      required: 'Primary phone number is required!',
                       pattern: {
                         value: /^[0-9]+$/,
-                        message: "Only numbers are allowed!",
+                        message: 'Only numbers are allowed!',
                       },
                       maxLength: {
                         value: 10,
-                        message: "Maximum length is 10!",
+                        message: 'Maximum length is 10!',
                       },
                       minLength: {
                         value: 10,
-                        message: "Minimum length is 10!",
+                        message: 'Minimum length is 10!',
                       },
                     })}
                   />
                   {errors.primaryPhoneNumber && (
-                    <p className="text-red-500">
-                      {errors.primaryPhoneNumber.message?.toString()}
-                    </p>
+                    <p className="text-red-500">{errors.primaryPhoneNumber.message?.toString()}</p>
                   )}
                 </div>
                 <div className="w-full md:w-1/2">
@@ -204,18 +192,18 @@ export default function UserProfile() {
                     type="number"
                     id="alternateNumber"
                     disabled={isDisabled}
-                    {...register("secondaryPhoneNumber", {
+                    {...register('secondaryPhoneNumber', {
                       pattern: {
                         value: /^[0-9]+$/,
-                        message: "Only numbers are allowed!",
+                        message: 'Only numbers are allowed!',
                       },
                       maxLength: {
                         value: 10,
-                        message: "Maximum length is 10!",
+                        message: 'Maximum length is 10!',
                       },
                       minLength: {
                         value: 10,
-                        message: "Minimum length is 10!",
+                        message: 'Minimum length is 10!',
                       },
                     })}
                   />
@@ -237,14 +225,12 @@ export default function UserProfile() {
                   id="password"
                   placeholder="Enter your password"
                   disabled={isDisabled}
-                  {...register("password", {
-                    required: "Password is required!",
+                  {...register('password', {
+                    required: 'Password is required!',
                   })}
                 />
                 {errors.password && (
-                  <p className="text-red-500">
-                    {errors.password.message?.toString()}
-                  </p>
+                  <p className="text-red-500">{errors.password.message?.toString()}</p>
                 )}
               </div>
               <div className={`${style.flex_normal} gap-6`}>

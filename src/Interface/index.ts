@@ -1,5 +1,5 @@
-import { AxiosError } from "axios";
-import { ChangeEvent, ReactNode } from "react";
+import { AxiosError } from 'axios';
+import { ChangeEvent, ReactNode } from 'react';
 
 export interface IProduct {
   _id: string;

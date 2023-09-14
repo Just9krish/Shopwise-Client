@@ -1,7 +1,7 @@
-import style from "../../../styles/style";
-import categoriesData from "../../../constant/categories.json";
-import { useNavigate } from "react-router-dom";
-import { Category } from "../../../pages/ProductsPage";
+import style from '../../../styles/style';
+import categoriesData from '../../../constant/categories.json';
+import { useNavigate } from 'react-router-dom';
+import { Category } from '../../../pages/ProductsPage';
 
 export default function Categories() {
   const navigate = useNavigate();

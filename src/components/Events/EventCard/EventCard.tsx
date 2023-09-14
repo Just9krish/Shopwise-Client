@@ -1,10 +1,10 @@
-import loadable from "@loadable/component";
-import { formattedPrice } from "../../../helper/formatPrice";
-import { IEvent } from "../../../Interface";
-import { host } from "../../../server";
-import style from "../../../styles/style";
-import getImageSource from "../../../helper/getImageSource";
-const Countdown = loadable(() => import("../CountDown/Countdown"));
+import loadable from '@loadable/component';
+import { formattedPrice } from '../../../helper/formatPrice';
+import { IEvent } from '../../../Interface';
+import { host } from '../../../server';
+import style from '../../../styles/style';
+import getImageSource from '../../../helper/getImageSource';
+const Countdown = loadable(() => import('../CountDown/Countdown'));
 
 type Props = {
   event: IEvent;
@@ -40,12 +40,8 @@ export default function EventCard({ event }: Props) {
         <p>{description}</p>
         <div className="flex justify-between flex-wrap gap-5 items-center">
           <div className={`${style.flex_normal} gap-5`}>
-            <h4 className="line-through text-gray-400 font-medium">
-              {formattedPrice(price)}
-            </h4>
-            <h4 className="font-bold text-xl text-green-600">
-              {formattedPrice(discount_price)}
-            </h4>
+            <h4 className="line-through text-gray-400 font-medium">{formattedPrice(price)}</h4>
+            <h4 className="font-bold text-xl text-green-600">{formattedPrice(discount_price)}</h4>
           </div>
           <span className="text-sky-400 text-lg">276 solds</span>
         </div>

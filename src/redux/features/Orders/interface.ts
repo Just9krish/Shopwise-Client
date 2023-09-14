@@ -1,5 +1,5 @@
-import { IProduct } from "../Products/interface";
-import { IAddressFrom } from "../User/interface";
+import { IProduct } from '../Products/interface';
+import { IAddressFrom } from '../User/interface';
 
 export interface IShopOrder {
   //   shippingAddress: IShippingAddress;

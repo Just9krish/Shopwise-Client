@@ -1,7 +1,6 @@
-import loadable from "@loadable/component";
-const ResetPassword = loadable(
-  () => import("../../components/Auth/resetpassword/ResetPassword")
-);
+import loadable from '@loadable/component';
+
+const ResetPassword = loadable(() => import('../../components/Auth/resetpassword/ResetPassword'));
 
 export default function ResetPasswordPage() {
   return (

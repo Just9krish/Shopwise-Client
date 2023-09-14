@@ -1,9 +1,9 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { API_URL } from "../../../constant";
-import { IAddToCart } from "./interface";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { API_URL } from '../../../constant';
+import { IAddToCart } from './interface';
 
 const config = {
-  headers: { "Content-Type": "application/json" },
+  headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 };
 
@@ -29,10 +29,7 @@ export function addToCart({ productId, quantity }: IAddToCart) {
 export function removeFromCart(itemId: string) {
   return new Promise(async (resolve, reject) => {
     try {
-      const response: AxiosResponse = await axios.delete(
-        API_URL.REMOVE_FROM_CART(itemId),
-        config
-      );
+      const response: AxiosResponse = await axios.delete(API_URL.REMOVE_FROM_CART(itemId), config);
       resolve({ data: response.data });
     } catch (error: AxiosError | any) {
       if (error.response) {
@@ -44,13 +41,7 @@ export function removeFromCart(itemId: string) {
   });
 }
 
-export function updateQuantity({
-  productId,
-  quantity,
-}: {
-  productId: string;
-  quantity: number;
-}) {
+export function updateQuantity({ productId, quantity }: { productId: string; quantity: number }) {
   return new Promise(async (resolve, reject) => {
     try {
       const response: AxiosResponse = await axios.put(

@@ -1,10 +1,10 @@
-import loadable from "@loadable/component";
-import { useEffect, useState } from "react";
-import { AiOutlineDelete } from "react-icons/ai";
-import { MdOutlineAdd } from "react-icons/md";
-import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import style from "../../../styles/style";
+import loadable from '@loadable/component';
+import { useEffect, useState } from 'react';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { MdOutlineAdd } from 'react-icons/md';
+import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import style from '../../../styles/style';
 import {
   clearUserError,
   clearUserMessage,
@@ -12,8 +12,8 @@ import {
   selectUser,
   selectUserError,
   selectUserMessage,
-} from "../../../redux/features/User/userSlice";
-const AddAddress = loadable(() => import("./AddAddress"));
+} from '../../../redux/features/User/userSlice';
+const AddAddress = loadable(() => import('./AddAddress'));
 
 export default function UserAdrress() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,10 +51,7 @@ export default function UserAdrress() {
       <div className={`w-full ${style.flex_normal} justify-between`}>
         <h1 className="text-[#000000ba] pb-2 text-2xl">Saved Addresses</h1>
 
-        <button
-          className={`${style.button} text-white`}
-          onClick={handleModalOpen}
-        >
+        <button className={`${style.button} text-white`} onClick={handleModalOpen}>
           <span className="mr-1">
             <MdOutlineAdd size={25} />
           </span>
@@ -78,11 +75,7 @@ export default function UserAdrress() {
                 <h4>{user?.primaryPhoneNumber}</h4>
               </div>
               <button onClick={() => handleDeleteAddress(address._id)}>
-                <AiOutlineDelete
-                  className="cursor-pointer"
-                  size={25}
-                  title="Delete Address"
-                />
+                <AiOutlineDelete className="cursor-pointer" size={25} title="Delete Address" />
               </button>
             </div>
           ))

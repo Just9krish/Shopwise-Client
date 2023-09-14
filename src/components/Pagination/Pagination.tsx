@@ -1,6 +1,6 @@
-import { Dispatch, SetStateAction } from "react";
-import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
-import { PRODUCT_PER_PAGE } from "../../constant";
+import { Dispatch, SetStateAction } from 'react';
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { PRODUCT_PER_PAGE } from '../../constant';
 
 type PaginationProps = {
   page: number;
@@ -9,12 +9,7 @@ type PaginationProps = {
   handlePage: (page: number) => void;
 };
 
-export default function Pagination({
-  page,
-  setPage,
-  handlePage,
-  totalProducts,
-}: PaginationProps) {
+export default function Pagination({ page, setPage, handlePage, totalProducts }: PaginationProps) {
   const totalPage = Math.ceil(totalProducts / PRODUCT_PER_PAGE);
 
   return (
@@ -38,16 +33,10 @@ export default function Pagination({
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            Showing{" "}
+            Showing <span className="font-medium">{(page - 1) * PRODUCT_PER_PAGE + 1}</span> to{' '}
             <span className="font-medium">
-              {(page - 1) * PRODUCT_PER_PAGE + 1}
-            </span>{" "}
-            to{" "}
-            <span className="font-medium">
-              {page * PRODUCT_PER_PAGE < totalProducts
-                ? page * PRODUCT_PER_PAGE
-                : totalProducts}
-            </span>{" "}
+              {page * PRODUCT_PER_PAGE < totalProducts ? page * PRODUCT_PER_PAGE : totalProducts}
+            </span>{' '}
             of <span className="font-medium">{totalProducts}</span> results
           </p>
         </div>
@@ -75,9 +64,7 @@ export default function Pagination({
                 onKeyDown={() => handlePage(idx + 1)}
                 aria-current="page"
                 className={`relative cursor-pointer z-10 inline-flex items-center ${
-                  idx + 1 === page
-                    ? "bg-orange-500 text-white"
-                    : "text-gray-400"
+                  idx + 1 === page ? 'bg-orange-500 text-white' : 'text-gray-400'
                 }  px-4 py-2 text-sm font-semibold  focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600`}
               >
                 {idx + 1}

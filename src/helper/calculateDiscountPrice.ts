@@ -1,7 +1,4 @@
-export default function calculateDiscountPrice(
-  price: number,
-  discountPercentage: number
-) {
+export default function calculateDiscountPrice(price: number, discountPercentage: number) {
   if (discountPercentage > 99) {
     return 0;
   }

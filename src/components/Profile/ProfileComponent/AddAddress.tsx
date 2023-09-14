@@ -1,14 +1,10 @@
-import { RxCross1 } from "react-icons/rx";
-import { Country, State } from "country-state-city";
-import style from "../../../styles/style";
-import {
-  HiOutlineOfficeBuilding,
-  HiOutlineGlobeAlt,
-  HiOutlineHome,
-} from "react-icons/hi";
-import { useAppDispatch } from "../../../hooks";
-import { updateUserAddressAsync } from "../../../redux/features/User/userSlice";
-import { useForm } from "react-hook-form";
+import { RxCross1 } from 'react-icons/rx';
+import { Country, State } from 'country-state-city';
+import style from '../../../styles/style';
+import { HiOutlineOfficeBuilding, HiOutlineGlobeAlt, HiOutlineHome } from 'react-icons/hi';
+import { useAppDispatch } from '../../../hooks';
+import { updateUserAddressAsync } from '../../../redux/features/User/userSlice';
+import { useForm } from 'react-hook-form';
 
 type Props = {
   handleModalOpen: () => void;
@@ -17,15 +13,15 @@ type Props = {
 export default function AddAddress({ handleModalOpen }: Props) {
   const addressType = [
     {
-      name: "Home",
+      name: 'Home',
       icon: <HiOutlineHome className="mr-1" />,
     },
     {
-      name: "Office",
+      name: 'Office',
       icon: <HiOutlineOfficeBuilding className="mr-1" />,
     },
     {
-      name: "Others",
+      name: 'Others',
       icon: <HiOutlineGlobeAlt className="mr-1" />,
     },
   ];
@@ -38,13 +34,13 @@ export default function AddAddress({ handleModalOpen }: Props) {
     handleSubmit,
   } = useForm();
 
-  const selectedCountry = watch("country");
+  const selectedCountry = watch('country');
   const dispatch = useAppDispatch();
 
   return (
     <div
       className="fixed w-full h-screen bg-black top-0 left-0 flex items-center justify-center z-[9999]"
-      style={{ backgroundColor: "rgba(0, 0, 0, 0.3)" }}
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
     >
       <div className="w-full max-w-[600px] overflow-y-scroll bg-white shadow px-8 py-12 rounded">
         <div className="flex justify-between">
@@ -77,12 +73,12 @@ export default function AddAddress({ handleModalOpen }: Props) {
                   Choose your Country:
                 </label>
                 <select
-                  {...register("country", {
-                    required: "Country name is required!",
+                  {...register('country', {
+                    required: 'Country name is required!',
                   })}
                   className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
                   id="country"
-                  aria-invalid={errors.country ? "true" : "false"}
+                  aria-invalid={errors.country ? 'true' : 'false'}
                 >
                   <option disabled selected value="">
                     Select your country
@@ -109,10 +105,10 @@ export default function AddAddress({ handleModalOpen }: Props) {
                   type="number"
                   id="zipcode"
                   className={`${style.input}`}
-                  aria-invalid={errors.zipcode ? "true" : "false"}
+                  aria-invalid={errors.zipcode ? 'true' : 'false'}
                   placeholder="Zip Code (Required)*"
-                  {...register("zipcode", {
-                    required: "Zip Code is required!",
+                  {...register('zipcode', {
+                    required: 'Zip Code is required!',
                   })}
                 />
                 {errors.zipcode && (
@@ -131,10 +127,10 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 <select
                   className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
                   id="state"
-                  {...register("state", {
-                    required: "State is required!",
+                  {...register('state', {
+                    required: 'State is required!',
                   })}
-                  aria-invalid={errors.state ? "true" : "false"}
+                  aria-invalid={errors.state ? 'true' : 'false'}
                 >
                   <option selected disabled value="">
                     Select your State
@@ -148,9 +144,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                     ))}
                 </select>
                 {errors.state && (
-                  <p className="text-red-500 text-sm italic">
-                    {errors.state.message?.toString()}
-                  </p>
+                  <p className="text-red-500 text-sm italic">{errors.state.message?.toString()}</p>
                 )}
               </div>
 
@@ -161,11 +155,9 @@ export default function AddAddress({ handleModalOpen }: Props) {
                     <button
                       type="button"
                       key={addressType.name}
-                      onClick={() => setValue("addressType", addressType.name)}
+                      onClick={() => setValue('addressType', addressType.name)}
                       className={`${
-                        watch("addressType") === addressType.name
-                          ? "bg-orange-500 text-white"
-                          : ""
+                        watch('addressType') === addressType.name ? 'bg-orange-500 text-white' : ''
                       } flex items-center py-1 px-2 text-xs rounded border`}
                     >
                       {addressType.icon}
@@ -181,9 +173,9 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 {/* Hidden input field to store the selected address type */}
                 <input
                   type="hidden"
-                  aria-invalid={errors.addressType ? "true" : "false"}
-                  {...register("addressType", {
-                    required: "Address type is required! ",
+                  aria-invalid={errors.addressType ? 'true' : 'false'}
+                  {...register('addressType', {
+                    required: 'Address type is required! ',
                   })}
                 />
               </div>
@@ -198,9 +190,9 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 id="address1"
                 className={`${style.input} w-full`}
                 placeholder="House No., Building Name (Required)*"
-                aria-invalid={errors.address1 ? "true" : "false"}
-                {...register("address1", {
-                  required: "Address 1 is required!",
+                aria-invalid={errors.address1 ? 'true' : 'false'}
+                {...register('address1', {
+                  required: 'Address 1 is required!',
                 })}
               />
               {errors.address1 && (
@@ -218,13 +210,13 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 type="text"
                 id="address2"
                 className={`${style.input} w-full`}
-                aria-invalid={errors.address2 ? "true" : "false"}
+                aria-invalid={errors.address2 ? 'true' : 'false'}
                 placeholder="Road Name, Area, Colony (Required)*"
-                {...register("address2", {
-                  required: "Address 2 is required!",
+                {...register('address2', {
+                  required: 'Address 2 is required!',
                   pattern: {
                     value: /^([^0-9]*)$/,
-                    message: "Not a valid addresss!",
+                    message: 'Not a valid addresss!',
                   },
                 })}
               />
@@ -244,10 +236,10 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 id="address3"
                 className={`${style.input} w-full`}
                 placeholder="Nearby Famous Shop/Mall/Landmark"
-                {...register("address3", {
+                {...register('address3', {
                   pattern: {
                     value: /^([^0-9]*)$/,
-                    message: "Not a valid addresss!",
+                    message: 'Not a valid addresss!',
                   },
                 })}
               />

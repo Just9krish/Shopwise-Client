@@ -1,6 +1,6 @@
-import { NavLink } from "react-router-dom";
-import navItems from "../../../../constant/navItems.json";
-import style from "../../../../styles/style";
+import { NavLink } from 'react-router-dom';
+import navItems from '../../../../constant/navItems.json';
+import style from '../../../../styles/style';
 
 interface IProps {
   toggleMobileNav: () => void;
@@ -18,9 +18,7 @@ export default function Navbar({ mobile, toggleMobileNav }: IProps) {
                 to={nav.url}
                 key={idx}
                 className={({ isActive }) =>
-                  isActive
-                    ? "text-black"
-                    : "text-white hover:text-gray-800 transition-all"
+                  isActive ? 'text-black' : 'text-white hover:text-gray-800 transition-all'
                 }
               >
                 {nav.title}
@@ -37,8 +35,8 @@ export default function Navbar({ mobile, toggleMobileNav }: IProps) {
                 key={idx}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-[#ff7d1a] block"
-                    : "text-black hover:text-gray-800 transition-all block"
+                    ? 'text-[#ff7d1a] block'
+                    : 'text-black hover:text-gray-800 transition-all block'
                 }
               >
                 {nav.title}

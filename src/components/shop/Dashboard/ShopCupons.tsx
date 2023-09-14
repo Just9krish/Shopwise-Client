@@ -1,19 +1,19 @@
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import axios, { AxiosError } from "axios";
-import { FormEvent, useEffect, useState } from "react";
-import { AiOutlineDelete } from "react-icons/ai";
-import { RxCross1 } from "react-icons/rx";
-import { toast } from "react-toastify";
-import { formattedPrice } from "../../../helper/formatPrice";
-import { ICoupon } from "../../../Interface";
-import Loader from "../../Loader/Loader";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { API_URL } from "../../../constant";
-import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import { DataGrid, GridCellParams } from '@mui/x-data-grid';
+import axios, { AxiosError } from 'axios';
+import { FormEvent, useEffect, useState } from 'react';
+import { AiOutlineDelete } from 'react-icons/ai';
+import { RxCross1 } from 'react-icons/rx';
+import { toast } from 'react-toastify';
+import { formattedPrice } from '../../../helper/formatPrice';
+import { ICoupon } from '../../../Interface';
+import Loader from '../../Loader/Loader';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { API_URL } from '../../../constant';
+import { selectShop } from '../../../redux/features/Shop/shopSlice';
 import {
   getShopProductsAsync,
   selectShopProducts,
-} from "../../../redux/features/Products/productSlice";
+} from '../../../redux/features/Products/productSlice';
 
 type row = {
   id: string;
@@ -76,7 +76,7 @@ export default function ShopCupons() {
   }
 
   const [isOpen, setIsOpen] = useState(false);
-  const [cuponcode, setCuponcode] = useState("");
+  const [cuponcode, setCuponcode] = useState('');
   const [discountpercentage, setDiscountpercentage] = useState(0);
   const [miniamount, setMiniAmount] = useState(0);
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
@@ -104,7 +104,7 @@ export default function ShopCupons() {
       if (res.status === 201) {
         setIsOpen(!isOpen);
         setIsLoading(false);
-        setCuponcode("");
+        setCuponcode('');
         setDiscountpercentage(0);
         setMiniAmount(0);
         setSelectedProduct(null);
@@ -131,43 +131,41 @@ export default function ShopCupons() {
 
   const columns = [
     {
-      field: "id",
-      headerName: "Coupon Id",
+      field: 'id',
+      headerName: 'Coupon Id',
       minWidth: 260,
       flex: 0.7,
     },
     {
-      field: "name",
-      headerName: "Coupon Name",
+      field: 'name',
+      headerName: 'Coupon Name',
       minWidth: 180,
       flex: 1.4,
     },
     {
-      field: "discountpercentage",
-      headerName: "Discount Percentage",
+      field: 'discountpercentage',
+      headerName: 'Discount Percentage',
       minWidth: 80,
       flex: 0.6,
     },
     {
-      field: "minamt",
-      headerName: "Minimum Amount",
+      field: 'minamt',
+      headerName: 'Minimum Amount',
       minWidth: 80,
       flex: 0.6,
     },
     {
-      field: "Delete",
+      field: 'Delete',
       flex: 0.8,
       minWidth: 100,
-      headerName: "Delete",
-      type: "number",
+      headerName: 'Delete',
+      type: 'number',
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
           <>
             <button
-              onClick={() =>
-                handleDeleteCoupon(shop?._id!, params.id.toString())
-              }
+              onClick={() => handleDeleteCoupon(shop?._id!, params.id.toString())}
               className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all"
             >
               <AiOutlineDelete size={20} />
@@ -184,7 +182,7 @@ export default function ShopCupons() {
     row.push({
       id: item._id,
       name: item.name,
-      discountpercentage: item.value + "%",
+      discountpercentage: item.value + '%',
       minamt: formattedPrice(item.minAmount),
     });
   });
@@ -203,12 +201,7 @@ export default function ShopCupons() {
           >
             Add Cuopon Code
           </button>
-          <DataGrid
-            rows={row}
-            columns={columns}
-            autoHeight
-            disableRowSelectionOnClick
-          />
+          <DataGrid rows={row} columns={columns} autoHeight disableRowSelectionOnClick />
           {isOpen && (
             <div className="fixed inset-0 z-10 bg-gray-800 bg-opacity-25 flex justify-center h-screen items-center">
               <div className="bg-white rounded w-full shadow py-4 px-8 lg:w-2/5 relative">
@@ -220,19 +213,10 @@ export default function ShopCupons() {
                   />
                 </div>
                 <div className="py-4">
-                  <h4 className="font-Poppins text-3xl text-center">
-                    Create Cuopon Code
-                  </h4>
-                  <form
-                    onSubmit={handleSubmit}
-                    className="space-y-6 mt-8"
-                    aria-required={true}
-                  >
+                  <h4 className="font-Poppins text-3xl text-center">Create Cuopon Code</h4>
+                  <form onSubmit={handleSubmit} className="space-y-6 mt-8" aria-required={true}>
                     <div>
-                      <label
-                        className="text-sm md:text-base"
-                        htmlFor="cuponcode"
-                      >
+                      <label className="text-sm md:text-base" htmlFor="cuponcode">
                         Cuopon Code <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -247,12 +231,8 @@ export default function ShopCupons() {
                       />
                     </div>
                     <div>
-                      <label
-                        className="text-sm md:text-base"
-                        htmlFor="discountpercentage"
-                      >
-                        Discount Percentage{" "}
-                        <span className="text-red-500">*</span>
+                      <label className="text-sm md:text-base" htmlFor="discountpercentage">
+                        Discount Percentage <span className="text-red-500">*</span>
                       </label>
                       <input
                         type="number"
@@ -263,19 +243,14 @@ export default function ShopCupons() {
                         min={0}
                         max={90}
                         value={discountpercentage}
-                        onChange={(e) =>
-                          setDiscountpercentage(parseInt(e.target.value))
-                        }
+                        onChange={(e) => setDiscountpercentage(parseInt(e.target.value))}
                         maxLength={2}
                         placeholder="Enter discount percentage"
                       />
                     </div>
 
                     <div>
-                      <label
-                        className="text-sm md:text-base"
-                        htmlFor="miniamount"
-                      >
+                      <label className="text-sm md:text-base" htmlFor="miniamount">
                         Minimum Amount <span className="text-red-500">*</span>
                       </label>
                       <input
@@ -285,25 +260,20 @@ export default function ShopCupons() {
                         name="miniamount"
                         min={0}
                         value={miniamount}
-                        onChange={(e) =>
-                          setMiniAmount(parseInt(e.target.value))
-                        }
+                        onChange={(e) => setMiniAmount(parseInt(e.target.value))}
                         required
                         placeholder="Enter your product name"
                       />
                     </div>
                     <div>
-                      <label
-                        className="text-sm md:text-base"
-                        htmlFor="productcategory"
-                      >
+                      <label className="text-sm md:text-base" htmlFor="productcategory">
                         Product Category <span className="text-red-500">*</span>
                       </label>
                       <select
                         className="w-full mt-2 border h-9 rounded bg-gray-50 text-sm md:text-base px-3 py-1.5"
                         name="productCategory"
                         id="productcategory"
-                        value={selectedProduct ? selectedProduct : ""}
+                        value={selectedProduct ? selectedProduct : ''}
                         onChange={(e) => setSelectedProduct(e.target.value)}
                         required
                       >

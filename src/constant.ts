@@ -12,13 +12,11 @@ export const API_URL = {
   LOGIN_USER: `${DOMAIN}/users/login`,
   GET_USER_INFO: `${DOMAIN}/users/getuser`,
   FORGOT_USER_PASSWORD: `${DOMAIN}/users/forgotpassword`,
-  REST_USER_PASSWORD: (resetToken: string) =>
-    `${DOMAIN}/users/resetpassword/${resetToken}`,
+  REST_USER_PASSWORD: (resetToken: string) => `${DOMAIN}/users/resetpassword/${resetToken}`,
   UPDATE_USER: `${DOMAIN}/users/profile`,
   UPDATE_USER_PROFILE: `${DOMAIN}/users/avatar`,
   ADD_USER_ADDRESS: `${DOMAIN}/users/address`,
-  DELETE_USER_ADDRESS: (addressId: string) =>
-    `${DOMAIN}/users/address/${addressId}`,
+  DELETE_USER_ADDRESS: (addressId: string) => `${DOMAIN}/users/address/${addressId}`,
   USER_PASSWORD_CHANGE: `${DOMAIN}/users/password-change`,
   GET_USER_ORDERS: (userId: string) => `${DOMAIN}/users/${userId}/orders`,
   LOGOUT_USER: `${DOMAIN}/users/logout`,
@@ -62,8 +60,7 @@ export const API_URL = {
 
   // Product APIs
   ADD_PRODUCT: `${DOMAIN}/products`,
-  GET_FILTERED_PRODUCTS: (queryString: string) =>
-    `${DOMAIN}/products?${queryString}`,
+  GET_FILTERED_PRODUCTS: (queryString: string) => `${DOMAIN}/products?${queryString}`,
   GET_SINGLE_PRODUCT: (productId: string) => `${DOMAIN}/products/${productId}`,
   GET_BEST_DEALS: `${DOMAIN}/products/best-deals`,
   GET_FEATURED_PRODUCTS: `${DOMAIN}/products/featured`,
@@ -77,8 +74,7 @@ export const API_URL = {
   // Wishlist API's
   ADD_TO_WISHLIST: `${DOMAIN}/wishlist`,
   GET_WISHLIST: `${DOMAIN}/wishlist`,
-  REMOVE_FROM_WISHLIST: (productId: string) =>
-    `${DOMAIN}/wishlist/${productId}`,
+  REMOVE_FROM_WISHLIST: (productId: string) => `${DOMAIN}/wishlist/${productId}`,
 };
 
 export const maxQuantityItem = 4;

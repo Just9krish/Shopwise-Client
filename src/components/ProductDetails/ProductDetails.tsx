@@ -1,34 +1,26 @@
-import loadable from "@loadable/component";
-import style from "../../styles/style";
-import { IProduct } from "../../Interface";
-import { formattedPrice } from "../../helper/formatPrice";
-import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
-import { host } from "../../server";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import loadable from '@loadable/component';
+import style from '../../styles/style';
+import { IProduct } from '../../Interface';
+import { formattedPrice } from '../../helper/formatPrice';
+import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
+import { host } from '../../server';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   addToWishlistAsync,
   removeToWishlistAsync,
   selectWishlist,
   selectWishlistLoading,
-} from "../../redux/features/Wishlist/wishlistSlice";
-import { useEffect, useState } from "react";
-import { selectIsUserAuthenticate } from "../../redux/features/User/userSlice";
-import { useNavigate } from "react-router-dom";
-import getImageSource from "../../helper/getImageSource";
-const AddtoCart = loadable(() => import("./AddtoCart/AddtoCart"));
-const Carousel = loadable(() => import("./Carousel/Carousel"));
-const Slider = loadable(() => import("./Slider/Slider"));
+} from '../../redux/features/Wishlist/wishlistSlice';
+import { useEffect, useState } from 'react';
+import { selectIsUserAuthenticate } from '../../redux/features/User/userSlice';
+import { useNavigate } from 'react-router-dom';
+import getImageSource from '../../helper/getImageSource';
+const AddtoCart = loadable(() => import('./AddtoCart/AddtoCart'));
+const Carousel = loadable(() => import('./Carousel/Carousel'));
+const Slider = loadable(() => import('./Slider/Slider'));
 
 export default function ProductDetails({ product }: { product: IProduct }) {
-  const {
-    images,
-    name,
-    discount_price,
-    price,
-    description,
-    shop,
-    discount_percentage,
-  } = product;
+  const { images, name, discount_price, price, description, shop, discount_percentage } = product;
   const [isWish, setIsWish] = useState(false);
   const wishlists = useAppSelector(selectWishlist);
   const isWishlistLoading = useAppSelector(selectWishlistLoading);
@@ -41,7 +33,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
     if (isUserAuthenticated) {
       dispatch(addToWishlistAsync(productId));
     } else {
-      navigation("/login");
+      navigation('/login');
     }
   }
 
@@ -67,26 +59,18 @@ export default function ProductDetails({ product }: { product: IProduct }) {
         <div className="w-full lg:w-1/2">
           <div className="space-y-10 px-3 py-9 lg:p-10">
             <h1 className={`${style.productTitle}`}>{name}</h1>
-            <p className="text-sm lg:text-base">
-              {description.slice(0, 599)}.....
-            </p>
+            <p className="text-sm lg:text-base">{description.slice(0, 599)}.....</p>
             <div>
-              <h4 className="text-green-700 font-semibold text-lg">
-                Deal of a Day
-              </h4>
+              <h4 className="text-green-700 font-semibold text-lg">Deal of a Day</h4>
               <div className={`${style.flex_normal}`}>
-                <span className="text-2xl text-[#CC0C39] mr-3">
-                  -{discount_percentage}%
-                </span>
+                <span className="text-2xl text-[#CC0C39] mr-3">-{discount_percentage}%</span>
                 <span className={`${style.productDiscountPrice} text-[28px]`}>
                   {formattedPrice(discount_price)}
                 </span>
               </div>
               <div className="text-sm">
                 <span className="text-[#565959]">M.R.P.:</span>
-                <span className={`${style.price}`}>
-                  {formattedPrice(price)}
-                </span>
+                <span className={`${style.price}`}>{formattedPrice(price)}</span>
               </div>
             </div>
             <div className={`${style.flex_normal} justify-between`}>
@@ -97,11 +81,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
                   disabled={isWishlistLoading}
                   onClick={() => removeFromWishlistHandler(product._id)}
                 >
-                  <AiFillHeart
-                    title="Remove from wish list"
-                    color="red"
-                    size={30}
-                  />
+                  <AiFillHeart title="Remove from wish list" color="red" size={30} />
                 </button>
               ) : (
                 <button
@@ -109,11 +89,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
                   type="button"
                   onClick={() => addToWishlistHandler(product._id)}
                 >
-                  <AiOutlineHeart
-                    title="Add to wish list"
-                    color="red"
-                    size={30}
-                  />
+                  <AiOutlineHeart title="Add to wish list" color="red" size={30} />
                 </button>
               )}
             </div>

@@ -1,39 +1,31 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IAddToCart, ICartState } from "./interface";
-import { RootState } from "../../store";
-import {
-  addToCart,
-  fetchCartDetails,
-  removeFromCart,
-  updateQuantity,
-} from "./cartAPI";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { IAddToCart, ICartState } from './interface';
+import { addToCart, fetchCartDetails, removeFromCart, updateQuantity } from './cartAPI';
+import { RootState } from '../../type';
 
 const initialState: ICartState = {
   cartPrice: 0,
   cart: [],
   isCartOpen: false,
-  cartMessage: "",
+  cartMessage: '',
   isCartLoading: false,
 };
 
 export const addToCartAsync = createAsyncThunk(
-  "cart/addToCartAsync",
+  'cart/addToCartAsync',
   async ({ productId, quantity }: IAddToCart) => {
     const res: any = await addToCart({ productId, quantity });
     return res.data;
   }
 );
 
-export const fetchCartDetailsAsync = createAsyncThunk(
-  "cart/fetchCartDetails",
-  async () => {
-    const res: any = await fetchCartDetails();
-    return res.data;
-  }
-);
+export const fetchCartDetailsAsync = createAsyncThunk('cart/fetchCartDetails', async () => {
+  const res: any = await fetchCartDetails();
+  return res.data;
+});
 
 export const removeFromCartAsync = createAsyncThunk(
-  "cart/removeFromCart",
+  'cart/removeFromCart',
   async (itemId: string) => {
     const res: any = await removeFromCart(itemId);
     return res.data;
@@ -41,7 +33,7 @@ export const removeFromCartAsync = createAsyncThunk(
 );
 
 export const updateQuantityAsync = createAsyncThunk(
-  "cart/updateQuantity",
+  'cart/updateQuantity',
   async ({ productId, quantity }: { productId: string; quantity: number }) => {
     const res: any = await updateQuantity({ productId, quantity });
     return res.data;
@@ -49,7 +41,7 @@ export const updateQuantityAsync = createAsyncThunk(
 );
 
 const cartSlice = createSlice({
-  name: "cart",
+  name: 'cart',
   initialState,
   reducers: {
     toggleCart: (state) => {
@@ -58,19 +50,15 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(addToCartAsync.pending, (state) => {})
       .addCase(addToCartAsync.fulfilled, (state, action) => {
         state.cart = action.payload.cart.items;
         state.cartPrice = action.payload.cart.totalPrice;
         state.cartMessage = action.payload.message;
       })
-      .addCase(fetchCartDetailsAsync.pending, (state) => {})
       .addCase(fetchCartDetailsAsync.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.cart = action.payload.cart.items;
         state.cartPrice = action.payload.cart.totalPrice;
       })
-      .addCase(removeFromCartAsync.pending, (state) => {})
       .addCase(removeFromCartAsync.fulfilled, (state, action) => {
         state.cart = action.payload.cart.items;
         state.cartPrice = action.payload.cart.totalPrice;
@@ -89,11 +77,9 @@ const cartSlice = createSlice({
 
 export const selectCart = (state: RootState) => state.cartState.cart;
 export const selectCartPrice = (state: RootState) => state.cartState.cartPrice;
-export const selectCartMessage = (state: RootState) =>
-  state.cartState.cartMessage;
+export const selectCartMessage = (state: RootState) => state.cartState.cartMessage;
 export const selectCartOpen = (state: RootState) => state.cartState.isCartOpen;
-export const selectCartLoading = (state: RootState) =>
-  state.cartState.isCartLoading;
+export const selectCartLoading = (state: RootState) => state.cartState.isCartLoading;
 
 export const { toggleCart } = cartSlice.actions;
 

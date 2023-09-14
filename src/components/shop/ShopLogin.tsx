@@ -1,14 +1,11 @@
-import style from "../../styles/style";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import logo from "../../assets/shopwise.png";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import {
-  loginShopAsync,
-  selectShopLoading,
-} from "../../redux/features/Shop/shopSlice";
+import style from '../../styles/style';
+import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useState } from 'react';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import logo from '../../assets/shopwise.png';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loginShopAsync, selectShopLoading } from '../../redux/features/Shop/shopSlice';
 
 export default function ShopLogin() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -47,18 +44,16 @@ export default function ShopLogin() {
               autoComplete="email"
               placeholder="Email"
               className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-              {...register("email", {
-                required: "Email is required!",
+              {...register('email', {
+                required: 'Email is required!',
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: "Email is not Valid!",
+                  message: 'Email is not Valid!',
                 },
               })}
             />
             {errors?.email && (
-              <span className="text-red-500 text-sm">
-                {errors.email.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors.email.message?.toString()}</span>
             )}
           </div>
 
@@ -70,10 +65,10 @@ export default function ShopLogin() {
               <input
                 id="password"
                 placeholder="Password"
-                type={isPasswordShown ? "text" : "password"}
+                type={isPasswordShown ? 'text' : 'password'}
                 className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-                {...register("password", {
-                  required: "Password is requried!",
+                {...register('password', {
+                  required: 'Password is requried!',
                 })}
               />
               <div
@@ -88,9 +83,7 @@ export default function ShopLogin() {
               </div>
             </div>
             {errors?.password && (
-              <span className="text-red-500 text-sm">
-                {errors?.password.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors?.password.message?.toString()}</span>
             )}
           </div>
 
@@ -101,10 +94,7 @@ export default function ShopLogin() {
                 id="remeberme"
                 className="h-4 w-4 text-[#ff7d1a] focus:ring-orange-500 border-gray-300 rounded"
               />
-              <label
-                htmlFor="remeberme"
-                className="ml-2 block text-sm text-gray-900"
-              >
+              <label htmlFor="remeberme" className="ml-2 block text-sm text-gray-900">
                 Remeber me
               </label>
             </div>
@@ -119,12 +109,12 @@ export default function ShopLogin() {
           </div>
           <button
             className={`flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 ${
-              isShopLoading ? "opacity-80" : ""
+              isShopLoading ? 'opacity-80' : ''
             } `}
             type="submit"
             disabled={isShopLoading}
           >
-            {isShopLoading ? "Login..." : "Login"}
+            {isShopLoading ? 'Login...' : 'Login'}
           </button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Not have any account?

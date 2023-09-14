@@ -1,18 +1,13 @@
-import { Navigate } from "react-router-dom";
-import Loader from "../components/Loader/Loader";
-import { useAppSelector } from "../hooks";
-import {
-  selectShop,
-  selectShopAuthenticated,
-  selectShopLoading,
-} from "../redux/features/Shop/shopSlice";
+import { Navigate } from 'react-router-dom';
+import Loader from '../components/Loader/Loader';
+import { useAppSelector } from '../hooks';
+import { selectShopAuthenticated, selectShopLoading } from '../redux/features/Shop/shopSlice';
 
 interface IProps {
   children: JSX.Element;
 }
 
-const SellerProtectedRoute = ({ children }: IProps): JSX.Element => {
-  const shop = useAppSelector(selectShop);
+function SellerProtectedRoute({ children }: IProps): JSX.Element {
   const isShopLoading = useAppSelector(selectShopLoading);
   const isShopAuthenticated = useAppSelector(selectShopAuthenticated);
 
@@ -25,5 +20,5 @@ const SellerProtectedRoute = ({ children }: IProps): JSX.Element => {
   }
 
   return children;
-};
+}
 export default SellerProtectedRoute;

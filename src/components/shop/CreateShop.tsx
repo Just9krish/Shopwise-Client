@@ -1,13 +1,10 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useForm } from "react-hook-form";
-import logo from "../../assets/shopwise.png";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import {
-  createShopAsync,
-  selectShopLoading,
-} from "../../redux/features/Shop/shopSlice";
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { useForm } from 'react-hook-form';
+import logo from '../../assets/shopwise.png';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { createShopAsync, selectShopLoading } from '../../redux/features/Shop/shopSlice';
 
 export default function CreateShop() {
   const isShopLoading = useAppSelector(selectShopLoading);
@@ -54,14 +51,12 @@ export default function CreateShop() {
               type="text"
               placeholder="Full Name"
               className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-              {...register("fullname", {
-                required: "Full Name is required!",
+              {...register('fullname', {
+                required: 'Full Name is required!',
               })}
             />
             {errors?.fullname && (
-              <span className="text-red-500 text-sm">
-                {errors?.fullname.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors?.fullname.message?.toString()}</span>
             )}
           </div>
 
@@ -73,18 +68,16 @@ export default function CreateShop() {
               type="email"
               placeholder="Email"
               className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-              {...register("email", {
-                required: "Email is required!",
+              {...register('email', {
+                required: 'Email is required!',
                 pattern: {
                   value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                  message: "Email is not Valid!",
+                  message: 'Email is not Valid!',
                 },
               })}
             />
             {errors?.email && (
-              <span className="text-red-500 text-sm">
-                {errors.email.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors.email.message?.toString()}</span>
             )}
           </div>
 
@@ -96,14 +89,12 @@ export default function CreateShop() {
               type="number"
               placeholder="Phone Number"
               className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-              {...register("phoneNumber", {
-                required: "Phone number is required!",
+              {...register('phoneNumber', {
+                required: 'Phone number is required!',
               })}
             />
             {errors?.phoneNumber && (
-              <span className="text-red-500 text-sm">
-                {errors.phoneNumber.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors.phoneNumber.message?.toString()}</span>
             )}
           </div>
 
@@ -115,14 +106,12 @@ export default function CreateShop() {
               type="number"
               placeholder="Zip Code"
               className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-              {...register("zipcode", {
-                required: "Zipcode is required!",
+              {...register('zipcode', {
+                required: 'Zipcode is required!',
               })}
             />
             {errors?.zipcode && (
-              <span className="text-red-500 text-sm">
-                {errors.zipcode.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors.zipcode.message?.toString()}</span>
             )}
           </div>
 
@@ -136,14 +125,12 @@ export default function CreateShop() {
               cols={30}
               rows={3}
               className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-              {...register("address", {
-                required: "Address is required!",
+              {...register('address', {
+                required: 'Address is required!',
               })}
             ></textarea>
             {errors?.address && (
-              <span className="text-red-500 text-sm">
-                {errors.address.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors.address.message?.toString()}</span>
             )}
           </div>
 
@@ -155,18 +142,17 @@ export default function CreateShop() {
               <input
                 id="password"
                 placeholder="Password"
-                type={isPasswordShown ? "text" : "password"}
+                type={isPasswordShown ? 'text' : 'password'}
                 className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-                {...register("password", {
-                  required: "Password is requried!",
+                {...register('password', {
+                  required: 'Password is requried!',
                   pattern: {
-                    value:
-                      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+                    value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
                     message:
-                      "Password requirements:\n\n" +
-                      "- At least 8 characters\n" +
-                      "- Must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number\n" +
-                      "- Can contain special characters",
+                      'Password requirements:\n\n' +
+                      '- At least 8 characters\n' +
+                      '- Must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number\n' +
+                      '- Can contain special characters',
                   },
                 })}
               />
@@ -182,9 +168,7 @@ export default function CreateShop() {
               </div>
             </div>
             {errors?.password && (
-              <span className="text-red-500 text-sm">
-                {errors?.password.message?.toString()}
-              </span>
+              <span className="text-red-500 text-sm">{errors?.password.message?.toString()}</span>
             )}
           </div>
 
@@ -196,20 +180,17 @@ export default function CreateShop() {
               <input
                 id="confirm-password"
                 placeholder="Confirm Password"
-                type={isConfirmPasswordShown ? "text" : "password"}
+                type={isConfirmPasswordShown ? 'text' : 'password'}
                 className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-                {...register("confirmPassword", {
-                  required: "Confirm password is requied!",
+                {...register('confirmPassword', {
+                  required: 'Confirm password is requied!',
                   validate: (value, formValues) =>
-                    value === formValues.password ||
-                    "Password is not matching!",
+                    value === formValues.password || 'Password is not matching!',
                 })}
               />
               <div
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() =>
-                  setIsConfirmPasswordShown(!isConfirmPasswordShown)
-                }
+                onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}
               >
                 {isConfirmPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
@@ -228,9 +209,7 @@ export default function CreateShop() {
           <button
             disabled={isShopLoading}
             className={`flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 ${
-              isShopLoading
-                ? "opacity-75 cursor-not-allowed"
-                : "hover:bg-orange-500"
+              isShopLoading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-orange-500'
             }`}
             type="submit"
           >
@@ -256,7 +235,7 @@ export default function CreateShop() {
                 ></path>
               </svg>
             )}
-            {isShopLoading ? "Creating..." : "Create a Account"}
+            {isShopLoading ? 'Creating...' : 'Create a Account'}
           </button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Already have shop?

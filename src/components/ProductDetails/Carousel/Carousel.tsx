@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { host } from "../../../server";
-import getImageSource from "../../../helper/getImageSource";
+import { useState } from 'react';
+import { host } from '../../../server';
+import getImageSource from '../../../helper/getImageSource';
 
 export type ImageProps = {
   id: number;
@@ -36,9 +36,7 @@ export default function Carousel({ images }: { images: ImageProps[] }) {
           <img
             src={getImageSource(image.url)}
             key={image.id}
-            className={`${
-              image.id === selectImg ? "block" : "hidden"
-            } rounded-lg border`}
+            className={`${image.id === selectImg ? 'block' : 'hidden'} rounded-lg border`}
             alt={image.name}
             loading="lazy"
           />

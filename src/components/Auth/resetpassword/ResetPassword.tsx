@@ -1,11 +1,11 @@
-import { useForm } from "react-hook-form";
-import logo from "../../../assets/shopwise.png";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import axios, { AxiosError } from "axios";
-import { API_URL } from "../../../constant";
+import { useForm } from 'react-hook-form';
+import logo from '../../../assets/shopwise.png';
+import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import axios, { AxiosError } from 'axios';
+import { API_URL } from '../../../constant';
 
 export default function ResetPassword() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);
@@ -21,12 +21,8 @@ export default function ResetPassword() {
 
   async function resetPassword(token: string, password: string) {
     try {
-      const config = { headers: { "Content-Type": "application/json" } };
-      const res = await axios.post(
-        API_URL.REST_USER_PASSWORD(token),
-        { password },
-        config
-      );
+      const config = { headers: { 'Content-Type': 'application/json' } };
+      const res = await axios.post(API_URL.REST_USER_PASSWORD(token), { password }, config);
       setSuccess(true);
       reset();
       toast.success(res.data.message);
@@ -40,7 +36,7 @@ export default function ResetPassword() {
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         <img className="mx-auto h-10 w-auto" src={logo} alt="Shopwise" />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          {success ? "Password reset successfully" : "Reset your password"}
+          {success ? 'Password reset successfully' : 'Reset your password'}
         </h2>
       </div>
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -64,18 +60,17 @@ export default function ResetPassword() {
                 <input
                   id="password"
                   placeholder="Enter a new password"
-                  type={isPasswordShown ? "text" : "password"}
+                  type={isPasswordShown ? 'text' : 'password'}
                   className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-                  {...register("password", {
-                    required: "Password is requried!",
+                  {...register('password', {
+                    required: 'Password is requried!',
                     pattern: {
-                      value:
-                        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
+                      value: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/gm,
                       message:
-                        "Password requirements:\n\n" +
-                        "- At least 8 characters\n" +
-                        "- Must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number\n" +
-                        "- Can contain special characters",
+                        'Password requirements:\n\n' +
+                        '- At least 8 characters\n' +
+                        '- Must contain at least 1 uppercase letter, 1 lowercase letter, and 1 number\n' +
+                        '- Can contain special characters',
                     },
                   })}
                 />
@@ -91,9 +86,7 @@ export default function ResetPassword() {
                 </div>
               </div>
               {errors?.password && (
-                <span className="text-red-500 text-sm">
-                  {errors?.password.message?.toString()}
-                </span>
+                <span className="text-red-500 text-sm">{errors?.password.message?.toString()}</span>
               )}
             </div>
 
@@ -108,20 +101,17 @@ export default function ResetPassword() {
                 <input
                   id="password"
                   placeholder="Confirm your new password"
-                  type={isConfirmPasswordShown ? "text" : "password"}
+                  type={isConfirmPasswordShown ? 'text' : 'password'}
                   className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-                  {...register("confirmPassword", {
-                    required: "Confirm password is requied!",
+                  {...register('confirmPassword', {
+                    required: 'Confirm password is requied!',
                     validate: (value, formValues) =>
-                      value === formValues.password ||
-                      "Password is not matching!",
+                      value === formValues.password || 'Password is not matching!',
                   })}
                 />
                 <div
                   className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                  onClick={() =>
-                    setIsConfirmPasswordShown(!isConfirmPasswordShown)
-                  }
+                  onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}
                 >
                   {isConfirmPasswordShown ? (
                     <AiOutlineEyeInvisible color="orange" size={20} />

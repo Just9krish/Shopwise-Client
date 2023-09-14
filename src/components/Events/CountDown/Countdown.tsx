@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
 type Props = {
   endDate: Date;
@@ -16,16 +16,12 @@ export default function Countdown({ endDate, startDate }: Props) {
 
     let seconds: string = Math.floor((difference / 1000) % 60).toString();
     let minutes: string = Math.floor((difference / 1000 / 60) % 60).toString();
-    let hours: string = Math.floor(
-      (difference / (1000 * 60 * 60)) % 24
-    ).toString();
-    let days: string = Math.floor(
-      difference / (1000 * 60 * 60 * 24)
-    ).toString();
+    let hours: string = Math.floor((difference / (1000 * 60 * 60)) % 24).toString();
+    let days: string = Math.floor(difference / (1000 * 60 * 60 * 24)).toString();
 
-    hours = hours.padStart(2, "0");
-    minutes = minutes.padStart(2, "0");
-    seconds = seconds.padStart(2, "0");
+    hours = hours.padStart(2, '0');
+    minutes = minutes.padStart(2, '0');
+    seconds = seconds.padStart(2, '0');
 
     let timeLeft = {};
 
@@ -33,15 +29,13 @@ export default function Countdown({ endDate, startDate }: Props) {
       timeLeft = { days, hours, minutes, seconds };
     } else {
       setTimeUp(true);
-      timeLeft = { hours: "00", minutes: "00", seconds: "00" };
+      timeLeft = { hours: '00', minutes: '00', seconds: '00' };
     }
 
     return timeLeft;
   };
 
-  const [timeLeft, setTimeLeft] = useState<Record<string, number>>(() =>
-    calculateTimeLeft()
-  );
+  const [timeLeft, setTimeLeft] = useState<Record<string, number>>(() => calculateTimeLeft());
 
   useEffect(() => {
     const today = new Date().setHours(0, 0, 0, 0);
@@ -88,14 +82,14 @@ export default function Countdown({ endDate, startDate }: Props) {
         timeUp ? (
           "Time's Up"
         ) : (
-          `Ending in ${timeLeft.days == 0 ? "" : `${timeLeft.days} Days`} ${
-            timeLeft.hours
-          } hours ${timeLeft.minutes} minutes ${timeLeft.seconds} seconds`
+          `Ending in ${timeLeft.days == 0 ? '' : `${timeLeft.days} Days`} ${timeLeft.hours} hours ${
+            timeLeft.minutes
+          } minutes ${timeLeft.seconds} seconds`
         )
       ) : (
         <>
-          Time until start: {timeLeft.hours} hours {timeLeft.minutes} minutes{" "}
-          {timeLeft.seconds} seconds
+          Time until start: {timeLeft.hours} hours {timeLeft.minutes} minutes {timeLeft.seconds}{' '}
+          seconds
         </>
       )}
     </span>

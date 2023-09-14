@@ -1,6 +1,6 @@
-import { IStarsProps } from "../../../Interface";
-import { FaStarHalfAlt, FaStar } from "react-icons/fa";
-import { FiStar } from "react-icons/fi";
+import { IStarsProps } from '../../../Interface';
+import { FaStarHalfAlt, FaStar } from 'react-icons/fa';
+import { FiStar } from 'react-icons/fi';
 
 export default function Stars({ stars }: IStarsProps) {
   const starRating = Array.from({ length: 5 }, (elem, index) => {
@@ -18,7 +18,5 @@ export default function Stars({ stars }: IStarsProps) {
     );
   });
 
-  return (
-    <div className="flex text-orange-400 items-center gap-1">{starRating}</div>
-  );
+  return <div className="flex text-orange-400 items-center gap-1">{starRating}</div>;
 }

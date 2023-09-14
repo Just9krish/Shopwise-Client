@@ -1,74 +1,52 @@
-import "react-toastify/dist/ReactToastify.css";
+import 'react-toastify/dist/ReactToastify.css';
 
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import { useEffect } from "react";
-import { useState } from "react";
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { API_URL } from "./constant";
-import { fetchUserDetailsAsync } from "./redux/features/User/userSlice";
-import { fetchShopAsync } from "./redux/features/Shop/shopSlice";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import { useEffect, useState } from 'react';
 
-import axios from "axios";
-import store from "./redux/store";
-import loadable from "@loadable/component";
-import SellerProtectedRoute from "./protected-routes/SellerProtectedRoute";
-import ProtectedRoute from "./protected-routes/Protectedroute";
-import Layout from "./components/Layout/Layout";
-import LoginPage from "./pages/User/LoginPage";
-import Loader from "./components/Loader/Loader";
-import HomePage from "./pages/HomePage";
-import OrderDetailsPage from "./pages/Seller/OrderDetailsPage";
-import { fetchCartDetailsAsync } from "./redux/features/Cart/cartSlice";
-import { getWishlistAsync } from "./redux/features/Wishlist/wishlistSlice";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
+import axios from 'axios';
+import loadable from '@loadable/component';
+import { API_URL } from './constant';
+import { fetchUserDetailsAsync } from './redux/features/User/userSlice';
+import { fetchShopAsync } from './redux/features/Shop/shopSlice';
 
-const ActivationPage = loadable(() => import("./pages/User/ActivationPage"));
-const ProductsPage = loadable(() => import("./pages/ProductsPage"));
-const ProductPage = loadable(() => import("./pages/ProductPage"));
-const SignupPage = loadable(() => import("./pages/User/SignupPage"));
-const EventsPage = loadable(() => import("./pages/EventsPage"));
-const FAQ = loadable(() => import("./pages/FAQPage"));
-const ProfilePage = loadable(() => import("./pages/User/ProfilePage"));
-const ShopCuponsPage = loadable(() => import("./pages/Seller/ShopCuponsPage"));
-const CheckoutPage = loadable(() => import("./pages/User/CheckoutPage"));
-const ShopHomePage = loadable(() => import("./pages/Seller/ShopHomePage"));
+import store from './redux/store';
+import SellerProtectedRoute from './protected-routes/SellerProtectedRoute';
+import ProtectedRoute from './protected-routes/Protectedroute';
+import Layout from './components/Layout/Layout';
+import LoginPage from './pages/User/LoginPage';
+import HomePage from './pages/HomePage';
+import OrderDetailsPage from './pages/Seller/OrderDetailsPage';
+import { fetchCartDetailsAsync } from './redux/features/Cart/cartSlice';
+import { getWishlistAsync } from './redux/features/Wishlist/wishlistSlice';
+import UserOrderDetailsPage from './pages/User/UserOrderDetailsPage';
 
-const CreateShop = loadable(
-  () => import("./pages/Seller/SellerAuth/CreateShopPage")
-);
+const ActivationPage = loadable(() => import('./pages/User/ActivationPage'));
+const ProductsPage = loadable(() => import('./pages/ProductsPage'));
+const ProductPage = loadable(() => import('./pages/ProductPage'));
+const SignupPage = loadable(() => import('./pages/User/SignupPage'));
+const EventsPage = loadable(() => import('./pages/EventsPage'));
+const FAQ = loadable(() => import('./pages/FAQPage'));
+const ProfilePage = loadable(() => import('./pages/User/ProfilePage'));
+const ShopCuponsPage = loadable(() => import('./pages/Seller/ShopCuponsPage'));
+const CheckoutPage = loadable(() => import('./pages/User/CheckoutPage'));
+const ShopHomePage = loadable(() => import('./pages/Seller/ShopHomePage'));
+
+const CreateShop = loadable(() => import('./pages/Seller/SellerAuth/CreateShopPage'));
 const SellerActivationPage = loadable(
-  () => import("./pages/Seller/SellerAuth/SellerActivationPage")
+  () => import('./pages/Seller/SellerAuth/SellerActivationPage')
 );
-const ShopLoginPage = loadable(
-  () => import("./pages/Seller/SellerAuth/ShopLoginPage")
-);
-const ShopDashboardPage = loadable(
-  () => import("./pages/Seller/ShopDashboardPage")
-);
-const SellerAddProductPage = loadable(
-  () => import("./pages/Seller/SellerAddProductPage")
-);
-const SellerProductsPage = loadable(
-  () => import("./pages/Seller/SellerProductsPage")
-);
-const SellerCreatEventPage = loadable(
-  () => import("./pages/Seller/SellerCreatEventPag")
-);
-const ShopAllEventsPage = loadable(
-  () => import("./pages/Seller/ShopAllEventsPage")
-);
-const SellerAllOrdersPage = loadable(
-  () => import("./pages/Seller/SellerAllOrdersPage")
-);
-const ForgotPasswordPage = loadable(
-  () => import("./pages/User/ForgotPasswordPage")
-);
-const ResetPasswordPage = loadable(
-  () => import("./pages/User/ResetPasswordPage")
-);
-
-import UserOrderDetailsPage from "./pages/User/UserOrderDetailsPage";
+const ShopLoginPage = loadable(() => import('./pages/Seller/SellerAuth/ShopLoginPage'));
+const ShopDashboardPage = loadable(() => import('./pages/Seller/ShopDashboardPage'));
+const SellerAddProductPage = loadable(() => import('./pages/Seller/SellerAddProductPage'));
+const SellerProductsPage = loadable(() => import('./pages/Seller/SellerProductsPage'));
+const SellerCreatEventPage = loadable(() => import('./pages/Seller/SellerCreatEventPag'));
+const ShopAllEventsPage = loadable(() => import('./pages/Seller/ShopAllEventsPage'));
+const SellerAllOrdersPage = loadable(() => import('./pages/Seller/SellerAllOrdersPage'));
+const ForgotPasswordPage = loadable(() => import('./pages/User/ForgotPasswordPage'));
+const ResetPasswordPage = loadable(() => import('./pages/User/ResetPasswordPage'));
 
 function App() {
   const [stripeKey, setStripeKey] = useState<string | null>(null);
@@ -119,20 +97,11 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/forgotpassword" element={<ForgotPasswordPage />} />
+        <Route path="/resetPassword/:resetToken" element={<ResetPasswordPage />} />
+        <Route path="/user/verify/:verificationToken" element={<ActivationPage />} />
+        <Route path="/seller/verify/:activationToken" element={<SellerActivationPage />} />
         <Route
-          path="/resetPassword/:resetToken"
-          element={<ResetPasswordPage />}
-        />
-        <Route
-          path="/user/verify/:verificationToken"
-          element={<ActivationPage />}
-        />
-        <Route
-          path="/seller/verify/:activation_token"
-          element={<SellerActivationPage />}
-        />
-        <Route
-          path="/products/:product_id"
+          path="/products/:productId"
           element={
             <Layout>
               <ProductPage />

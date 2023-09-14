@@ -1,36 +1,23 @@
-import { Disclosure } from "@headlessui/react";
-import { ChangeEvent } from "react";
-import { BiMinus, BiPlus } from "react-icons/bi";
-import { Section, filter, Category } from "../../pages/ProductsPage";
+import { Disclosure } from '@headlessui/react';
+import { ChangeEvent } from 'react';
+import { BiMinus, BiPlus } from 'react-icons/bi';
+import { Section, filter, Category } from '../../pages/ProductsPage';
 
 type DesktopFilterProps = {
   filters: filter[];
-  handleFilter: (
-    e: ChangeEvent<HTMLInputElement>,
-    section: Section,
-    option: Category
-  ) => void;
+  handleFilter: (e: ChangeEvent<HTMLInputElement>, section: Section, option: Category) => void;
 };
 
-export default function DesktopFilter({
-  handleFilter,
-  filters,
-}: DesktopFilterProps) {
+export default function DesktopFilter({ handleFilter, filters }: DesktopFilterProps) {
   return (
     <form className="hidden lg:block">
       {filters.map((section) => (
-        <Disclosure
-          as="div"
-          key={section.id}
-          className="border-b border-gray-200 py-6"
-        >
+        <Disclosure as="div" key={section.id} className="border-b border-gray-200 py-6">
           {({ open }) => (
             <>
               <h3 className="-my-3 flow-root">
                 <Disclosure.Button className="flex w-full items-center justify-between py-3 text-sm text-gray-400 hover:text-gray-500">
-                  <span className="font-medium text-gray-900">
-                    {section.name}
-                  </span>
+                  <span className="font-medium text-gray-900">{section.name}</span>
                   <span className="ml-6 flex items-center">
                     {open ? (
                       <BiMinus className="h-5 w-5" aria-hidden="true" />

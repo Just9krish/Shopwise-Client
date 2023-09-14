@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
-import { formattedPrice } from "../../../helper/formatPrice";
-import { useAppSelector } from "../../../hooks";
-import { IProduct, IShippingAddress } from "../../../Interface";
-import { host } from "../../../server";
-import { selectUser } from "../../../redux/features/User/userSlice";
-import getImageSource from "../../../helper/getImageSource";
+import { useEffect, useState } from 'react';
+import { formattedPrice } from '../../../helper/formatPrice';
+import { useAppSelector } from '../../../hooks';
+import { IProduct, IShippingAddress } from '../../../Interface';
+import { host } from '../../../server';
+import { selectUser } from '../../../redux/features/User/userSlice';
+import getImageSource from '../../../helper/getImageSource';
 
 type Iorder = {
   orders: {
@@ -30,15 +30,13 @@ export default function PlacedProduct() {
   const [orderProducts, setOrderProducts] = useState<null | OrderItem[]>();
 
   useEffect(() => {
-    const latestOrder = localStorage.getItem("latestorder");
+    const latestOrder = localStorage.getItem('latestorder');
 
     if (latestOrder) {
       const order: Iorder = JSON.parse(latestOrder);
       setOrder(order);
 
-      const products = order.orders.flatMap((order) =>
-        order.cart.map((cartItem) => cartItem)
-      );
+      const products = order.orders.flatMap((order) => order.cart.map((cartItem) => cartItem));
       setOrderProducts(products);
     }
   }, []);
@@ -46,8 +44,8 @@ export default function PlacedProduct() {
   return (
     <div className="bg-white shadow px-6 py-8">
       <p className="font-Poppins font-extralight text-sm">
-        Thank you, {user?.name}, for placing an order with us. We will try to
-        deliver your order as soon as possible.
+        Thank you, {user?.name}, for placing an order with us. We will try to deliver your order as
+        soon as possible.
       </p>
       {order && (
         <div>
@@ -82,9 +80,7 @@ export default function PlacedProduct() {
                   </div>
                   <div>
                     <p className="font-semibold">{orderProduct.product.name}</p>
-                    <p className="text-gray-600 text-sm">
-                      Quantity: {orderProduct.quantity}
-                    </p>
+                    <p className="text-gray-600 text-sm">Quantity: {orderProduct.quantity}</p>
                     <p className="text-gray-600 text-sm">
                       Price:
                       {formattedPrice(

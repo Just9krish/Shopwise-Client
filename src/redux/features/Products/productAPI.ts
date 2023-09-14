@@ -1,18 +1,14 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { API_URL } from "../../../constant";
-import { FilterQuery, IAddProduct, IDeleteProduct } from "./interface";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { API_URL } from '../../../constant';
+import { FilterQuery, IAddProduct, IDeleteProduct } from './interface';
 
 const config = {
-  headers: { "Content-Type": "multipart/form-data" },
+  headers: { 'Content-Type': 'multipart/form-data' },
   withCredentials: true,
 };
 
-export function getAllProductsByFilters({
-  filter,
-  sort,
-  pagination,
-}: FilterQuery) {
-  let queryString = "";
+export function getAllProductsByFilters({ filter, sort, pagination }: FilterQuery) {
+  let queryString = '';
 
   for (let key in filter) {
     const categoryValues = filter[key];
@@ -31,9 +27,7 @@ export function getAllProductsByFilters({
 
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.get(
-        API_URL.GET_FILTERED_PRODUCTS(queryString)
-      );
+      const res: AxiosResponse = await axios.get(API_URL.GET_FILTERED_PRODUCTS(queryString));
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {
@@ -48,11 +42,7 @@ export function getAllProductsByFilters({
 export function addProduct(data: IAddProduct) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.post(
-        API_URL.ADD_PRODUCT,
-        data,
-        config
-      );
+      const res: AxiosResponse = await axios.post(API_URL.ADD_PRODUCT, data, config);
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {
@@ -67,10 +57,9 @@ export function addProduct(data: IAddProduct) {
 export function getShopProducts(shopId: string) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.get(
-        API_URL.GET_SHOP_PRODUCTS(shopId),
-        { withCredentials: true }
-      );
+      const res: AxiosResponse = await axios.get(API_URL.GET_SHOP_PRODUCTS(shopId), {
+        withCredentials: true,
+      });
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {
@@ -103,9 +92,7 @@ export function deleteProduct({ productId, shopId }: IDeleteProduct) {
 export function getProduct(productId: string) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.get(
-        API_URL.GET_SINGLE_PRODUCT(productId)
-      );
+      const res: AxiosResponse = await axios.get(API_URL.GET_SINGLE_PRODUCT(productId));
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {

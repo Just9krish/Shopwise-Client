@@ -1,12 +1,12 @@
-import style from "../../../styles/style";
-import loadable from "@loadable/component";
-const Product = loadable(() => import("../../Product/Product"));
-import { useAppDispatch, useAppSelector } from "../../../hooks";
+import style from '../../../styles/style';
+import loadable from '@loadable/component';
+const Product = loadable(() => import('../../Product/Product'));
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   getFeaturedProductsAsync,
   selectFeaturedProducts,
-} from "../../../redux/features/Products/productSlice";
-import { useEffect } from "react";
+} from '../../../redux/features/Products/productSlice';
+import { useEffect } from 'react';
 
 export default function FeaturedProducts() {
   const featuredProducts = useAppSelector(selectFeaturedProducts);
@@ -26,9 +26,7 @@ export default function FeaturedProducts() {
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 mt-8">
-            {featuredProducts?.map((product, idx) => (
-              <Product key={idx} product={product} />
-            ))}
+            {featuredProducts?.map((product, idx) => <Product key={idx} product={product} />)}
           </div>
         )}
       </div>

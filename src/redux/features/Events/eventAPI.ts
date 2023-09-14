@@ -1,9 +1,9 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { API_URL } from "../../../constant";
-import { IDeleteEventData } from "./interface";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { API_URL } from '../../../constant';
+import { IDeleteEventData } from './interface';
 
 const config = {
-  headers: { "Content-Type": "application/json" },
+  headers: { 'Content-Type': 'application/json' },
   withCredentials: true,
 };
 
@@ -25,10 +25,7 @@ export function getAllEvents() {
 export function getShopAllEvents(shopId: string) {
   return new Promise(async (resolve, reject) => {
     try {
-      const res: AxiosResponse = await axios.get(
-        API_URL.GET_SHOP_EVENTS(shopId),
-        config
-      );
+      const res: AxiosResponse = await axios.get(API_URL.GET_SHOP_EVENTS(shopId), config);
       resolve({ data: res.data });
     } catch (error: AxiosError | any) {
       if (error.response) {

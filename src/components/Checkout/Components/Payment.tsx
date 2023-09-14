@@ -4,16 +4,16 @@ import {
   CardNumberElement,
   useStripe,
   useElements,
-} from "@stripe/react-stripe-js";
-import axios, { AxiosError } from "axios";
-import { ChangeEvent, FormEvent, useState } from "react";
-import { GrPowerReset } from "react-icons/gr";
-import { toast } from "react-toastify";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import style from "../../../styles/style";
-import { API_URL } from "../../../constant";
-import { selectUser } from "../../../redux/features/User/userSlice";
-import { fetchCartDetailsAsync } from "../../../redux/features/Cart/cartSlice";
+} from '@stripe/react-stripe-js';
+import axios, { AxiosError } from 'axios';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { GrPowerReset } from 'react-icons/gr';
+import { toast } from 'react-toastify';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import style from '../../../styles/style';
+import { API_URL } from '../../../constant';
+import { selectUser } from '../../../redux/features/User/userSlice';
+import { fetchCartDetailsAsync } from '../../../redux/features/Cart/cartSlice';
 
 type SavedAddress = {
   fullName: string;
@@ -39,7 +39,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
 
-  const shipping_address = localStorage.getItem("shipping_address");
+  const shipping_address = localStorage.getItem('shipping_address');
 
   let savedAddress: SavedAddress | undefined;
 
@@ -76,7 +76,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
           { userId: user?._id },
           {
             headers: {
-              "Content-Type": "application/json",
+              'Content-Type': 'application/json',
             },
             withCredentials: true,
           }
@@ -84,21 +84,18 @@ export default function Payment({ toggleActiveStep }: IProps) {
 
         const client_secret = data.clientSecret;
 
-        const { error, paymentIntent } = await stripe?.confirmCardPayment(
-          client_secret,
-          {
-            payment_method: { card: cardNumberElement },
-          }
-        );
+        const { error, paymentIntent } = await stripe?.confirmCardPayment(client_secret, {
+          payment_method: { card: cardNumberElement },
+        });
 
         if (error) {
           toast.error(error.message);
         } else {
-          if (paymentIntent.status === "succeeded") {
+          if (paymentIntent.status === 'succeeded') {
             const paymentInfo = {
               id: paymentIntent.id,
               status: paymentIntent.status,
-              paymentMethod: "Card",
+              paymentMethod: 'Card',
             };
 
             const order = {
@@ -109,16 +106,16 @@ export default function Payment({ toggleActiveStep }: IProps) {
 
             const { data } = await axios.post(API_URL.CREATE_ORDER, order, {
               headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
               },
               withCredentials: true,
             });
 
             dispatch(fetchCartDetailsAsync());
 
-            toast.success("Order created successfully");
-            localStorage.removeItem("shipping_address");
-            localStorage.setItem("latestorder", JSON.stringify(data));
+            toast.success('Order created successfully');
+            localStorage.removeItem('shipping_address');
+            localStorage.setItem('latestorder', JSON.stringify(data));
             toggleActiveStep(2);
           }
         }
@@ -134,12 +131,11 @@ export default function Payment({ toggleActiveStep }: IProps) {
 
   // cash on delivery
   const [randomText, setRandomText] = useState(generateRandomText());
-  const [userInput, setUserInput] = useState("");
+  const [userInput, setUserInput] = useState('');
 
   function generateRandomText() {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    let text = "";
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let text = '';
     for (let i = 0; i < 6; i++) {
       text += characters.charAt(Math.floor(Math.random() * characters.length));
     }
@@ -153,8 +149,8 @@ export default function Payment({ toggleActiveStep }: IProps) {
   async function handleVerify() {
     try {
       const paymentInfo = {
-        paymentMethod: "COD",
-        status: "Pending",
+        paymentMethod: 'COD',
+        status: 'Pending',
       };
       const order = {
         shippingAddress,
@@ -163,14 +159,14 @@ export default function Payment({ toggleActiveStep }: IProps) {
 
       const { data } = await axios.post(API_URL.CREATE_ORDER, order, {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         withCredentials: true,
       });
       dispatch(fetchCartDetailsAsync());
-      toast.success("Order created successfully");
-      localStorage.removeItem("shipping_address");
-      localStorage.setItem("latestorder", JSON.stringify(data));
+      toast.success('Order created successfully');
+      localStorage.removeItem('shipping_address');
+      localStorage.setItem('latestorder', JSON.stringify(data));
 
       toggleActiveStep(2);
     } catch (err: AxiosError | any) {
@@ -184,7 +180,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
 
   function handleReset() {
     setRandomText(generateRandomText());
-    setUserInput("");
+    setUserInput('');
   }
 
   return (
@@ -194,22 +190,17 @@ export default function Payment({ toggleActiveStep }: IProps) {
         <button className="flex gap-8" onClick={() => setSelect(1)}>
           <span
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute after:bg-green-500 after:z-30 after:rounded-full ${
-              select === 1 ? "after:h-[18px] after:w-[18px]" : ""
+              select === 1 ? 'after:h-[18px] after:w-[18px]' : ''
             }`}
           ></span>
-          <h4 className="font-semibold text-[#000000b1]">
-            Pay with Debit/Credit Card
-          </h4>
+          <h4 className="font-semibold text-[#000000b1]">Pay with Debit/Credit Card</h4>
         </button>
 
         {select == 1 && (
           <div className="flex border-b px-14 pb-8">
             <form className="w-full space-y-4" onSubmit={handleCardPayment}>
               <div className="max-w-sm w-full">
-                <label
-                  htmlFor="nameoncard"
-                  className="block text-sm font-medium text-[#000000a4]"
-                >
+                <label htmlFor="nameoncard" className="block text-sm font-medium text-[#000000a4]">
                   Name On Card
                 </label>
                 <input
@@ -220,17 +211,15 @@ export default function Payment({ toggleActiveStep }: IProps) {
               </div>
 
               <div className="max-w-sm w-full">
-                <p className="text-sm font-medium text-[#000000a4]">
-                  Card Information
-                </p>
+                <p className="text-sm font-medium text-[#000000a4]">Card Information</p>
                 <CardNumberElement
                   options={{
-                    placeholder: "XXXX XXXX XXXX XXXX",
+                    placeholder: 'XXXX XXXX XXXX XXXX',
                     style: {
-                      base: { fontSize: "17px", color: "#444" },
+                      base: { fontSize: '17px', color: '#444' },
                       empty: {
-                        "::placeholder": {
-                          color: "#c8c8c8",
+                        '::placeholder': {
+                          color: '#c8c8c8',
                         },
                       },
                     },
@@ -242,10 +231,10 @@ export default function Payment({ toggleActiveStep }: IProps) {
                     <CardExpiryElement
                       options={{
                         style: {
-                          base: { fontSize: "17px", color: "#444" },
+                          base: { fontSize: '17px', color: '#444' },
                           empty: {
-                            "::placeholder": {
-                              color: "#c8c8c8",
+                            '::placeholder': {
+                              color: '#c8c8c8',
                             },
                           },
                         },
@@ -257,10 +246,10 @@ export default function Payment({ toggleActiveStep }: IProps) {
                     <CardCvcElement
                       options={{
                         style: {
-                          base: { fontSize: "17px", color: "#444" },
+                          base: { fontSize: '17px', color: '#444' },
                           empty: {
-                            "::placeholder": {
-                              color: "#c8c8c8",
+                            '::placeholder': {
+                              color: '#c8c8c8',
                             },
                           },
                         },
@@ -284,7 +273,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
         <button className="flex gap-8" onClick={() => setSelect(2)}>
           <span
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute  after:bg-green-500 after:rounded-full after:z-30 ${
-              select === 2 ? "after:h-[18px] after:w-[18px]" : ""
+              select === 2 ? 'after:h-[18px] after:w-[18px]' : ''
             }`}
           ></span>
           <h4 className="font-semibold text-[#000000b1]">Pay with Pay Pal</h4>
@@ -302,16 +291,14 @@ export default function Payment({ toggleActiveStep }: IProps) {
         <button className="flex gap-8" onClick={() => setSelect(3)}>
           <span
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute after:bg-green-500 after:z-30 after:rounded-full ${
-              select === 3 ? "after:h-[18px] after:w-[18px]" : ""
+              select === 3 ? 'after:h-[18px] after:w-[18px]' : ''
             }`}
           ></span>
           <h4 className="font-semibold text-[#000000b1]">Cash On Delivery</h4>
         </button>
         {select === 3 && (
           <div className="px-14 pb-8 space-y-4 max-w-md w-full">
-            <h4 className="text-[#000000a4]">
-              Enter the text shown in the image:
-            </h4>
+            <h4 className="text-[#000000a4]">Enter the text shown in the image:</h4>
             <img
               src={`https://dummyimage.com/180x50/999/fff&text=${randomText}`}
               alt="Random Text"

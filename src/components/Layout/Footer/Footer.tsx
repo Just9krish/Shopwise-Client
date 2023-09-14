@@ -1,11 +1,11 @@
-import { BsTwitter, BsYoutube } from "react-icons/bs";
-import { MdLocationOn, MdWifiCalling3, MdEmail } from "react-icons/md";
-import { FiInstagram } from "react-icons/fi";
-import style from "../../../styles/style";
-import siteLink from "../../../constant/footerLinks.json";
-import supportLink from "../../../constant/footerSupportLinks.json";
-import { Link } from "react-router-dom";
-import logo from "../../../assets/shopwise.png";
+import { BsTwitter, BsYoutube } from 'react-icons/bs';
+import { MdLocationOn, MdWifiCalling3, MdEmail } from 'react-icons/md';
+import { FiInstagram } from 'react-icons/fi';
+import style from '../../../styles/style';
+import siteLink from '../../../constant/footerLinks.json';
+import supportLink from '../../../constant/footerSupportLinks.json';
+import { Link } from 'react-router-dom';
+import logo from '../../../assets/shopwise.png';
 
 export default function Footer() {
   return (
@@ -14,7 +14,7 @@ export default function Footer() {
         {/* <h3 className="mb-6 text-2xl font-semibold lg:text-4xl">Shopwise</h3> */}
         <img
           className="w-40 mb-6"
-          style={{ filter: "grayscale(100%) invert(100%) hue-rotate(180deg)" }}
+          style={{ filter: 'grayscale(100%) invert(100%) hue-rotate(180deg)' }}
           src={logo}
           alt="Shopwise log"
         />
@@ -25,8 +25,8 @@ export default function Footer() {
                 <MdLocationOn fontSize="1.2em" />
               </span>
               <p>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Excepturi dolores similique repudiandae?
+                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Excepturi dolores
+                similique repudiandae?
               </p>
             </div>
             <div className="flex items-center mb-4">

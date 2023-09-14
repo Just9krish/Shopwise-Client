@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { GrFormPrevious, GrFormNext } from "react-icons/gr";
-import { host } from "../../../server";
-import { ImageProps } from "../Carousel/Carousel";
-import getImageSource from "../../../helper/getImageSource";
+import { useState } from 'react';
+import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
+import { host } from '../../../server';
+import { ImageProps } from '../Carousel/Carousel';
+import getImageSource from '../../../helper/getImageSource';
 
 export default function Slider({ images }: { images: ImageProps[] }) {
   const [slide, setSlide] = useState(0);
 
   function changeSlide(direction: string) {
-    if (direction === "l") {
+    if (direction === 'l') {
       setSlide(slide !== 0 ? slide - 1 : images.length - 1);
     }
 
-    if (direction === "r") {
+    if (direction === 'r') {
       setSlide(slide === images.length - 1 ? 0 : slide + 1);
     }
   }
@@ -40,13 +40,13 @@ export default function Slider({ images }: { images: ImageProps[] }) {
       </div>
       <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full px-2">
         <div
-          onClick={() => changeSlide("l")}
+          onClick={() => changeSlide('l')}
           className="bg-white h-8 w-8 rounded-full flex justify-center items-center"
         >
           <GrFormPrevious />
         </div>
         <div
-          onClick={() => changeSlide("r")}
+          onClick={() => changeSlide('r')}
           className="bg-white h-8 w-8 rounded-full flex justify-center items-center"
         >
           <GrFormNext />

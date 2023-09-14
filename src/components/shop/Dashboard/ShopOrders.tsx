@@ -1,18 +1,15 @@
-import { DataGrid, GridCellParams } from "@mui/x-data-grid";
-import { useEffect } from "react";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { Link } from "react-router-dom";
-import { formattedPrice } from "../../../helper/formatPrice";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import Loader from "../../Loader/Loader";
-import {
-  selectShop,
-  selectShopLoading,
-} from "../../../redux/features/Shop/shopSlice";
+import { DataGrid, GridCellParams } from '@mui/x-data-grid';
+import { useEffect } from 'react';
+import { AiOutlineArrowRight } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import { formattedPrice } from '../../../helper/formatPrice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import Loader from '../../Loader/Loader';
+import { selectShop, selectShopLoading } from '../../../redux/features/Shop/shopSlice';
 import {
   getAllOrdersOfShopAsync,
   selectShopOrders,
-} from "../../../redux/features/Orders/orderSlice";
+} from '../../../redux/features/Orders/orderSlice';
 
 type Row = {
   id: string;
@@ -32,43 +29,43 @@ export default function ShopOrders() {
 
   const columns = [
     {
-      field: "id",
-      headerName: "Order ID",
+      field: 'id',
+      headerName: 'Order ID',
       minWidth: 150,
       flex: 0.7,
     },
 
     {
-      field: "status",
-      headerName: "Status",
+      field: 'status',
+      headerName: 'Status',
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params: GridCellParams) => {
-        return params.value == "Delivered" ? "greenColor" : "redcolor";
+        return params.value == 'Delivered' ? 'greenColor' : 'redcolor';
       },
     },
     {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
+      field: 'itemsQty',
+      headerName: 'Items Qty',
+      type: 'number',
       minWidth: 130,
       flex: 0.7,
     },
 
     {
-      field: "total",
-      headerName: "Total",
-      type: "number",
+      field: 'total',
+      headerName: 'Total',
+      type: 'number',
       minWidth: 130,
       flex: 0.8,
     },
 
     {
-      field: " ",
+      field: ' ',
       flex: 1,
       minWidth: 150,
-      headerName: "",
-      type: "number",
+      headerName: '',
+      type: 'number',
       sortable: false,
 
       renderCell: (params: GridCellParams) => {

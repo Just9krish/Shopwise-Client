@@ -1,21 +1,21 @@
-import loadable from "@loadable/component";
-import { useEffect, useState } from "react";
-import { BsBagFill } from "react-icons/bs";
-import { Link, useParams } from "react-router-dom";
-import { formattedPrice } from "../../../helper/formatPrice";
-import { useAppDispatch, useAppSelector } from "../../../hooks";
-import { IShopOrder } from "../../../Interface";
-import { host } from "../../../server";
-import { Country, State } from "country-state-city";
+import loadable from '@loadable/component';
+import { useEffect, useState } from 'react';
+import { BsBagFill } from 'react-icons/bs';
+import { Link, useParams } from 'react-router-dom';
+import { formattedPrice } from '../../../helper/formatPrice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { IShopOrder } from '../../../Interface';
+import { host } from '../../../server';
+import { Country, State } from 'country-state-city';
 
-import { selectShop } from "../../../redux/features/Shop/shopSlice";
+import { selectShop } from '../../../redux/features/Shop/shopSlice';
 import {
   getAllOrdersOfShopAsync,
   selectShopOrders,
   updateOrderStatusAsync,
-} from "../../../redux/features/Orders/orderSlice";
-import getImageSource from "../../../helper/getImageSource";
-const Loader = loadable(() => import("../../Loader/Loader"));
+} from '../../../redux/features/Orders/orderSlice';
+import getImageSource from '../../../helper/getImageSource';
+const Loader = loadable(() => import('../../Loader/Loader'));
 
 export default function OrderDetails() {
   const dispatch = useAppDispatch();
@@ -23,23 +23,21 @@ export default function OrderDetails() {
   const shopOrders = useAppSelector(selectShopOrders);
   const { orderId } = useParams();
   const [selectedOrder, setSelectedOrder] = useState<IShopOrder | null>(null);
-  const [orderStatus, setOrderStatus] = useState("");
+  const [orderStatus, setOrderStatus] = useState('');
 
-  const orderStatusList = ["Shipped", "Delivered", "Cancelled", "Processing"];
-  const refundStatusList = ["Processing refund", "Refund Success"];
+  const orderStatusList = ['Shipped', 'Delivered', 'Cancelled', 'Processing'];
+  const refundStatusList = ['Processing refund', 'Refund Success'];
 
   const getCountryName = (isoCode: string) => {
-    const country = Country.getAllCountries().find(
-      (country) => country.isoCode === isoCode
-    );
-    return country ? country.name : "";
+    const country = Country.getAllCountries().find((country) => country.isoCode === isoCode);
+    return country ? country.name : '';
   };
 
   const getStateName = (isoCode: string, countryIsoCode: string) => {
     const country = State.getStatesOfCountry(countryIsoCode).find(
       (country) => country.isoCode === isoCode
     );
-    return country ? country.name : "";
+    return country ? country.name : '';
   };
 
   useEffect(() => {
@@ -52,7 +50,7 @@ export default function OrderDetails() {
     const order = shopOrders.find((order) => order._id === orderId);
     setSelectedOrder(order || null);
 
-    setOrderStatus(order?.orderStatus || "");
+    setOrderStatus(order?.orderStatus || '');
   }, [orderId, shopOrders]);
 
   return (
@@ -79,8 +77,7 @@ export default function OrderDetails() {
             <div>
               <h2 className="text-lg  text-[#201f13]">Placed on:</h2>
               <span className="text-[#4a4a4a]">
-                {selectedOrder &&
-                  new Date(selectedOrder.createdAt).toLocaleString()}
+                {selectedOrder && new Date(selectedOrder.createdAt).toLocaleString()}
               </span>
             </div>
           </article>
@@ -91,14 +88,11 @@ export default function OrderDetails() {
               const { name, price, images, category, discount_price } = product;
 
               return (
-                <div
-                  key={_id}
-                  className="flex items-center gap-4 py-4 border-b border-gray-300"
-                >
+                <div key={_id} className="flex items-center gap-4 py-4 border-b border-gray-300">
                   <Link to={`/products/${product._id}`}>
                     <img
                       src={getImageSource(images[0].url)}
-                      alt={images[0]?.name || "Product image"}
+                      alt={images[0]?.name || 'Product image'}
                       className="w-16 h-16 object-cover rounded-lg"
                     />
                   </Link>
@@ -124,18 +118,14 @@ export default function OrderDetails() {
             <div className="mt-6 flex items-center gap-2 justify-end">
               <span className="text-lg text-[#201f13]">Total Price:</span>
               <span className="tracking-wide">
-                <strong>
-                  {selectedOrder && formattedPrice(selectedOrder.totalPrice)}
-                </strong>
+                <strong>{selectedOrder && formattedPrice(selectedOrder.totalPrice)}</strong>
               </span>
             </div>
           </article>
 
           <article className="md:w-2/5">
             <div className="mt-6 md:mt-0 md:ml-6">
-              <h2 className="text-lg font-semibold text-[#201f13]">
-                Shipping Address:
-              </h2>
+              <h2 className="text-lg font-semibold text-[#201f13]">Shipping Address:</h2>
               <h3 className="text-[#4a4a4a]">
                 {selectedOrder && selectedOrder.shippingAddress?.fullname}
               </h3>
@@ -152,14 +142,11 @@ export default function OrderDetails() {
                   )}
               </h3>
               <h3 className="text-[#4a4a4a]">
-                {selectedOrder &&
-                  getCountryName(selectedOrder?.shippingAddress?.country)}
+                {selectedOrder && getCountryName(selectedOrder?.shippingAddress?.country)}
               </h3>
               <div className="flex items-center gap-2">
                 <span className="text-[#201f13]">Pincode:</span>
-                <span className="text-[#4a4a4a]">
-                  {selectedOrder?.shippingAddress?.zipcode}
-                </span>
+                <span className="text-[#4a4a4a]">{selectedOrder?.shippingAddress?.zipcode}</span>
               </div>
 
               <div className="flex items-center gap-2">
@@ -173,41 +160,33 @@ export default function OrderDetails() {
             </div>
 
             <div className="mt-6 md:ml-6">
-              <h2 className="text-lg font-semibold text-[#201f13]">
-                Payment Info
-              </h2>
+              <h2 className="text-lg font-semibold text-[#201f13]">Payment Info</h2>
               <div className="flex items-center gap-2">
-                <span className="text-[#201f13] font-extralight">
-                  Total Price:
-                </span>
+                <span className="text-[#201f13] font-extralight">Total Price:</span>
                 <span className="font-extrabold tracking-wide">
                   {selectedOrder && formattedPrice(selectedOrder.totalPrice)}
                 </span>
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-[#201f13] font-extralight">
-                  Payment Status:
-                </span>
-                <span>{selectedOrder?.paymentInfo?.status || "Not Paid"}</span>
+                <span className="text-[#201f13] font-extralight">Payment Status:</span>
+                <span>{selectedOrder?.paymentInfo?.status || 'Not Paid'}</span>
               </div>
 
               <div className="flex items-center gap-2">
-                <span className="text-[#201f13] font-extralight">
-                  Payment Mode:
-                </span>
+                <span className="text-[#201f13] font-extralight">Payment Mode:</span>
                 <span
                   className={`${
-                    selectedOrder?.paymentInfo?.status === "succeeded"
-                      ? "text-[#19e50b]"
-                      : selectedOrder?.paymentInfo?.status === "canceled"
-                      ? "text-[#f75e68]"
-                      : "text-orange-500"
+                    selectedOrder?.paymentInfo?.status === 'succeeded'
+                      ? 'text-[#19e50b]'
+                      : selectedOrder?.paymentInfo?.status === 'canceled'
+                      ? 'text-[#f75e68]'
+                      : 'text-orange-500'
                   } font-Poppins font-semibold`}
                 >
-                  {selectedOrder?.paymentInfo?.paymentMethod === "COD"
-                    ? "Cash on Delivery"
-                    : "Online Payment"}
+                  {selectedOrder?.paymentInfo?.paymentMethod === 'COD'
+                    ? 'Cash on Delivery'
+                    : 'Online Payment'}
                 </span>
               </div>
             </div>
@@ -229,11 +208,7 @@ export default function OrderDetails() {
               ))}
             </select>
 
-            <select
-              className="w-56 mt-2 border rounded py-1.5 px-3"
-              name=""
-              id="refund"
-            >
+            <select className="w-56 mt-2 border rounded py-1.5 px-3" name="" id="refund">
               {refundStatusList.map((status, index) => (
                 <option key={index} value={status}>
                   {status}

@@ -1,16 +1,13 @@
-import { Navigate } from "react-router-dom";
-import Loader from "../components/Loader/Loader";
-import { useAppSelector } from "../hooks";
-import {
-  selectIsUserAuthenticate,
-  selectIsUserLoading,
-} from "../redux/features/User/userSlice";
+import { Navigate } from 'react-router-dom';
+import Loader from '../components/Loader/Loader';
+import { useAppSelector } from '../hooks';
+import { selectIsUserAuthenticate, selectIsUserLoading } from '../redux/features/User/userSlice';
 
 interface IProps {
   children: JSX.Element;
 }
 
-const ProtectedRoute = ({ children }: IProps): JSX.Element => {
+function ProtectedRoute({ children }: IProps): JSX.Element {
   const isUserAuthenticate = useAppSelector(selectIsUserAuthenticate);
   const isUserLoading = useAppSelector(selectIsUserLoading);
 
@@ -26,7 +23,7 @@ const ProtectedRoute = ({ children }: IProps): JSX.Element => {
     return <Navigate to="/login" replace />;
   }
 
-  return <>{children}</>;
-};
+  return <div>{children}</div>;
+}
 
 export default ProtectedRoute;

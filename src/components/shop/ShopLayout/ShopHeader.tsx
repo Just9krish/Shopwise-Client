@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
-import style from "../../../styles/style";
-import logo from "../../../assets/shopwise.png";
-import { AiOutlineGift } from "react-icons/ai";
-import { BsCalendarEvent } from "react-icons/bs";
-import { HiMenuAlt3 } from "react-icons/hi";
-import { FiPackage, FiShoppingBag } from "react-icons/fi";
-import { host } from "../../../server";
-import { useAppSelector } from "../../../hooks";
-import { selectShop } from "../../../redux/features/Shop/shopSlice";
-import getImageSource from "../../../helper/getImageSource";
+import { Link } from 'react-router-dom';
+import style from '../../../styles/style';
+import logo from '../../../assets/shopwise.png';
+import { AiOutlineGift } from 'react-icons/ai';
+import { BsCalendarEvent } from 'react-icons/bs';
+import { HiMenuAlt3 } from 'react-icons/hi';
+import { FiPackage, FiShoppingBag } from 'react-icons/fi';
+import { host } from '../../../server';
+import { useAppSelector } from '../../../hooks';
+import { selectShop } from '../../../redux/features/Shop/shopSlice';
+import getImageSource from '../../../helper/getImageSource';
 
 export default function ShopHeader() {
   const shop = useAppSelector(selectShop);

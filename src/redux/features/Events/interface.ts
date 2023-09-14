@@ -1,4 +1,4 @@
-import { IShop } from "../Shop/interface";
+import { IShop } from '../Shop/interface';
 
 export interface IDeleteEventData {
   shopId: string;

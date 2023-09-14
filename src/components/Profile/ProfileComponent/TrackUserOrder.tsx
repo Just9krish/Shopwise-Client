@@ -1,58 +1,58 @@
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid } from '@mui/x-data-grid';
 
-import { MdOutlineTrackChanges } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { MdOutlineTrackChanges } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
-import { formattedPrice } from "../../../helper/formatPrice";
+import { formattedPrice } from '../../../helper/formatPrice';
 
 export default function TrackUserOrder() {
   const orders = [
     {
-      _id: "7463hvbfbhfbrtr28820221",
+      _id: '7463hvbfbhfbrtr28820221',
       orderItems: [
         {
-          name: "Iphone 14 pro max",
+          name: 'Iphone 14 pro max',
         },
       ],
       totalPrice: 12000000,
-      orderStatus: "Processing",
+      orderStatus: 'Processing',
     },
   ];
 
   const columns = [
-    { field: "id", headerName: "Order ID", minWidth: 150, flex: 0.7 },
+    { field: 'id', headerName: 'Order ID', minWidth: 150, flex: 0.7 },
 
     {
-      field: "status",
-      headerName: "Status",
+      field: 'status',
+      headerName: 'Status',
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params: any) => {
-        return params.value.status === "Delivered" ? "greenColor" : "redColor";
+        return params.value.status === 'Delivered' ? 'greenColor' : 'redColor';
       },
     },
     {
-      field: "itemsQty",
-      headerName: "Items Qty",
-      type: "number",
+      field: 'itemsQty',
+      headerName: 'Items Qty',
+      type: 'number',
       minWidth: 130,
       flex: 0.7,
     },
 
     {
-      field: "total",
-      headerName: "Total",
-      type: "number",
+      field: 'total',
+      headerName: 'Total',
+      type: 'number',
       minWidth: 130,
       flex: 0.8,
     },
 
     {
-      field: " ",
+      field: ' ',
       flex: 1,
       minWidth: 150,
-      headerName: "",
-      type: "number",
+      headerName: '',
+      type: 'number',
       sortable: false,
       renderCell: (params: any) => {
         return (
