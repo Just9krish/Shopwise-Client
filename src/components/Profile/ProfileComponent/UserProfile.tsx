@@ -1,18 +1,17 @@
 import { AiOutlineCamera } from 'react-icons/ai';
 import { ChangeEvent, useState, useEffect } from 'react';
-import { host } from '../../../server';
-import style from '../../../styles/style';
-import { toast } from 'react-toastify';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 import axios, { AxiosError } from 'axios';
+import { useForm } from 'react-hook-form';
+import style from '../../../styles/style';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { API_URL } from '../../../constant';
 import {
   fetchUserDetailsAsync,
   selectUser,
   updateUserInfoAsync,
 } from '../../../redux/features/User/userSlice';
-import { useForm } from 'react-hook-form';
 import getImageSource from '../../../helper/getImageSource';
+import { toast } from 'react-toastify';
 
 export default function UserProfile() {
   const user = useAppSelector(selectUser);
@@ -42,7 +41,7 @@ export default function UserProfile() {
       formData.append('file', e.target.files[0]);
 
       try {
-        const { data } = await axios.put(API_URL.UPDATE_USER_PROFILE, formData, {
+        await axios.put(API_URL.UPDATE_USER_PROFILE, formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
           withCredentials: true,
         });
@@ -112,8 +111,7 @@ export default function UserProfile() {
 
                 dispatch(updateUserInfoAsync(updateData));
               })}
-              className="space-y-7 md:space-y-9"
-            >
+              className="space-y-7 md:space-y-9">
               <div className="w-full flex flex-col md:flex-row gap-4 lg:gap-8">
                 <div className="w-full md:w-1/2">
                   <label className="block mb-2" htmlFor="name">
@@ -238,8 +236,7 @@ export default function UserProfile() {
                   <button
                     className={`${style.button} text-blue-500 bg-transparent border border-blue-500 transition-all hover:bg-blue-500 hover:text-white focus:text-white focus:bg-blue-500`}
                     type="button"
-                    onClick={handleUpdate}
-                  >
+                    onClick={handleUpdate}>
                     Update Details
                   </button>
                 )}
@@ -247,16 +244,14 @@ export default function UserProfile() {
                   <button
                     className={`${style.button} text-red-500 bg-transparent border border-red-500 transition-all hover:bg-red-500 hover:text-white focus:text-white focus:bg-red-500`}
                     onClick={handleCancel}
-                    type="button"
-                  >
+                    type="button">
                     Cancel
                   </button>
                 )}
                 {!isDisabled && (
                   <button
                     className={`${style.button} bg-green-500 text-white transition-all hover:bg-green-600 focus:bg-green-600`}
-                    type="submit"
-                  >
+                    type="submit">
                     Save Details
                   </button>
                 )}

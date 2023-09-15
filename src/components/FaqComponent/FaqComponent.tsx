@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { IQuestion } from '../../Interface';
 import { MdOutlineKeyboardArrowUp, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { IQuestion } from '../../Interface';
 import style from '../../styles/style';
 
 interface IProps {
@@ -25,8 +25,7 @@ function FaqComponent({ questions }: IProps) {
           <div key={index} className="py-3 px-9 shadow rounded-md bg-white">
             <div
               className={`${style.flex_normal} justify-between cursor-pointer`}
-              onClick={() => handleQuestionClick(index)}
-            >
+              onClick={() => handleQuestionClick(index)}>
               <h2 className="font-medium text-xl">{q.question}</h2>
               <span>
                 {expandedQuestionIndex !== index ? (

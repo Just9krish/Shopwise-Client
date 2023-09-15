@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { host } from '../../../server';
 import getImageSource from '../../../helper/getImageSource';
 
 export type ImageProps = {
@@ -19,8 +18,7 @@ export default function Carousel({ images }: { images: ImageProps[] }) {
         {images?.map((image) => (
           <div
             key={image.id}
-            className="hover:opacity-40 cursor-pointer w-28 duration-500 border-[2.5px] hover:border-[2.5px] hover:border-orange-500 hover:bg-orange-500 rounded-lg"
-          >
+            className="hover:opacity-40 cursor-pointer w-28 duration-500 border-[2.5px] hover:border-[2.5px] hover:border-orange-500 hover:bg-orange-500 rounded-lg">
             <img
               src={getImageSource(image.url)}
               className="rounded-lg"

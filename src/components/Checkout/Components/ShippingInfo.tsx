@@ -1,6 +1,6 @@
-import style from '../../../styles/style';
 import { Country, State } from 'country-state-city';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import style from '../../../styles/style';
 import { useAppSelector } from '../../../hooks';
 import { selectUser } from '../../../redux/features/User/userSlice';
 
@@ -72,7 +72,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
     <div className="bg-white shadow rounded p-8">
       <h4 className="text-lg font-semibold text-gray-800">Shipping Address</h4>
       <div className="mt-8">
-        <form className="space-y-6" aria-required onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div className={`${style.flex_normal} gap-8 flex-wrap`}>
             <div className="w-2/5">
               <label className="mb-1 text-sm hidden md:block" htmlFor="name">
@@ -165,8 +165,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
                 value={formState.selectedCountry}
                 required
-                onChange={handleFormInputChange}
-              >
+                onChange={handleFormInputChange}>
                 <option selected disabled value="">
                   Choose Country
                 </option>
@@ -192,8 +191,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                 value={formState.selectedState}
                 required
                 onChange={handleFormInputChange}
-                className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
-              >
+                className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded">
                 <option selected disabled value="">
                   Choose State
                 </option>
@@ -284,8 +282,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
             <button
               type="submit"
               value="Pay Now"
-              className="bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600"
-            >
+              className="bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600">
               Pay Now
             </button>
           </div>

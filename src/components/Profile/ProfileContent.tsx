@@ -1,4 +1,5 @@
 import loadable from '@loadable/component';
+
 const TrackUserOrder = loadable(() => import('./ProfileComponent/TrackUserOrder'));
 const UserAdrress = loadable(() => import('./ProfileComponent/UserAdrress'));
 const UserOrders = loadable(() => import('./ProfileComponent/UserOrders'));
@@ -13,12 +14,12 @@ interface IProps {
 export default function ProfileContent({ activeTab }: IProps) {
   return (
     <div className="w-full bg-white rounded-md shadow py-8 px-6 min-h-[428px] lg:min-h-[456px]">
-      {activeTab === 0 && <UserProfile />}
-      {activeTab === 1 && <UserOrders />}
-      {activeTab === 2 && <UserRefunds />}
-      {activeTab === 3 && <TrackUserOrder />}
-      {activeTab === 4 && <UserPasswordChange />}
-      {activeTab === 5 && <UserAdrress />}
+      {activeTab === 1 && <UserProfile />}
+      {activeTab === 2 && <UserOrders />}
+      {activeTab === 3 && <UserRefunds />}
+      {activeTab === 4 && <TrackUserOrder />}
+      {activeTab === 5 && <UserPasswordChange />}
+      {activeTab === 6 && <UserAdrress />}
     </div>
   );
 }

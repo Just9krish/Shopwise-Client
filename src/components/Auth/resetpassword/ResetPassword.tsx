@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
-import logo from '../../../assets/shopwise.png';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import logo from '../../../assets/shopwise.png';
 import { API_URL } from '../../../constant';
 
 export default function ResetPassword() {
@@ -27,7 +27,6 @@ export default function ResetPassword() {
       reset();
       toast.success(res.data.message);
     } catch (error: AxiosError | any) {
-      console.log(error);
       toast.error(error.response.data.message);
     }
   }
@@ -47,13 +46,11 @@ export default function ResetPassword() {
             onSubmit={handleSubmit((data) => {
               console.log(data);
               if (resetToken) resetPassword(resetToken, data.password);
-            })}
-          >
+            })}>
             <div>
               <label
                 className="block text-sm font-medium leading-6 text-gray-900"
-                htmlFor="password"
-              >
+                htmlFor="password">
                 New Password
               </label>
               <div className="relative mt-2">
@@ -76,8 +73,7 @@ export default function ResetPassword() {
                 />
                 <div
                   className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                  onClick={() => setIsPasswordShown(!isPasswordShown)}
-                >
+                  onClick={() => setIsPasswordShown(!isPasswordShown)}>
                   {isPasswordShown ? (
                     <AiOutlineEyeInvisible color="orange" size={20} />
                   ) : (
@@ -93,8 +89,7 @@ export default function ResetPassword() {
             <div>
               <label
                 className="block text-sm font-medium leading-6 text-gray-900"
-                htmlFor="password"
-              >
+                htmlFor="password">
                 Confirm New Password
               </label>
               <div className="relative mt-2">
@@ -111,8 +106,7 @@ export default function ResetPassword() {
                 />
                 <div
                   className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                  onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}
-                >
+                  onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}>
                   {isConfirmPasswordShown ? (
                     <AiOutlineEyeInvisible color="orange" size={20} />
                   ) : (
@@ -129,8 +123,7 @@ export default function ResetPassword() {
 
             <button
               className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
-              type="submit"
-            >
+              type="submit">
               Reset my password
             </button>
           </form>
@@ -142,8 +135,7 @@ export default function ResetPassword() {
             <Link
               to="/login"
               className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
-              type="button"
-            >
+              type="button">
               Login
             </Link>
           </div>

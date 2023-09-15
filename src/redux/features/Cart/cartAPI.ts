@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../../constant';
 import { IAddToCart } from './interface';
 
@@ -16,7 +16,7 @@ export function addToCart({ productId, quantity }: IAddToCart) {
         config
       );
       resolve({ data: response.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -31,7 +31,7 @@ export function removeFromCart(itemId: string) {
     try {
       const response: AxiosResponse = await axios.delete(API_URL.REMOVE_FROM_CART(itemId), config);
       resolve({ data: response.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -50,7 +50,7 @@ export function updateQuantity({ productId, quantity }: { productId: string; qua
         config
       );
       resolve({ data: response.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -65,7 +65,7 @@ export function fetchCartDetails() {
     try {
       const response: AxiosResponse = await axios.get(API_URL.GET_CART, config);
       resolve({ data: response.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BsFillBagFill } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
-import styles from '../../../styles/style';
 import { RxCross1 } from 'react-icons/rx';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   getSingleUserOrderAsync,
@@ -20,7 +18,6 @@ export default function UserOrderDetails() {
 
   const order = useAppSelector(selectSelectedOrder);
 
-  console.log(order);
 
   useEffect(() => {
     if (orderId) {
@@ -141,7 +138,7 @@ export default function UserOrderDetails() {
                     // onChange={(e) => setComment(e.target.value)}
                     placeholder="How was your product? write your expresion about it!"
                     className="mt-2 w-[95%] border p-2 outline-none"
-                  ></textarea>
+                  />
                 </div>
                 <div
                   className={`${styles.button} text-white text-[20px] ml-3`}
@@ -164,7 +161,7 @@ export default function UserOrderDetails() {
             <div className="w-full 800px:w-[60%]">
               <h4 className="pt-3 text-[20px] font-[600]">Shipping Address:</h4>
               <h4 className="pt-3 text-[20px]">
-                {order?.shippingAddress.address1 + ' ' + order?.shippingAddress.address2}
+                {`${order?.shippingAddress.address1} ${order?.shippingAddress.address2}`}
               </h4>
               <h4 className=" text-[20px]">{order?.shippingAddress.country}</h4>
               <h4 className=" text-[20px]">{order?.shippingAddress.state}</h4>
@@ -189,7 +186,7 @@ export default function UserOrderDetails() {
           <br />
         </div>
       ) : (
-        <div></div>
+        <div />
       )}
     </>
   );

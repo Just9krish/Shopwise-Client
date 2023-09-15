@@ -1,8 +1,8 @@
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { DataGrid, GridCellParams } from '@mui/x-data-grid';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { formattedPrice } from '../../../helper/formatPrice';
 import { selectUser } from '../../../redux/features/User/userSlice';
 import {
@@ -20,7 +20,7 @@ export default function UserOrders() {
     if (user) {
       dispatch(getAllOrdersOfUserAsnyc(user?._id));
     }
-  }, [user?._id]);
+  }, [user, dispatch]);
 
   const columns = [
     { field: 'id', headerName: 'Order ID', minWidth: 150, flex: 0.7 },
@@ -59,13 +59,13 @@ export default function UserOrders() {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <>
-            <Link to={`/order/${params.id}`}>
-              <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
-                <AiOutlineArrowRight size={20} />
-              </button>
-            </Link>
-          </>
+          <Link to={`/order/${params.id}`}>
+            <button
+              type="button"
+              className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
+              <AiOutlineArrowRight size={20} />
+            </button>
+          </Link>
         );
       },
     },

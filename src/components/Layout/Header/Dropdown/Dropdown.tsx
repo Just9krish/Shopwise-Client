@@ -1,10 +1,9 @@
 import { BiMenuAltLeft } from 'react-icons/bi';
 import { IoIosArrowDown } from 'react-icons/io';
-import { useState, useEffect, useRef, MouseEvent } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from '../../../../styles/style';
 import categories from '../../../../constant/categories.json';
-import { useNavigate } from 'react-router-dom';
-import { ICategory } from '../../../../Interface';
 import { Category } from '../../../../pages/ProductsPage';
 
 export default function Dropdown() {
@@ -12,7 +11,7 @@ export default function Dropdown() {
   const navigate = useNavigate();
   const ref = useRef<HTMLDivElement>(null);
 
-  function handleClick(e: any) {
+  function handleClick() {
     setIsDropdownOpen((prev) => !prev);
   }
 
@@ -40,8 +39,8 @@ export default function Dropdown() {
       <div className="relative h-[60px] w-[270px] hidden lg:block">
         <BiMenuAltLeft size={30} className="absolute left-2 top-1/2 -translate-y-1/2" />
         <button
-          className={`font-medium w-full h-full mt-[10px] text-[17px] bg-white ${style.flex_normal} justify-between pl-10 rounded-t-md`}
-        >
+          type="button"
+          className={`font-medium w-full h-full mt-[10px] text-[17px] bg-white ${style.flex_normal} justify-between pl-10 rounded-t-md`}>
           All Categories
         </button>
         <IoIosArrowDown
@@ -57,8 +56,7 @@ export default function Dropdown() {
                 <div
                   className={`${style.flex_normal} cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
                   onClick={() => handleSubmit(category)}
-                  key={idx}
-                >
+                  key={idx}>
                   <div className={`${style.flex_normal} py-1.5 px-2.5`}>
                     <img
                       src={category.image_Url}

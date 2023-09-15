@@ -1,9 +1,10 @@
 import { TiPlus, TiMinus } from 'react-icons/ti';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { IProduct } from '../../../Interface';
 import style from '../../../styles/style';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { toast } from 'react-toastify';
 import {
   addToCartAsync,
   removeFromCartAsync,
@@ -11,7 +12,6 @@ import {
   updateQuantityAsync,
 } from '../../../redux/features/Cart/cartSlice';
 import { maxQuantityItem, minQuantityItem } from '../../../constant';
-import { useNavigate } from 'react-router-dom';
 import { selectIsUserAuthenticate } from '../../../redux/features/User/userSlice';
 
 interface AddtoCartProps {
@@ -65,15 +65,13 @@ export default function AddtoCart({ product, variant }: AddtoCartProps) {
         <div
           className={`${style.flex_normal} justify-between ${
             variant === 'card' ? 'w-full' : 'w-36 bg-[#f7f8fd]'
-          }  py-6 rounded-lg h-6`}
-        >
+          }  py-6 rounded-lg h-6`}>
           <button
             type="button"
             className={`p-2 text-orange-500 bg-white  ${
               variant === 'card' ? 'rounded-full border border-gray-400' : ''
             }`}
-            onClick={decrement}
-          >
+            onClick={decrement}>
             <TiMinus />
           </button>
           <p className="font-semibold">{quantity}</p>
@@ -83,8 +81,7 @@ export default function AddtoCart({ product, variant }: AddtoCartProps) {
               variant === 'card' ? 'rounded-full border border-gray-400' : ''
             }`}
             disabled={quantity >= maxQuantityItem}
-            onClick={increment}
-          >
+            onClick={increment}>
             <TiPlus />
           </button>
         </div>
@@ -92,8 +89,7 @@ export default function AddtoCart({ product, variant }: AddtoCartProps) {
         <button
           type="button"
           className={`${style.cart_button} px-3 py-1.5`}
-          onClick={() => handleAddToCart(product._id)}
-        >
+          onClick={() => handleAddToCart(product._id)}>
           <AiOutlineShoppingCart title="Add to Cart" />
           <span className="ml-2">Add to cart</span>
         </button>

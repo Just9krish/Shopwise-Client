@@ -13,6 +13,7 @@ import {
   selectUserError,
   selectUserMessage,
 } from '../../../redux/features/User/userSlice';
+
 const AddAddress = loadable(() => import('./AddAddress'));
 
 export default function UserAdrress() {
@@ -43,7 +44,7 @@ export default function UserAdrress() {
       toast.success(message);
       dispatch(clearUserMessage());
     }
-  }, [userError, message]);
+  }, [userError, message, dispatch]);
 
   return (
     <div className="w-full px-5">
@@ -63,8 +64,7 @@ export default function UserAdrress() {
         {addresses.length > 0 ? (
           addresses?.map((address) => (
             <div
-              className={`w-full rounded ${style.flex_normal} justify-between bg-gray-100 shadow py-4 px-8`}
-            >
+              className={`w-full rounded ${style.flex_normal} justify-between bg-gray-100 shadow py-4 px-8`}>
               <div className={`${style.flex_normal}`}>
                 <h4 className="font-semibold">{address.addressType}</h4>
               </div>

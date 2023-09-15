@@ -6,7 +6,7 @@ export default function Layout({ children }: IComponentProp): JSX.Element {
   return (
     <>
       <Header />
-      <>{children}</>
+      {children}
       <Footer />
     </>
   );

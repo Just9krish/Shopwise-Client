@@ -1,7 +1,7 @@
-import style from '../../../styles/style';
 import { FaShippingFast } from 'react-icons/fa';
 import { MdLocalOffer } from 'react-icons/md';
 import { RiSecurePaymentLine } from 'react-icons/ri';
+import style from '../../../styles/style';
 
 export default function Branding() {
   return (

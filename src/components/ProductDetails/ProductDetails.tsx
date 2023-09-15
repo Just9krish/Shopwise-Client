@@ -1,9 +1,10 @@
 import loadable from '@loadable/component';
+import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import style from '../../styles/style';
 import { IProduct } from '../../Interface';
 import { formattedPrice } from '../../helper/formatPrice';
-import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
-import { host } from '../../server';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   addToWishlistAsync,
@@ -11,10 +12,9 @@ import {
   selectWishlist,
   selectWishlistLoading,
 } from '../../redux/features/Wishlist/wishlistSlice';
-import { useEffect, useState } from 'react';
 import { selectIsUserAuthenticate } from '../../redux/features/User/userSlice';
-import { useNavigate } from 'react-router-dom';
 import getImageSource from '../../helper/getImageSource';
+
 const AddtoCart = loadable(() => import('./AddtoCart/AddtoCart'));
 const Carousel = loadable(() => import('./Carousel/Carousel'));
 const Slider = loadable(() => import('./Slider/Slider'));
@@ -79,16 +79,14 @@ export default function ProductDetails({ product }: { product: IProduct }) {
                 <button
                   type="button"
                   disabled={isWishlistLoading}
-                  onClick={() => removeFromWishlistHandler(product._id)}
-                >
+                  onClick={() => removeFromWishlistHandler(product._id)}>
                   <AiFillHeart title="Remove from wish list" color="red" size={30} />
                 </button>
               ) : (
                 <button
                   disabled={isWishlistLoading}
                   type="button"
-                  onClick={() => addToWishlistHandler(product._id)}
-                >
+                  onClick={() => addToWishlistHandler(product._id)}>
                   <AiOutlineHeart title="Add to wish list" color="red" size={30} />
                 </button>
               )}
@@ -107,8 +105,8 @@ export default function ProductDetails({ product }: { product: IProduct }) {
                 </div>
               </div>
               <button
-                className={`${style.button} text-white bg-blue-500 hover:bg-blue-600 transition-all focus:bg-blue-600`}
-              >
+                type="button"
+                className={`${style.button} text-white bg-blue-500 hover:bg-blue-600 transition-all focus:bg-blue-600`}>
                 Send Message
                 <AiOutlineMessage title="Send Message" className="ml-1.5" />
               </button>

@@ -1,5 +1,6 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../../constant';
+import { IWishlistResponse } from './interface';
 
 const config = {
   headers: { 'Content-Type': 'application/json' },
@@ -12,7 +13,7 @@ export function getWishlist() {
       const res: AxiosResponse = await axios.get(API_URL.GET_WISHLIST, config);
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -22,13 +23,13 @@ export function getWishlist() {
   });
 }
 
-export function addToWishlist(productId: string) {
+export function addToWishlist(productId: string): Promise<IWishlistResponse> {
   return new Promise(async (resolve, reject) => {
     try {
       const res: AxiosResponse = await axios.post(API_URL.ADD_TO_WISHLIST, { productId }, config);
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -47,7 +48,7 @@ export function removeFromWishlist(productId: string) {
       );
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {

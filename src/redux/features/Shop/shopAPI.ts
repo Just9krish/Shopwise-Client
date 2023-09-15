@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../../constant';
 import { IShopData, IShopLoginData } from './interface';
 
@@ -14,7 +14,7 @@ export function createShop(shopData: IShopData) {
         headers: { 'Content-Type': 'application/json' },
       });
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -29,7 +29,7 @@ export async function loginShop(loginData: IShopLoginData) {
     try {
       const res: AxiosResponse = await axios.post(API_URL.LOGIN_SHOP, loginData, config);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -44,7 +44,7 @@ export async function fetchShop() {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_SHOP_INFO, config);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {

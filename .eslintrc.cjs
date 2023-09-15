@@ -35,5 +35,8 @@ module.exports = {
     'prettier/prettier': ['error', { singleQuote: true }],
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'no-param-reassign': 'off',
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'no-async-promise-executor': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
 };

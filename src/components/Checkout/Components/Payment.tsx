@@ -47,7 +47,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
     savedAddress = JSON.parse(shipping_address);
   }
 
-  let shippingAddress = {
+  const shippingAddress = {
     country: savedAddress?.selectedCountry,
     zipcode: savedAddress?.zipCode,
     state: savedAddress?.selectedState,
@@ -90,34 +90,32 @@ export default function Payment({ toggleActiveStep }: IProps) {
 
         if (error) {
           toast.error(error.message);
-        } else {
-          if (paymentIntent.status === 'succeeded') {
-            const paymentInfo = {
-              id: paymentIntent.id,
-              status: paymentIntent.status,
-              paymentMethod: 'Card',
-            };
+        } else if (paymentIntent.status === 'succeeded') {
+          const paymentInfo = {
+            id: paymentIntent.id,
+            status: paymentIntent.status,
+            paymentMethod: 'Card',
+          };
 
-            const order = {
-              paymentInfo,
-              shippingAddress,
-              paidPrice: paymentIntent.amount,
-            };
+          const order = {
+            paymentInfo,
+            shippingAddress,
+            paidPrice: paymentIntent.amount,
+          };
 
-            const { data } = await axios.post(API_URL.CREATE_ORDER, order, {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              withCredentials: true,
-            });
+          const { data } = await axios.post(API_URL.CREATE_ORDER, order, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            withCredentials: true,
+          });
 
-            dispatch(fetchCartDetailsAsync());
+          dispatch(fetchCartDetailsAsync());
 
-            toast.success('Order created successfully');
-            localStorage.removeItem('shipping_address');
-            localStorage.setItem('latestorder', JSON.stringify(data));
-            toggleActiveStep(2);
-          }
+          toast.success('Order created successfully');
+          localStorage.removeItem('shipping_address');
+          localStorage.setItem('latestorder', JSON.stringify(data));
+          toggleActiveStep(2);
         }
       }
     } catch (err: AxiosError | any) {
@@ -192,7 +190,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute after:bg-green-500 after:z-30 after:rounded-full ${
               select === 1 ? 'after:h-[18px] after:w-[18px]' : ''
             }`}
-          ></span>
+          />
           <h4 className="font-semibold text-[#000000b1]">Pay with Debit/Credit Card</h4>
         </button>
 
@@ -275,7 +273,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute  after:bg-green-500 after:rounded-full after:z-30 ${
               select === 2 ? 'after:h-[18px] after:w-[18px]' : ''
             }`}
-          ></span>
+          />
           <h4 className="font-semibold text-[#000000b1]">Pay with Pay Pal</h4>
         </button>
 
@@ -293,7 +291,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute after:bg-green-500 after:z-30 after:rounded-full ${
               select === 3 ? 'after:h-[18px] after:w-[18px]' : ''
             }`}
-          ></span>
+          />
           <h4 className="font-semibold text-[#000000b1]">Cash On Delivery</h4>
         </button>
         {select === 3 && (
@@ -316,8 +314,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
             </div>
             <button
               className="py-1.5 px-4 bg-orange-500 text-white rounded-md border border-orange-500 transition-all hover:text-orange-500 hover:bg-transparent"
-              onClick={handleVerify}
-            >
+              onClick={handleVerify}>
               Submit
             </button>
           </div>

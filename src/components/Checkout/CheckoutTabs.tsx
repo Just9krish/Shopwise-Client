@@ -14,8 +14,7 @@ export default function CheckoutTabs({ toggleActiveStep, activeStep }: IProps) {
             key={step}
             className={`rounded-full px-4 py-2 font-bold text-sm transition-all duration-500 font-Roboto ${
               index <= activeStep ? 'text-white bg-[#5cb85c]' : 'text-[#a9b0b4] bg-[#EAF0F4]'
-            }`}
-          >
+            }`}>
             {step}
           </span>
         ))}

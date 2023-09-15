@@ -1,10 +1,10 @@
 import { RxCross1 } from 'react-icons/rx';
 import { Country, State } from 'country-state-city';
-import style from '../../../styles/style';
 import { HiOutlineOfficeBuilding, HiOutlineGlobeAlt, HiOutlineHome } from 'react-icons/hi';
+import { useForm } from 'react-hook-form';
+import style from '../../../styles/style';
 import { useAppDispatch } from '../../../hooks';
 import { updateUserAddressAsync } from '../../../redux/features/User/userSlice';
-import { useForm } from 'react-hook-form';
 
 type Props = {
   handleModalOpen: () => void;
@@ -40,8 +40,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
   return (
     <div
       className="fixed w-full h-screen bg-black top-0 left-0 flex items-center justify-center z-[9999]"
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
-    >
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
       <div className="w-full max-w-[600px] overflow-y-scroll bg-white shadow px-8 py-12 rounded">
         <div className="flex justify-between">
           <h2 className="text-2xl font-Poppins">Add New Address</h2>
@@ -65,8 +64,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
 
               dispatch(updateUserAddressAsync(address));
             })}
-            className="space-y-6"
-          >
+            className="space-y-6">
             <div className="w-full flex flex-wrap gap-4 justify-between items-start">
               <div className="w-2/5">
                 <label htmlFor="country" className="block pb-1">
@@ -78,8 +76,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                   })}
                   className="bg-gray-50 text-sm md:text-base px-3 py-1.5 border rounded"
                   id="country"
-                  aria-invalid={errors.country ? 'true' : 'false'}
-                >
+                  aria-invalid={errors.country ? 'true' : 'false'}>
                   <option disabled selected value="">
                     Select your country
                   </option>
@@ -130,8 +127,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                   {...register('state', {
                     required: 'State is required!',
                   })}
-                  aria-invalid={errors.state ? 'true' : 'false'}
-                >
+                  aria-invalid={errors.state ? 'true' : 'false'}>
                   <option selected disabled value="">
                     Select your State
                   </option>
@@ -158,8 +154,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                       onClick={() => setValue('addressType', addressType.name)}
                       className={`${
                         watch('addressType') === addressType.name ? 'bg-orange-500 text-white' : ''
-                      } flex items-center py-1 px-2 text-xs rounded border`}
-                    >
+                      } flex items-center py-1 px-2 text-xs rounded border`}>
                       {addressType.icon}
                       {addressType.name}
                     </button>

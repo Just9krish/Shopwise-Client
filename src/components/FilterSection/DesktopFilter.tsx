@@ -42,8 +42,7 @@ export default function DesktopFilter({ handleFilter, filters }: DesktopFilterPr
                       />
                       <label
                         htmlFor={`filter-${section.id}-${optionIdx}`}
-                        className="ml-3 text-sm text-gray-600"
-                      >
+                        className="ml-3 text-sm text-gray-600">
                         {option.title}
                       </label>
                     </div>

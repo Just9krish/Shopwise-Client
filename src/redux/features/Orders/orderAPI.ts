@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../../constant';
 import { IUpdateOrderStatus } from './interface';
 
@@ -12,7 +12,7 @@ export function getAllOrdersOfShop(shopId: string) {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_SHOP_ORDERS(shopId), config);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -27,7 +27,7 @@ export function getAllOrdersOfUser(userId: string) {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_USER_ORDERS(userId), config);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -46,7 +46,7 @@ export function updateOrderStatus({ orderId, orderStatus, shopId }: IUpdateOrder
         config
       );
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -61,7 +61,7 @@ export function getOrderOfUser(orderId: string) {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_SINGLE_USER_ORDER(orderId), config);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {

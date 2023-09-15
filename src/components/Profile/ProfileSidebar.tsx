@@ -1,9 +1,9 @@
-import style from '../../styles/style';
 import { RxPerson } from 'react-icons/rx';
 import { HiOutlineShoppingBag, HiReceiptRefund } from 'react-icons/hi';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { TbAddressBook } from 'react-icons/tb';
 import { MdOutlinePassword, MdOutlineTrackChanges } from 'react-icons/md';
+import style from '../../styles/style';
 import { useAppDispatch } from '../../hooks';
 import { logoutUserAsync } from '../../redux/features/User/userSlice';
 
@@ -38,20 +38,25 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
 
   return (
     <div className="bg-white shadow rounded-lg py-8 flex flex-col items-center md:items-start lg:block">
-      {userLinks?.map((link, idx) => (
+      {userLinks?.map((link) => (
         <div
-          key={idx}
+          key={link.id}
           className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-5 py-4 lg:px-12 hover:bg-orange-200`}
-          onClick={() => setActiveTab(idx)}
-        >
-          <span className={`${activeTab === idx ? 'text-orange-500' : ''} text-xl`}>
+          onClick={() => setActiveTab(link.id)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              setActiveTab(link.id);
+            }
+          }}
+          tabIndex={0}
+          role="button">
+          <span className={`${activeTab === link.id ? 'text-orange-500' : ''} text-xl`}>
             {link.icon}
           </span>
           <span
             className={`${
-              activeTab === idx ? 'text-orange-500' : ''
-            } capitalize hidden text-sm lg:text-base md:block`}
-          >
+              activeTab === link.id ? 'text-orange-500' : ''
+            } capitalize hidden text-sm lg:text-base md:block`}>
             {link.linkName}
           </span>
         </div>
@@ -59,19 +64,21 @@ export default function ProfileSidebar({ setActiveTab, activeTab }: IProps) {
       <div
         className={`${style.flex_normal} gap-3 cursor-pointer transition-all px-5 py-4 lg:px-12 hover:bg-orange-200`}
         onClick={() => dispatch(logoutUserAsync())}
-      >
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') dispatch(logoutUserAsync());
+        }}
+        role="button"
+        tabIndex={0}>
         <span className={`${activeTab === userLinks.length + 1 ? 'text-orange-500' : ''} text-xl`}>
           <span
-            className={`${activeTab === userLinks.length + 1 ? 'text-orange-500' : ''} text-xl`}
-          >
+            className={`${activeTab === userLinks.length + 1 ? 'text-orange-500' : ''} text-xl`}>
             <AiOutlineLogout title="Log out" />
           </span>
         </span>
         <span
           className={`${
             activeTab === userLinks.length + 1 ? 'text-orange-500' : ''
-          } capitalize hidden text-sm lg:text-base md:block`}
-        >
+          } capitalize hidden text-sm lg:text-base md:block`}>
           Log out
         </span>
       </div>

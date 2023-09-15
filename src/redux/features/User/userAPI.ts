@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../../constant';
 import { IAddressFrom, IUpdateData, IUserPasswordChange, LoginData, UserData } from './interface';
 
@@ -14,7 +14,7 @@ export function createUser(userData: UserData) {
         headers: { 'Content-Type': 'application/json' },
       });
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -29,7 +29,7 @@ export function loginUser(loginData: LoginData) {
     try {
       const res: AxiosResponse = await axios.post(API_URL.LOGIN_USER, loginData, config);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -45,7 +45,7 @@ export function logoutUser() {
       const res: AxiosResponse = await axios.get(API_URL.LOGOUT_USER, config);
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -61,7 +61,7 @@ export function fetchUserDetails() {
       const res: AxiosResponse = await axios.get(API_URL.GET_USER_INFO, config);
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -77,7 +77,7 @@ export function updateUserInfo(updateData: IUpdateData) {
       const res: AxiosResponse = await axios.put(API_URL.UPDATE_USER, updateData, config);
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -93,7 +93,7 @@ export function updateUserAddress(address: IAddressFrom) {
       const res: AxiosResponse = await axios.post(API_URL.ADD_USER_ADDRESS, address, config);
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -109,7 +109,7 @@ export function deleteUserAddress(addressId: string) {
       const res: AxiosResponse = await axios.delete(API_URL.DELETE_USER_ADDRESS(addressId), config);
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -133,7 +133,7 @@ export function changeUserPassword({
       );
 
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {

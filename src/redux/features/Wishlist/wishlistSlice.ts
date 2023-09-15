@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { addToWishlist, getWishlist, removeFromWishlist } from './wishlistAPI';
 import { RootState } from '../../type';
+import { IWishlistState } from './interface';
 
-const initialState = {
+const initialState: IWishlistState = {
   wishlist: [],
   isWishlistLoading: false,
 };
@@ -11,6 +12,7 @@ export const addToWishlistAsync = createAsyncThunk(
   'wishlist/addToWishlist',
   async (productId: string) => {
     const response: any = await addToWishlist(productId);
+
     return response.data;
   }
 );

@@ -9,18 +9,17 @@ interface IProps {
 
 export default function Navbar({ mobile, toggleMobileNav }: IProps) {
   return (
-    <>
+    <div>
       {!mobile ? (
         <nav className={`${style.flex_normal} gap-8 font-medium`}>
           {navItems &&
-            navItems?.map((nav, idx) => (
+            navItems?.map((nav) => (
               <NavLink
                 to={nav.url}
-                key={idx}
+                key={nav.title}
                 className={({ isActive }) =>
                   isActive ? 'text-black' : 'text-white hover:text-gray-800 transition-all'
-                }
-              >
+                }>
                 {nav.title}
               </NavLink>
             ))}
@@ -28,22 +27,21 @@ export default function Navbar({ mobile, toggleMobileNav }: IProps) {
       ) : (
         <nav className="space-y-5">
           {navItems &&
-            navItems?.map((nav, idx) => (
+            navItems?.map((nav) => (
               <NavLink
                 onClick={toggleMobileNav}
                 to={nav.url}
-                key={idx}
+                key={nav.title}
                 className={({ isActive }) =>
                   isActive
                     ? 'text-[#ff7d1a] block'
                     : 'text-black hover:text-gray-800 transition-all block'
-                }
-              >
+                }>
                 {nav.title}
               </NavLink>
             ))}
         </nav>
       )}
-    </>
+    </div>
   );
 }

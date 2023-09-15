@@ -54,13 +54,11 @@ export default function UserRefunds() {
       sortable: false,
       renderCell: (params: any) => {
         return (
-          <>
-            <Link to={`/order/${params.id}`}>
-              <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
-                <AiOutlineArrowRight size={20} />
-              </button>
-            </Link>
-          </>
+          <Link to={`/order/${params.id}`}>
+            <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
+              <AiOutlineArrowRight size={20} />
+            </button>
+          </Link>
         );
       },
     },

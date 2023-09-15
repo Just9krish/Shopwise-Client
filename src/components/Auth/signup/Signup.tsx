@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import logo from '../../../assets/shopwise.png';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import logo from '../../../assets/shopwise.png';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { createUserAsync, selectIsUserLoading } from '../../../redux/features/User/userSlice';
 
@@ -36,8 +36,7 @@ export default function Signup() {
               confirmPassword: data.confirmPassword,
             };
             dispatch(createUserAsync(userData));
-          })}
-        >
+          })}>
           <div>
             <label htmlFor="email" className="sr-only">
               Full Name
@@ -100,8 +99,7 @@ export default function Signup() {
               />
               <div
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() => setIsPasswordShown(!isPasswordShown)}
-              >
+                onClick={() => setIsPasswordShown(!isPasswordShown)}>
                 {isPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
                 ) : (
@@ -132,8 +130,7 @@ export default function Signup() {
               />
               <div
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}
-              >
+                onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}>
                 {isConfirmPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
                 ) : (
@@ -153,28 +150,26 @@ export default function Signup() {
             type="submit"
             className={`flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600 ${
               isUserLoading ? 'opacity-75 cursor-not-allowed' : 'hover:bg-orange-500'
-            }`}
-          >
+            }`}>
             {isUserLoading && (
               <svg
                 className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
-                viewBox="0 0 24 24"
-              >
+                viewBox="0 0 24 24">
                 <circle
                   className="opacity-25"
                   cx="12"
                   cy="12"
                   r="10"
                   stroke="currentColor"
-                  stroke-width="4"
-                ></circle>
+                  strokeWidth="4"
+                />
                 <path
                   className="opacity-75"
                   fill="currentColor"
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
+                />
               </svg>
             )}
             {isUserLoading ? 'Creating...' : 'Create a Account'}
@@ -183,8 +178,7 @@ export default function Signup() {
             Already have an account?
             <Link
               to="/login"
-              className="font-semibold leading-6 text-[#ff7d1a] hover:text-orange-500 ml-1"
-            >
+              className="font-semibold leading-6 text-[#ff7d1a] hover:text-orange-500 ml-1">
               Login
             </Link>
           </p>

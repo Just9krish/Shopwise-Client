@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
-import style from '../../../styles/style';
 import { HiPlus, HiMinus } from 'react-icons/hi';
 import { toast } from 'react-toastify';
-import { formattedPrice } from '../../../helper/formatPrice';
 import { RxCross1 } from 'react-icons/rx';
-import { host } from '../../../server';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { Link } from 'react-router-dom';
+import style from '../../../styles/style';
+import { formattedPrice } from '../../../helper/formatPrice';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { getCartItemPrice } from '../../../helper/getCartItemPrice';
 import { ICartItem } from '../../../redux/features/Cart/interface';
 import {
@@ -28,12 +26,9 @@ export default function CartItem({ item }: IProps) {
 
   function increaseQuantity() {
     if (item.quantity < 4) {
-      dispatch(updateQuantityAsync({ productId: _id, quantity: item.quantity + 1 })).catch(
-        (error) => {
-          console.error('Error updating quantity:', error);
-          toast.error('Failed to update quantity.');
-        }
-      );
+      dispatch(updateQuantityAsync({ productId: _id, quantity: item.quantity + 1 })).catch(() => {
+        toast.error('Failed to update quantity.');
+      });
     } else {
       toast.info('You cannot add more than 4 quantities.');
     }
@@ -41,12 +36,9 @@ export default function CartItem({ item }: IProps) {
 
   function decreaseQuantity() {
     if (item.quantity > 1) {
-      dispatch(updateQuantityAsync({ productId: _id, quantity: item.quantity - 1 })).catch(
-        (error) => {
-          console.error('Error updating quantity:', error);
-          toast.error('Failed to update quantity.');
-        }
-      );
+      dispatch(updateQuantityAsync({ productId: _id, quantity: item.quantity - 1 })).catch(() => {
+        toast.error('Failed to update quantity.');
+      });
     } else {
       toast.info('Quantity cannot be less than 1');
     }
@@ -65,8 +57,7 @@ export default function CartItem({ item }: IProps) {
           className={`border-none bg-none bg-orange-500 rounded-full h-6 w-6 ${
             style.flex_normal
           } justify-center text-white ${isCartLoading ? 'opacity-75' : ''}`}
-          onClick={increaseQuantity}
-        >
+          onClick={increaseQuantity}>
           <HiPlus title="Increment" />
         </button>
         <span>{quantity}</span>
@@ -76,27 +67,25 @@ export default function CartItem({ item }: IProps) {
           className={`border-none bg-none bg-slate-300 rounded-full h-6 w-6 ${
             style.flex_normal
           } justify-center text-white ${isCartLoading ? 'opacity-75' : ''}`}
-          onClick={decreaseQuantity}
-        >
+          onClick={decreaseQuantity}>
           <HiMinus title="Decrement" color="#7d879c" />
         </button>
       </div>
       <div className={`${style.flex_normal} gap-4 flex-grow p-1`}>
         <Link
           className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
-          to={`/products/${_id}`}
-        >
+          to={`/products/${_id}`}>
           <img
             src={getImageSource(images[0].url)}
             className="w-16 rounded-md h-16 ml-2"
             loading="lazy"
+            alt={images[0].name}
           />
         </Link>
         <div>
           <Link
             className="block font-bold capitalize hover:text-blue-500 transition-all"
-            to={`/products/${_id}`}
-          >
+            to={`/products/${_id}`}>
             <h4 className="text-xs font-extralight">{name}</h4>
           </Link>
           <h4 className="text-xs text-gray-500">
@@ -107,7 +96,7 @@ export default function CartItem({ item }: IProps) {
           </h4>
         </div>
       </div>
-      <button onClick={() => handleRemoveItem(item.product._id)}>
+      <button type="button" onClick={() => handleRemoveItem(item.product._id)}>
         <RxCross1 className="cursor-pointer" size={20} />
       </button>
     </div>

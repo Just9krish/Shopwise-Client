@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../../constant';
 import { IDeleteEventData } from './interface';
 
@@ -12,7 +12,7 @@ export function getAllEvents() {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_ALL_EVENTS);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -27,7 +27,7 @@ export function getShopAllEvents(shopId: string) {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_SHOP_EVENTS(shopId), config);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -45,7 +45,7 @@ export function deleteShopEvent({ shopId, eventId }: IDeleteEventData) {
         config
       );
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {

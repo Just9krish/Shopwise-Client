@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../../constant';
 import { FilterQuery, IAddProduct, IDeleteProduct } from './interface';
 
@@ -8,28 +8,26 @@ const config = {
 };
 
 export function getAllProductsByFilters({ filter, sort, pagination }: FilterQuery) {
-  let queryString = '';
+  const filterKeys = Object.keys(filter);
+  const sortKeys = Object.keys(sort);
+  const paginationKeys = Object.keys(pagination);
 
-  for (let key in filter) {
-    const categoryValues = filter[key];
-    if (categoryValues.length) {
-      queryString += `${key}=${categoryValues}&`;
-    }
-  }
+  const filterQueryString = filterKeys
+    .filter((key) => filter[key].length)
+    .map((key) => `${key}=${filter[key]}`)
+    .join('&');
 
-  for (let key in sort) {
-    queryString += `${key}=${sort[key]}&`;
-  }
+  const sortQueryString = sortKeys.map((key) => `${key}=${sort[key]}`).join('&');
 
-  for (let key in pagination) {
-    queryString += `${key}=${pagination[key]}&`;
-  }
+  const paginationQueryString = paginationKeys.map((key) => `${key}=${pagination[key]}`).join('&');
+
+  const queryString = `${filterQueryString}&${sortQueryString}&${paginationQueryString}`;
 
   return new Promise(async (resolve, reject) => {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_FILTERED_PRODUCTS(queryString));
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -44,7 +42,7 @@ export function addProduct(data: IAddProduct) {
     try {
       const res: AxiosResponse = await axios.post(API_URL.ADD_PRODUCT, data, config);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -61,7 +59,7 @@ export function getShopProducts(shopId: string) {
         withCredentials: true,
       });
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -79,7 +77,7 @@ export function deleteProduct({ productId, shopId }: IDeleteProduct) {
         { withCredentials: true }
       );
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -94,7 +92,7 @@ export function getProduct(productId: string) {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_SINGLE_PRODUCT(productId));
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -109,7 +107,7 @@ export function getBestDealsProducts() {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_BEST_DEALS);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {
@@ -124,7 +122,7 @@ export function getFeaturedProducts() {
     try {
       const res: AxiosResponse = await axios.get(API_URL.GET_FEATURED_PRODUCTS);
       resolve({ data: res.data });
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       if (error.response) {
         reject(error.response.data);
       } else {

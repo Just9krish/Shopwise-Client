@@ -17,7 +17,7 @@ export default function Countdown({ endDate, startDate }: Props) {
     let seconds: string = Math.floor((difference / 1000) % 60).toString();
     let minutes: string = Math.floor((difference / 1000 / 60) % 60).toString();
     let hours: string = Math.floor((difference / (1000 * 60 * 60)) % 24).toString();
-    let days: string = Math.floor(difference / (1000 * 60 * 60 * 24)).toString();
+    const days: string = Math.floor(difference / (1000 * 60 * 60 * 24)).toString();
 
     hours = hours.padStart(2, '0');
     minutes = minutes.padStart(2, '0');
@@ -82,9 +82,9 @@ export default function Countdown({ endDate, startDate }: Props) {
         timeUp ? (
           "Time's Up"
         ) : (
-          `Ending in ${timeLeft.days == 0 ? '' : `${timeLeft.days} Days`} ${timeLeft.hours} hours ${
-            timeLeft.minutes
-          } minutes ${timeLeft.seconds} seconds`
+          `Ending in ${timeLeft.days === 0 ? '' : `${timeLeft.days} Days`} ${
+            timeLeft.hours
+          } hours ${timeLeft.minutes} minutes ${timeLeft.seconds} seconds`
         )
       ) : (
         <>

@@ -10,8 +10,8 @@ import {
   updateUserAddress,
   updateUserInfo,
 } from './userAPI';
-import { RootState } from '../../store';
 import { IAddressFrom, IUpdateData, IUserPasswordChange, LoginData, UserData } from './interface';
+import { RootState } from '../../type';
 
 const initialState: IUserState = {
   isUserAuthenticated: false,
@@ -147,28 +147,19 @@ export const userSlice = createSlice({
         state.isUserLoading = false;
         state.userError = action.error.message ? action.error.message : 'Something went wrong';
       })
-      .addCase(updateUserAddressAsync.pending, (state) => {
-        // state.isUserLoading = true;
-      })
+
       .addCase(updateUserAddressAsync.fulfilled, (state, action) => {
-        // state.isUserLoading = false;
         state.user = action.payload.user;
         state.userMessage = action.payload.message;
       })
       .addCase(updateUserAddressAsync.rejected, (state, action) => {
-        // state.isUserLoading = false;
         state.userError = action.error.message ? action.error.message : 'Something went wrong';
       })
-      .addCase(deleteUserAddressAsync.pending, (state) => {
-        // state.isUserLoading = true;
-      })
       .addCase(deleteUserAddressAsync.fulfilled, (state, action) => {
-        // state.isUserLoading = false;
         state.user = action.payload.user;
         state.userMessage = action.payload.message;
       })
       .addCase(deleteUserAddressAsync.rejected, (state, action) => {
-        // state.isUserLoading = false;
         state.userError = action.error.message ? action.error.message : 'Something went wrong';
       })
       .addCase(changeUserPasswordAsync.pending, (state) => {

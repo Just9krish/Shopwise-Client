@@ -1,6 +1,6 @@
+import { useNavigate } from 'react-router-dom';
 import style from '../../../styles/style';
 import categoriesData from '../../../constant/categories.json';
-import { useNavigate } from 'react-router-dom';
 import { Category } from '../../../pages/ProductsPage';
 
 export default function Categories() {
@@ -21,8 +21,7 @@ export default function Categories() {
               <div
                 key={idx}
                 onClick={() => handleSubmit(category)}
-                className={`bg-white rounded-md ${style.flex_normal} flex-col shadow p-4 cursor-pointer hover:scale-105 transition-all duration-300`}
-              >
+                className={`bg-white rounded-md ${style.flex_normal} flex-col shadow p-4 cursor-pointer hover:scale-105 transition-all duration-300`}>
                 <div className="h-32 overflow-hidden">
                   <img
                     className="w-full h-full object-cover"

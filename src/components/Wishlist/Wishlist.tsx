@@ -1,9 +1,10 @@
-import style from '../../styles/style';
 import loadable from '@loadable/component';
 import { RxCross1 } from 'react-icons/rx';
 import { BsBagHeart } from 'react-icons/bs';
+import style from '../../styles/style';
 import { useAppSelector } from '../../hooks';
 import { selectWishlist } from '../../redux/features/Wishlist/wishlistSlice';
+
 const ItemCard = loadable(() => import('./WishCard/ItemCard'));
 
 interface IProps {
@@ -19,8 +20,7 @@ export default function Wishlist({ isWishlistOpen, toggleWishlist }: IProps) {
       className={`fixed top-0 left-0 right-0 w-full h-screen z-50 duration-500 ease-in-out ${
         isWishlistOpen ? 'translate-x-0' : 'translate-x-full'
       }`}
-      style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}
-    >
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.3)' }}>
       <div className="w-1/4 min-h-screen bg-white fixed top-0 right-0 shadow px-8 pt-10 pb-7 flex flex-col">
         <div className="flex justify-end">
           <RxCross1 title="Close" size={30} cursor="pointer" onClick={toggleWishlist} />
@@ -36,13 +36,12 @@ export default function Wishlist({ isWishlistOpen, toggleWishlist }: IProps) {
           style={{
             background:
               'linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 10%, rgba(255, 255, 255, 1) 90%, rgba(255, 255, 255, 0) 100%)',
-          }}
-        >
+          }}>
           {wishlists?.length === 0 ? (
             <div>No item in wishlist</div>
           ) : (
-            wishlists?.map((item, idx) => (
-              <ItemCard toggleWishlist={toggleWishlist} key={idx} item={item} />
+            wishlists?.map((item) => (
+              <ItemCard toggleWishlist={toggleWishlist} key={item._id} item={item} />
             ))
           )}
         </div>

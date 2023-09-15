@@ -1,12 +1,13 @@
-import style from '../../../styles/style';
 import loadable from '@loadable/component';
-const Product = loadable(() => import('../../Product/Product'));
+import { useEffect } from 'react';
+import style from '../../../styles/style';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {
   getFeaturedProductsAsync,
   selectFeaturedProducts,
 } from '../../../redux/features/Products/productSlice';
-import { useEffect } from 'react';
+
+const Product = loadable(() => import('../../Product/Product'));
 
 export default function FeaturedProducts() {
   const featuredProducts = useAppSelector(selectFeaturedProducts);
@@ -20,13 +21,13 @@ export default function FeaturedProducts() {
     <section>
       <div className={`${style.section}`}>
         <h1 className={`${style.heading}`}>Featured Products</h1>
-        {featuredProducts && featuredProducts.length == 0 ? (
+        {featuredProducts && featuredProducts.length === 0 ? (
           <div>
             <h4>There is no featured products right now to show.</h4>
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 mt-8">
-            {featuredProducts?.map((product, idx) => <Product key={idx} product={product} />)}
+            {featuredProducts?.map((product, idx) => <Product key={product._id} product={product} />)}
           </div>
         )}
       </div>

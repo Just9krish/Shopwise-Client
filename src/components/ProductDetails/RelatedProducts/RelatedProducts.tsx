@@ -4,6 +4,7 @@ import { useAppSelector } from '../../../hooks';
 import { IProduct } from '../../../Interface';
 import style from '../../../styles/style';
 import { selectProducts } from '../../../redux/features/Products/productSlice';
+
 const Product = loadable(() => import('../../Product/Product'));
 
 interface IProps {
@@ -21,7 +22,7 @@ export default function RelatedProducts({ product }: IProps) {
     const filteredProducts = allProducts?.filter((product) => product.category === category);
 
     setRelatedProducts(filteredProducts);
-  }, []);
+  }, [category]);
   return (
     <>
       {relatedProducts.length !== 0 ? (

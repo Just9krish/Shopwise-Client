@@ -1,12 +1,11 @@
-import style from '../../../styles/style';
 import { BsCartPlus } from 'react-icons/bs';
 import { RxCross1 } from 'react-icons/rx';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import style from '../../../styles/style';
 import { formattedPrice } from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { useState, useEffect } from 'react';
 import { IProduct } from '../../../redux/features/Products/interface';
-import { host } from '../../../server';
-import { Link } from 'react-router-dom';
 import { addToCartAsync, selectCart, toggleCart } from '../../../redux/features/Cart/cartSlice';
 import { removeToWishlistAsync } from '../../../redux/features/Wishlist/wishlistSlice';
 import getImageSource from '../../../helper/getImageSource';
@@ -16,7 +15,7 @@ interface IProps {
   toggleWishlist: () => void;
 }
 
-const ItemCard = ({ item, toggleWishlist }: IProps) => {
+function ItemCard({ item, toggleWishlist }: IProps) {
   const { name, price, images, discount_price, discount_percentage, _id } = item;
   const [isInCart, setIsInCart] = useState(false);
   const cart = useAppSelector(selectCart);
@@ -28,16 +27,16 @@ const ItemCard = ({ item, toggleWishlist }: IProps) => {
   }
 
   useEffect(() => {
-    if (cart?.find((i) => i.product._id === item._id)) {
+    if (cart && item && cart.find((i) => i.product?.id === item?.id)) {
       setIsInCart(true);
     } else {
       setIsInCart(false);
     }
-  }, [cart]);
+  }, [cart, item]);
 
   return (
     <div className={`${style.flex_normal} w-full border-b p-4 justify-between gap-4`}>
-      <button onClick={() => dispatch(removeToWishlistAsync(_id))}>
+      <button type="button" onClick={() => dispatch(removeToWishlistAsync(_id))}>
         <RxCross1 className="cursor-pointer" size={10} />
       </button>
       <Link to={`/products/${_id}`}>
@@ -61,19 +60,21 @@ const ItemCard = ({ item, toggleWishlist }: IProps) => {
         </div>
       </div>
       {!isInCart ? (
-        <button onClick={() => dispatch(addToCartAsync({ productId: _id, quantity: 1 }))}>
+        <button
+          type="button"
+          onClick={() => dispatch(addToCartAsync({ productId: _id, quantity: 1 }))}>
           <BsCartPlus size={20} className="cursor-pointer" color="#ff7d1a" title="Add to Cart" />
         </button>
       ) : (
         <button
+          type="button"
           onClick={handleToggleCart}
-          className="text-xs bg-[#ff7d1a] text-white px-2 py-2 rounded"
-        >
+          className="text-xs bg-[#ff7d1a] text-white px-2 py-2 rounded">
           Cart
         </button>
       )}
     </div>
   );
-};
+}
 
 export default ItemCard;

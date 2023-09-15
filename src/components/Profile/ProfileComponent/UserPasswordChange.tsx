@@ -11,7 +11,6 @@ export default function UserPasswordChange() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
   const dispatch = useAppDispatch();
@@ -35,8 +34,7 @@ export default function UserPasswordChange() {
                 confirmNewPassword: data.confirmNewPassword,
               })
             );
-          })}
-        >
+          })}>
           <div>
             <label className="sr-only" htmlFor="password">
               Old Password
@@ -51,8 +49,7 @@ export default function UserPasswordChange() {
               />
               <div
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() => setIsPasswordShown(!isPasswordShown)}
-              >
+                onClick={() => setIsPasswordShown(!isPasswordShown)}>
                 {isPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
                 ) : (
@@ -81,8 +78,7 @@ export default function UserPasswordChange() {
               />
               <div
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() => setIsNewPasswordShown(!isNewPasswordShown)}
-              >
+                onClick={() => setIsNewPasswordShown(!isNewPasswordShown)}>
                 {isNewPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
                 ) : (
@@ -111,8 +107,7 @@ export default function UserPasswordChange() {
               />
               <div
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() => setIsConfirmNewPasswordShown(!isConfirmNewPasswordShown)}
-              >
+                onClick={() => setIsConfirmNewPasswordShown(!isConfirmNewPasswordShown)}>
                 {isConfirmNewPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
                 ) : (
@@ -128,9 +123,7 @@ export default function UserPasswordChange() {
           </div>
 
           <div>
-            <button
-              className={`bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600`}
-            >
+            <button className="bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600">
               Save Changes
             </button>
           </div>

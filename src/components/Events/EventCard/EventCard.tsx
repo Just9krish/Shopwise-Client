@@ -3,7 +3,7 @@ import { formattedPrice } from '../../../helper/formatPrice';
 import { IEvent } from '../../../Interface';
 import { host } from '../../../server';
 import style from '../../../styles/style';
-import getImageSource from '../../../helper/getImageSource';
+
 const Countdown = loadable(() => import('../CountDown/Countdown'));
 
 type Props = {
@@ -15,23 +15,12 @@ export default function EventCard({ event }: Props) {
     return null;
   }
 
-  const {
-    name,
-    images,
-    price,
-    discount_price,
-    description,
-    category,
-    discount_percentage,
-    endDate,
-    startDate,
-  } = event;
+  const { name, images, price, discount_price, description, endDate, startDate } = event;
 
   return (
     <div
       className="w-full bg-white rounded-lg flex flex-col lg:flex-row
-     gap-6 p-6"
-    >
+     gap-6 p-6">
       <div className="w-full lg:w-1/2 mx-auto">
         <img src={`${host}/${images[0]}`} loading="lazy" alt="" />
       </div>
