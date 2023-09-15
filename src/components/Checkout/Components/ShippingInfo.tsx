@@ -3,6 +3,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import style from '../../../styles/style';
 import { useAppSelector } from '../../../hooks';
 import { selectUser } from '../../../redux/features/User/userSlice';
+import { IAddress } from '../../../Interface';
 
 type IProps = {
   toggleActiveStep: (para: number) => void;
@@ -11,8 +12,12 @@ type IProps = {
 export default function ShippingInfo({ toggleActiveStep }: IProps) {
   const [selectedAddress, setSelectedAddress] = useState<null | string>(null);
 
-  const user = useAppSelector(selectUser) ?? { addresses: [] };
-  const { addresses } = user;
+  const user = useAppSelector(selectUser);
+  let addresses: null | IAddress[] = null;
+
+  if (user?.addresses) {
+    addresses = user.addresses;
+  }
 
   const initialFormState = {
     fullName: '',
@@ -31,9 +36,9 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
 
   useEffect(() => {
     if (selectedAddress) {
-      const address = addresses?.find((address) => address._id === selectedAddress);
+      const address = addresses?.find((add) => add._id === selectedAddress);
 
-      if (address) {
+      if (user && address) {
         setFormState({
           fullName: user?.name,
           email: user?.email,
@@ -50,7 +55,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
     } else {
       setFormState(initialFormState);
     }
-  }, [selectedAddress]);
+  }, [addresses, selectedAddress, user]);
 
   function handleFormInputChange(e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
     const { name, value } = e.target;
@@ -266,7 +271,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
                       name="address"
                       id={address._id}
                       value={address._id}
-                      checked={address._id == selectedAddress}
+                      checked={address._id === selectedAddress}
                       onChange={handleAddressChange}
                     />
                     <label className="ml-2 text-sm" htmlFor={address._id}>

@@ -115,13 +115,17 @@ const productsSlice = createSlice({
     builder.addCase(deleteShopProductAsync.pending, (state) => {
       state.isProductLoading = true;
     });
-    builder.addCase(deleteShopProductAsync.fulfilled, (state, action: any) => {
-      state.isProductLoading = false;
-      const deletedProductId = action.payload.deletedProductId;
-      state.shopProducts = state.shopProducts.filter((product) => product._id !== deletedProductId);
+    builder.addCase(deleteShopProductAsync.fulfilled, (state, action) => {
+      const { deletedProductId, message } = action.payload;
 
-      state.productMessage = action.payload.message;
+      return {
+        ...state,
+        isProductLoading: false,
+        shopProducts: state.shopProducts.filter((product) => product._id !== deletedProductId),
+        productMessage: message,
+      };
     });
+
     builder.addCase(deleteShopProductAsync.rejected, (state, action) => {
       state.isProductLoading = false;
       state.productError = action.error.message ? action.error.message : 'Something went wrong';

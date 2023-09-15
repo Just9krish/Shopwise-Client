@@ -26,7 +26,7 @@ export default function ResetPassword() {
       setSuccess(true);
       reset();
       toast.success(res.data.message);
-    } catch (error: AxiosError | any) {
+    } catch (error: any) {
       toast.error(error.response.data.message);
     }
   }
@@ -44,7 +44,6 @@ export default function ResetPassword() {
             className="space-y-6"
             noValidate
             onSubmit={handleSubmit((data) => {
-              console.log(data);
               if (resetToken) resetPassword(resetToken, data.password);
             })}>
             <div>
@@ -71,7 +70,8 @@ export default function ResetPassword() {
                     },
                   })}
                 />
-                <div
+                <button
+                  type="button"
                   className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
                   onClick={() => setIsPasswordShown(!isPasswordShown)}>
                   {isPasswordShown ? (
@@ -79,7 +79,7 @@ export default function ResetPassword() {
                   ) : (
                     <AiOutlineEye color="orange" size={20} />
                   )}
-                </div>
+                </button>
               </div>
               {errors?.password && (
                 <span className="text-red-500 text-sm">{errors?.password.message?.toString()}</span>
@@ -104,7 +104,8 @@ export default function ResetPassword() {
                       value === formValues.password || 'Password is not matching!',
                   })}
                 />
-                <div
+                <button
+                  type="button"
                   className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
                   onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}>
                   {isConfirmPasswordShown ? (
@@ -112,7 +113,7 @@ export default function ResetPassword() {
                   ) : (
                     <AiOutlineEye color="orange" size={20} />
                   )}
-                </div>
+                </button>
               </div>
               {errors?.confirmPassword && (
                 <span className="text-red-500 text-sm">

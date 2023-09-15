@@ -51,7 +51,7 @@ export default function Cart() {
           {cart.length === 0 ? (
             <div>No item in cart</div>
           ) : (
-            cart?.map((item: ICartItem) => <CartItem key={item.id} item={item} />)
+            cart?.map((item: ICartItem) => <CartItem key={item._id} item={item} />)
           )}
         </div>
         {cart.length > 0 && (

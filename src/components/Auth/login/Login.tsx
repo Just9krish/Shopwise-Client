@@ -70,7 +70,8 @@ export default function Login() {
                   required: 'Password is requried!',
                 })}
               />
-              <div
+              <button
+                type="button"
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
                 onClick={() => setIsPasswordShown(!isPasswordShown)}>
                 {isPasswordShown ? (
@@ -78,7 +79,7 @@ export default function Login() {
                 ) : (
                   <AiOutlineEye color="orange" size={20} />
                 )}
-              </div>
+              </button>
             </div>
             {errors?.password && (
               <span className="text-red-500 text-sm">{errors?.password.message?.toString()}</span>

@@ -4,8 +4,6 @@ export default function Success() {
       <iframe
         title="Order Placed Successfully"
         className="w-[400px] h-[400px] mt-8 mb-8"
-        frameBorder="0"
-        allowFullScreen
         sandbox="allow-same-origin allow-scripts allow-popups allow-forms"
         src="https://embed.lottiefiles.com/animation/100858"
       />

@@ -5,8 +5,8 @@ import {
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
-import axios, { AxiosError } from 'axios';
-import { ChangeEvent, FormEvent, useState } from 'react';
+import axios from 'axios';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { GrPowerReset } from 'react-icons/gr';
 import { toast } from 'react-toastify';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
@@ -39,12 +39,12 @@ export default function Payment({ toggleActiveStep }: IProps) {
   const dispatch = useAppDispatch();
   const user = useAppSelector(selectUser);
 
-  const shipping_address = localStorage.getItem('shipping_address');
+  const SHIPPINGADDRESS = localStorage.getItem('SHIPPINGADDRESS');
 
   let savedAddress: SavedAddress | undefined;
 
-  if (shipping_address) {
-    savedAddress = JSON.parse(shipping_address);
+  if (SHIPPINGADDRESS) {
+    savedAddress = JSON.parse(SHIPPINGADDRESS);
   }
 
   const shippingAddress = {
@@ -82,9 +82,9 @@ export default function Payment({ toggleActiveStep }: IProps) {
           }
         );
 
-        const client_secret = data.clientSecret;
+        const { clientSecret } = data;
 
-        const { error, paymentIntent } = await stripe?.confirmCardPayment(client_secret, {
+        const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
           payment_method: { card: cardNumberElement },
         });
 
@@ -103,7 +103,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
             paidPrice: paymentIntent.amount,
           };
 
-          const { data } = await axios.post(API_URL.CREATE_ORDER, order, {
+          const { data: latestOrder } = await axios.post(API_URL.CREATE_ORDER, order, {
             headers: {
               'Content-Type': 'application/json',
             },
@@ -113,12 +113,12 @@ export default function Payment({ toggleActiveStep }: IProps) {
           dispatch(fetchCartDetailsAsync());
 
           toast.success('Order created successfully');
-          localStorage.removeItem('shipping_address');
-          localStorage.setItem('latestorder', JSON.stringify(data));
+          localStorage.removeItem('SHIPPINGADDRESS');
+          localStorage.setItem('latestorder', JSON.stringify(latestOrder));
           toggleActiveStep(2);
         }
       }
-    } catch (err: AxiosError | any) {
+    } catch (err: any) {
       if (err.response) {
         toast.error(err.response.data.message);
       } else {
@@ -128,13 +128,13 @@ export default function Payment({ toggleActiveStep }: IProps) {
   }
 
   // cash on delivery
-  const [randomText, setRandomText] = useState(generateRandomText());
+  const [randomText, setRandomText] = useState('');
   const [userInput, setUserInput] = useState('');
 
   function generateRandomText() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let text = '';
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i += 1) {
       text += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return text;
@@ -163,11 +163,11 @@ export default function Payment({ toggleActiveStep }: IProps) {
       });
       dispatch(fetchCartDetailsAsync());
       toast.success('Order created successfully');
-      localStorage.removeItem('shipping_address');
+      localStorage.removeItem('SHIPPINGADDRESS');
       localStorage.setItem('latestorder', JSON.stringify(data));
 
       toggleActiveStep(2);
-    } catch (err: AxiosError | any) {
+    } catch (err: any) {
       if (err.response) {
         toast.error(err.response.data.message);
       } else {
@@ -181,11 +181,15 @@ export default function Payment({ toggleActiveStep }: IProps) {
     setUserInput('');
   }
 
+  useEffect(() => {
+    setRandomText(generateRandomText());
+  }, []);
+
   return (
     <div className="bg-white shadow rounded p-8">
       <div className="space-y-8">
         {/* card payment */}
-        <button className="flex gap-8" onClick={() => setSelect(1)}>
+        <button type="button" className="flex gap-8" onClick={() => setSelect(1)}>
           <span
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute after:bg-green-500 after:z-30 after:rounded-full ${
               select === 1 ? 'after:h-[18px] after:w-[18px]' : ''
@@ -194,7 +198,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
           <h4 className="font-semibold text-[#000000b1]">Pay with Debit/Credit Card</h4>
         </button>
 
-        {select == 1 && (
+        {select === 1 && (
           <div className="flex border-b px-14 pb-8">
             <form className="w-full space-y-4" onSubmit={handleCardPayment}>
               <div className="max-w-sm w-full">
@@ -259,7 +263,9 @@ export default function Payment({ toggleActiveStep }: IProps) {
               </div>
 
               <div className="max-w-sm w-full">
-                <button className="w-full border border-orange-500 py-1.5 rounded text-orange-500 font-medium transition-all hover:text-white hover:bg-orange-500">
+                <button
+                  type="button"
+                  className="w-full border border-orange-500 py-1.5 rounded text-orange-500 font-medium transition-all hover:text-white hover:bg-orange-500">
                   Pay
                 </button>
               </div>
@@ -268,7 +274,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
         )}
 
         {/* paypal */}
-        <button className="flex gap-8" onClick={() => setSelect(2)}>
+        <button type="button" className="flex gap-8" onClick={() => setSelect(2)}>
           <span
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute  after:bg-green-500 after:rounded-full after:z-30 ${
               select === 2 ? 'after:h-[18px] after:w-[18px]' : ''
@@ -286,7 +292,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
         )}
 
         {/* cash on delivery */}
-        <button className="flex gap-8" onClick={() => setSelect(3)}>
+        <button type="button" className="flex gap-8" onClick={() => setSelect(3)}>
           <span
             className={`bg-transparent h-6 w-6 rounded-full border-2 border-green-500 flex justify-center items-center relative after:absolute after:bg-green-500 after:z-30 after:rounded-full ${
               select === 3 ? 'after:h-[18px] after:w-[18px]' : ''
@@ -308,11 +314,12 @@ export default function Payment({ toggleActiveStep }: IProps) {
                 value={userInput}
                 onChange={handleInputChange}
               />
-              <button onClick={handleReset}>
+              <button type="button" onClick={handleReset}>
                 <GrPowerReset size={20} cursor="pointer" />
               </button>
             </div>
             <button
+              type="button"
               className="py-1.5 px-4 bg-orange-500 text-white rounded-md border border-orange-500 transition-all hover:text-orange-500 hover:bg-transparent"
               onClick={handleVerify}>
               Submit

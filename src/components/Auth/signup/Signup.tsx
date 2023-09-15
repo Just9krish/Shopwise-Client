@@ -97,7 +97,8 @@ export default function Signup() {
                   },
                 })}
               />
-              <div
+              <button
+                type="button"
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
                 onClick={() => setIsPasswordShown(!isPasswordShown)}>
                 {isPasswordShown ? (
@@ -105,7 +106,7 @@ export default function Signup() {
                 ) : (
                   <AiOutlineEye color="orange" size={20} />
                 )}
-              </div>
+              </button>
             </div>
             {errors?.password && (
               <span className="text-red-500 text-sm">{errors?.password.message?.toString()}</span>
@@ -128,7 +129,8 @@ export default function Signup() {
                     value === formValues.password || 'Password is not matching!',
                 })}
               />
-              <div
+              <button
+                type="button"
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
                 onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}>
                 {isConfirmPasswordShown ? (
@@ -136,7 +138,7 @@ export default function Signup() {
                 ) : (
                   <AiOutlineEye color="orange" size={20} />
                 )}
-              </div>
+              </button>
             </div>
             {errors?.confirmPassword && (
               <span className="text-red-500 text-sm">

@@ -1,15 +1,15 @@
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import style from '../../../styles/style';
 import categoriesData from '../../../constant/categories.json';
-import { Category } from '../../../pages/ProductsPage';
+// import { Category } from '../../../pages/ProductsPage';
 
 export default function Categories() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  function handleSubmit(category: Category) {
-    navigate(`products?category=${category.title}`);
-    window.location.reload();
-  }
+  // function handleSubmit(category: Category) {
+  //   navigate(`products?category=${category.title}`);
+  //   window.location.reload();
+  // }
 
   return (
     <section>
@@ -17,10 +17,10 @@ export default function Categories() {
         <h1 className={`${style.heading}`}>Shop on Different Categories:</h1>
         <div className="grid grid-cols-1 mt-8 gap-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-5 xl:grid-cols-5 xl:gap-8">
           {categoriesData &&
-            categoriesData?.map((category, idx) => (
+            categoriesData?.map((category) => (
               <div
-                key={idx}
-                onClick={() => handleSubmit(category)}
+                key={category.id}
+                // onClick={() => handleSubmit(category)}
                 className={`bg-white rounded-md ${style.flex_normal} flex-col shadow p-4 cursor-pointer hover:scale-105 transition-all duration-300`}>
                 <div className="h-32 overflow-hidden">
                   <img

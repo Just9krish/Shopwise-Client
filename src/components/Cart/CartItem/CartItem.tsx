@@ -20,13 +20,13 @@ interface IProps {
 
 export default function CartItem({ item }: IProps) {
   const { product, quantity } = item;
-  const { name, _id, images } = product;
+  const { name, _id: id, images } = product;
   const dispatch = useAppDispatch();
   const isCartLoading = useAppSelector(selectCartLoading);
 
   function increaseQuantity() {
     if (item.quantity < 4) {
-      dispatch(updateQuantityAsync({ productId: _id, quantity: item.quantity + 1 })).catch(() => {
+      dispatch(updateQuantityAsync({ productId: id, quantity: item.quantity + 1 })).catch(() => {
         toast.error('Failed to update quantity.');
       });
     } else {
@@ -36,7 +36,7 @@ export default function CartItem({ item }: IProps) {
 
   function decreaseQuantity() {
     if (item.quantity > 1) {
-      dispatch(updateQuantityAsync({ productId: _id, quantity: item.quantity - 1 })).catch(() => {
+      dispatch(updateQuantityAsync({ productId: id, quantity: item.quantity - 1 })).catch(() => {
         toast.error('Failed to update quantity.');
       });
     } else {
@@ -74,7 +74,7 @@ export default function CartItem({ item }: IProps) {
       <div className={`${style.flex_normal} gap-4 flex-grow p-1`}>
         <Link
           className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
-          to={`/products/${_id}`}>
+          to={`/products/${id}`}>
           <img
             src={getImageSource(images[0].url)}
             className="w-16 rounded-md h-16 ml-2"
@@ -85,7 +85,7 @@ export default function CartItem({ item }: IProps) {
         <div>
           <Link
             className="block font-bold capitalize hover:text-blue-500 transition-all"
-            to={`/products/${_id}`}>
+            to={`/products/${id}`}>
             <h4 className="text-xs font-extralight">{name}</h4>
           </Link>
           <h4 className="text-xs text-gray-500">

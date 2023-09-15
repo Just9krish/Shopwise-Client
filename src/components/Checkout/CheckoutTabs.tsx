@@ -1,10 +1,20 @@
 type IProps = {
-  toggleActiveStep: (para: number) => void;
   activeStep: number;
 };
 
-export default function CheckoutTabs({ toggleActiveStep, activeStep }: IProps) {
+export default function CheckoutTabs({ activeStep }: IProps) {
   const steps = ['1. Shipping', '2. Payment', '3. Success'];
+
+  const progressBarWidth = () => {
+    switch (activeStep) {
+      case 0:
+        return 'after:w-0';
+      case 1:
+        return 'after:w-1/2';
+      default:
+        return 'after:w-full';
+    }
+  };
 
   return (
     <div className="w-full relative">
@@ -20,9 +30,7 @@ export default function CheckoutTabs({ toggleActiveStep, activeStep }: IProps) {
         ))}
       </div>
       <div
-        className={`absolute left-0 h-2 top-1/2 -translate-y-1/2 bg-[#EAF0F4] w-full rounded-full transition-all -z-10 ease-in-out duration-500 after:w-0 after:z-0 after:h-full after:absolute after:bg-[#5cb85c] ${
-          activeStep === 0 ? 'after:w-0' : activeStep === 1 ? 'after:w-1/2' : 'after:w-full'
-        }`}
+        className={`absolute left-0 h-2 top-1/2 -translate-y-1/2 bg-[#EAF0F4] w-full rounded-full transition-all -z-10 ease-in-out duration-500 after:w-0 after:z-0 after:h-full after:absolute after:bg-[#5cb85c] ${progressBarWidth()}`}
       />
     </div>
   );

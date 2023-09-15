@@ -38,31 +38,6 @@ export default function ForgotPassword() {
             onSubmit(data.email);
           })}
           className="space-y-6">
-          {/* <div>
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-              Email address
-            </label>
-            <div className="mt-2">
-              <input
-                id="email"
-                {...register('email', {
-                  required: 'email is required',
-                  pattern: {
-                    value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-                    message: 'email not valid',
-                  },
-                })}
-                type="email"
-                className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
-              />
-              {errors.email && (
-                <p id="email-error" className="text-red-500">
-                  {errors.email.message?.toString()}
-                </p>
-              )}
-            </div>
-          </div> */}
-
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
@@ -73,6 +48,7 @@ export default function ForgotPassword() {
                 {...register('email', {
                   required: 'Email is required',
                   pattern: {
+                    // eslint-disable-next-line no-useless-escape
                     value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
                     message: 'Email is not valid',
                   },
@@ -81,7 +57,7 @@ export default function ForgotPassword() {
                 className="appearance-none block w-full py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 px-3 rounded-md focus:outline-none shadow-sm placeholder-gray-400 sm:text-sm sm:leading-6 focus:ring-inset focus:ring-orange-500"
               />
               {errors.email && (
-                <p className="text-red-500" id="email-error">
+                <p id="email-error" className="text-red-500">
                   {errors.email.message?.toString()}
                 </p>
               )}

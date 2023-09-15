@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { formattedPrice } from '../../../helper/formatPrice';
 import { useAppSelector } from '../../../hooks';
 import { IProduct, IShippingAddress } from '../../../Interface';
-import { host } from '../../../server';
 import { selectUser } from '../../../redux/features/User/userSlice';
 import getImageSource from '../../../helper/getImageSource';
 
@@ -33,10 +32,10 @@ export default function PlacedProduct() {
     const latestOrder = localStorage.getItem('latestorder');
 
     if (latestOrder) {
-      const order: Iorder = JSON.parse(latestOrder);
-      setOrder(order);
+      const savedOrder: Iorder = JSON.parse(latestOrder);
+      setOrder(savedOrder);
 
-      const products = order.orders.flatMap((order) => order.cart.map((cartItem) => cartItem));
+      const products = savedOrder.orders.flatMap((i) => i.cart.map((cartItem) => cartItem));
       setOrderProducts(products);
     }
   }, []);
@@ -69,8 +68,7 @@ export default function PlacedProduct() {
               {orderProducts.map((orderProduct) => (
                 <div
                   key={orderProduct.product._id}
-                  className="flex items-center gap-4 p-4 border-b"
-                >
+                  className="flex items-center gap-4 p-4 border-b">
                   <div className="w-[66px] h-[66px] rounded overflow-hidden">
                     <img
                       src={getImageSource(orderProduct.product.images[0].url)}

@@ -37,6 +37,23 @@ module.exports = {
     'no-param-reassign': 'off',
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'no-async-promise-executor': 'off',
+    'react/jsx-props-no-spreading': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
+    'jsx-a11y/label-has-for': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
   },
 };
