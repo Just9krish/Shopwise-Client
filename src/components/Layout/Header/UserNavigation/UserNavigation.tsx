@@ -31,8 +31,7 @@ export default function UserNavigation({ userState, toggleWishlist }: IProps) {
       <button
         type="button"
         className="relative cursor-pointer"
-        onClick={() => dispatch(toggleCart())}
-      >
+        onClick={() => dispatch(toggleCart())}>
         <AiOutlineShoppingCart color="white" size={30} />
         <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
           {cart?.length}

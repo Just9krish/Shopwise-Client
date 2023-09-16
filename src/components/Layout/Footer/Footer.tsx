@@ -1,10 +1,10 @@
 import { BsTwitter, BsYoutube } from 'react-icons/bs';
 import { MdLocationOn, MdWifiCalling3, MdEmail } from 'react-icons/md';
 import { FiInstagram } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import style from '../../../styles/style';
 import siteLink from '../../../constant/footerLinks.json';
 import supportLink from '../../../constant/footerSupportLinks.json';
-import { Link } from 'react-router-dom';
 import logo from '../../../assets/shopwise.png';
 
 export default function Footer() {
@@ -53,7 +53,9 @@ export default function Footer() {
                 className="rounded-md px-2 py-1 mr-4 text-gray-500"
                 required
               />
-              <button className="bg-orange-500 py-1 px-3.5 rounded-md uppercase hover:bg-orange-400">
+              <button
+                type="button"
+                className="bg-orange-500 py-1 px-3.5 rounded-md uppercase hover:bg-orange-400">
                 Subscribe
               </button>
             </form>
@@ -61,11 +63,10 @@ export default function Footer() {
               {siteLink && (
                 <ul className="list-none">
                   <h4 className="font-semibold mb-2 text-lg">Company</h4>
-                  {siteLink?.map((link, idx) => (
+                  {siteLink?.map((link) => (
                     <li
-                      key={idx}
-                      className="hover:text-[#ff7d1a] transition-all hover:underline mb-1"
-                    >
+                      key={link.id}
+                      className="hover:text-[#ff7d1a] transition-all hover:underline mb-1">
                       <Link to={link.link}>{link.name}</Link>
                     </li>
                   ))}
@@ -74,11 +75,10 @@ export default function Footer() {
               {supportLink && (
                 <ul className="list-none">
                   <h4 className="font-semibold mb-2 text-lg">Support</h4>
-                  {supportLink?.map((link, idx) => (
+                  {supportLink?.map((link) => (
                     <li
                       className="hover:text-[#ff7d1a] transition-all hover:underline mb-1 cursor-pointer"
-                      key={idx}
-                    >
+                      key={link.id}>
                       {link.name}
                     </li>
                   ))}
@@ -91,20 +91,17 @@ export default function Footer() {
             <div className="flex justify-center items-centers mb-6">
               <a
                 className="flex justify-center items-center w-8 h-8 border border-white mr-4 rounded-full p-2 text-white transition-all hover:border-orange-500 hover:text-orange-500 hover:-translate-y-1"
-                href="#"
-              >
+                href="/">
                 <BsTwitter />
               </a>
               <a
                 className="flex justify-center items-center w-8 h-8 border border-white mr-4 rounded-full p-2 text-white transition-all hover:border-orange-500 hover:text-orange-500 hover:-translate-y-1"
-                href="#"
-              >
+                href="/">
                 <FiInstagram />
               </a>
               <a
                 className="flex justify-center items-center w-8 h-8 border border-white rounded-full p-2 text-white transition-all hover:border-orange-500 hover:text-orange-500 hover:-translate-y-1"
-                href="#"
-              >
+                href="/">
                 <BsYoutube />
               </a>
             </div>

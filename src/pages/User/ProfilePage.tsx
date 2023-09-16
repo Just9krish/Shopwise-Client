@@ -6,7 +6,7 @@ const ProfileContent = loadable(() => import('../../components/Profile/ProfileCo
 const ProfileSidebar = loadable(() => import('../../components/Profile/ProfileSidebar'));
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeTab, setActiveTab] = useState(1);
 
   return (
     <section>

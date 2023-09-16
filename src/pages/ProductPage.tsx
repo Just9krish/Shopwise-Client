@@ -74,8 +74,7 @@ function ProductDetailsInfo({ product }: { product: IProduct }) {
               handleTabClick('productDetails');
             }
           }}
-          tabIndex={0}
-        >
+          tabIndex={0}>
           Products Details
         </div>
         <div
@@ -89,8 +88,7 @@ function ProductDetailsInfo({ product }: { product: IProduct }) {
               handleTabClick('reviews');
             }
           }}
-          tabIndex={0}
-        >
+          tabIndex={0}>
           Products Reviews
         </div>
         <div
@@ -104,8 +102,7 @@ function ProductDetailsInfo({ product }: { product: IProduct }) {
               handleTabClick('shop');
             }
           }}
-          tabIndex={0}
-        >
+          tabIndex={0}>
           Shop Information
         </div>
       </div>

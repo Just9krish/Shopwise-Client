@@ -12,6 +12,7 @@ interface IProps {
 }
 
 export default function ProfileContent({ activeTab }: IProps) {
+  console.log(activeTab);
   return (
     <div className="w-full bg-white rounded-md shadow py-8 px-6 min-h-[428px] lg:min-h-[456px]">
       {activeTab === 1 && <UserProfile />}

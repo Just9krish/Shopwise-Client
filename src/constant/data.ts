@@ -1,7 +1,6 @@
 import shooes from '../assets/shooes.jpg';
 import shooes2 from '../assets/shooes1.jpg';
 import shooes3 from '../assets/shoosse2.jpg';
-import shooes4 from '../assets/shoosse2.jpg';
 import headphone from '../assets/heaphone.jpg';
 import camera from '../assets/camera.jpg';
 

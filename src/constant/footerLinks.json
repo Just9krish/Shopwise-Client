@@ -1,21 +1,26 @@
 [
   {
+    "id": 1,
     "name": "About us",
     "link": "/about"
   },
   {
+    "id": 2,
     "name": "Careers",
     "link": "/carrers"
   },
   {
+    "id": 3,
     "name": "Store Locations",
     "link": "/store_locations"
   },
   {
+    "id": 4,
     "name": "Our Blog",
     "link": "/blog"
   },
   {
+    "id": 5,
     "name": "Reviews",
     "link": "/reviews"
   }

@@ -34,8 +34,7 @@ export default function Login() {
             dispatch(loginUserAsync(loginData)).then(() => {
               dispatch(fetchUserDetailsAsync());
             });
-          })}
-        >
+          })}>
           <div>
             <label htmlFor="email" className="sr-only">
               Email address
@@ -74,8 +73,7 @@ export default function Login() {
               <button
                 type="button"
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() => setIsPasswordShown(!isPasswordShown)}
-              >
+                onClick={() => setIsPasswordShown(!isPasswordShown)}>
                 {isPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
                 ) : (
@@ -102,24 +100,21 @@ export default function Login() {
             <div className="text-sm">
               <Link
                 to="/forgotpassword"
-                className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500"
-              >
+                className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500">
                 Forgot your password?
               </Link>
             </div>
           </div>
           <button
             className="w-full group bg-[#ff7d1a] text-white py-2 rounded hover:bg-orange-500 focus:bg-ornage-500 transition-all"
-            type="submit"
-          >
+            type="submit">
             Login
           </button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Not have any account?
             <Link
               to="/signup"
-              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 ml-1 focus:text-orange-500 leading-6"
-            >
+              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 ml-1 focus:text-orange-500 leading-6">
               Signup
             </Link>
           </p>
@@ -127,8 +122,7 @@ export default function Login() {
             Send me back to
             <Link
               to="/"
-              className="font-medium text-blue-500 transition-all hover:text-blue-500 ml-1 focus:text-blue-500"
-            >
+              className="font-medium text-blue-500 transition-all hover:text-blue-500 ml-1 focus:text-blue-500">
               Home
             </Link>
           </p>

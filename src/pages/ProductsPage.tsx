@@ -132,8 +132,7 @@ export default function ProductsPage() {
                 enterTo="transform opacity-100 scale-100"
                 leave="transition ease-in duration-75"
                 leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
-              >
+                leaveTo="transform opacity-0 scale-95">
                 <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <div className="py-1">
                     {sortOptions.map((option) => (
@@ -151,8 +150,7 @@ export default function ProductsPage() {
                               option.current ? 'font-medium text-gray-900' : 'text-gray-500',
                               active ? 'bg-gray-100' : '',
                               'block px-4 py-2 text-sm cursor-pointer w-full text-left'
-                            )}
-                          >
+                            )}>
                             {option.name}
                           </button>
                         )}
@@ -165,16 +163,14 @@ export default function ProductsPage() {
 
             <button
               type="button"
-              className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
-            >
+              className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
               <span className="sr-only">View grid</span>
               <HiOutlineSquares2X2 className="h-5 w-5" aria-hidden="true" />
             </button>
             <button
               type="button"
               className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
-              onClick={() => setMobileFiltersOpen(true)}
-            >
+              onClick={() => setMobileFiltersOpen(true)}>
               <span className="sr-only">Filters</span>
               <PiFunnelLight className="h-5 w-5" aria-hidden="true" />
             </button>

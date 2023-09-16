@@ -55,15 +55,13 @@ export default function SellerActivationPage() {
               type="button"
               className="w-full px-4 py-2 rounded-md bg-orange-500 text-white font-semibold hover:bg-orange-600 flex items-center justify-center"
               onClick={handleRetryClick}
-              disabled={isLoading}
-            >
+              disabled={isLoading}>
               {isLoading ? <AiOutlineReload className="animate-spin mr-2" /> : 'Retry'}
             </button>
           ) : (
             <Link
               to="/dashboard"
-              className="w-full px-4 py-2 rounded-md bg-orange-500 text-white font-semibold hover:bg-orange-600 flex items-center justify-center"
-            >
+              className="w-full px-4 py-2 rounded-md bg-orange-500 text-white font-semibold hover:bg-orange-600 flex items-center justify-center">
               Back to Home
             </Link>
           )}

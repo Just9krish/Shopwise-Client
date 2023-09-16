@@ -23,7 +23,7 @@ export interface IProps {
 }
 
 export default function Product({ product }: IProps) {
-  const { name, category, rating, price, discount_price, images, _id } = product;
+  const { name, category, rating, price, discount_price, images, _id: productId } = product;
   const wishlists = useAppSelector(selectWishlist);
   const isWishlistLoading = useAppSelector(selectWishlistLoading);
   const isUserAuthenticated = useAppSelector(selectIsUserAuthenticate);
@@ -46,7 +46,7 @@ export default function Product({ product }: IProps) {
     <div className="border p-4 bg-white relative overflow-visible shadow rounded-md">
       <Link
         className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
-        to={`/products/${_id}`}>
+        to={`/products/${productId}`}>
         <div className="h-40 overflow-hidden rounded-lg">
           <img
             src={getImageSource(images[0].url)}
@@ -59,7 +59,7 @@ export default function Product({ product }: IProps) {
       <div className="pt-[10%] pb-3 space-y-1">
         <Link
           className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
-          to={`/products/${_id}`}>
+          to={`/products/${productId}`}>
           {name.length > 55 ? `${name.slice(0, 55)}...` : name}
         </Link>
         <span className="capitalize inline-block bg-red-300 text-white text-xs px-1.5 rounded-xl">

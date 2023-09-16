@@ -34,8 +34,7 @@ export default function ShopProfileData({ isOwner }: IProps) {
               }
             }}
             role="button"
-            tabIndex={0}
-          >
+            tabIndex={0}>
             Shop Products
           </div>
           <div
@@ -49,8 +48,7 @@ export default function ShopProfileData({ isOwner }: IProps) {
               }
             }}
             role="button"
-            tabIndex={0}
-          >
+            tabIndex={0}>
             Ongoing Events
           </div>
           <div
@@ -64,8 +62,7 @@ export default function ShopProfileData({ isOwner }: IProps) {
               }
             }}
             role="button"
-            tabIndex={0}
-          >
+            tabIndex={0}>
             Shop Reviews
           </div>
         </div>
@@ -75,8 +72,7 @@ export default function ShopProfileData({ isOwner }: IProps) {
             <Link to="/dashboard" className="">
               <button
                 type="button"
-                className="border-none bg-orange-500 text-white transition-all px-3 py-1.5 rounded-md hover:bg-orange-400 focus:bg-orange-500"
-              >
+                className="border-none bg-orange-500 text-white transition-all px-3 py-1.5 rounded-md hover:bg-orange-400 focus:bg-orange-500">
                 Dashboard
               </button>
             </Link>

@@ -1,14 +1,18 @@
 [
   {
+    "id": 1,
     "name": "FAQ"
   },
   {
+    "id": 2,
     "name": "Reviews"
   },
   {
+    "id": 3,
     "name": "Contact Us"
   },
   {
+    "id": 4,
     "name": "Shipping"
   }
 ]

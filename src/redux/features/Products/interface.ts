@@ -17,7 +17,7 @@ export interface IProduct {
     size: number;
   }[];
   shop: IShop;
-  reviews?: { user: {}; comment: string; rating: number }[];
+  reviews?: { user: any; comment: string; rating: number }[];
   rating: number;
   sold_out: number;
   stock: number;

@@ -37,8 +37,7 @@ export default function ForgotPassword() {
           onSubmit={handleSubmit((data) => {
             onSubmit(data.email);
           })}
-          className="space-y-6"
-        >
+          className="space-y-6">
           <div>
             <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
               Email address
@@ -68,8 +67,7 @@ export default function ForgotPassword() {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff7d1a] transition-all"
-            >
+              className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#ff7d1a] transition-all">
               Send Email
             </button>
           </div>
@@ -79,8 +77,7 @@ export default function ForgotPassword() {
           Send me back to{' '}
           <Link
             to="/login"
-            className="font-semibold leading-6 text-[#ff7d1a] hover:text-orange-500"
-          >
+            className="font-semibold leading-6 text-[#ff7d1a] hover:text-orange-500">
             Login
           </Link>
         </p>

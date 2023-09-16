@@ -1,17 +1,22 @@
 [
   {
+    "id": 1,
     "name": "Game & Video"
   },
   {
+    "id": 2,
     "name": "Phone &Tablets"
   },
   {
+    "id": 3,
     "name": "Computers & Laptop"
   },
   {
+    "id": 4,
     "name": "Sport Watches"
   },
   {
+    "id": 5,
     "name": "Events"
   }
 ]
