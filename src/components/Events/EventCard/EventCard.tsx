@@ -15,7 +15,7 @@ export default function EventCard({ event }: Props) {
     return null;
   }
 
-  const { name, images, price, discount_price, description, endDate, startDate } = event;
+  const { name, images, price, discountPrice, description, endDate, startDate } = event;
 
   return (
     <div
@@ -30,7 +30,7 @@ export default function EventCard({ event }: Props) {
         <div className="flex justify-between flex-wrap gap-5 items-center">
           <div className={`${style.flex_normal} gap-5`}>
             <h4 className="line-through text-gray-400 font-medium">{formatPrice(price)}</h4>
-            <h4 className="font-bold text-xl text-green-600">{formatPrice(discount_price)}</h4>
+            <h4 className="font-bold text-xl text-green-600">{formatPrice(discountPrice)}</h4>
           </div>
           <span className="text-sky-400 text-lg">276 solds</span>
         </div>

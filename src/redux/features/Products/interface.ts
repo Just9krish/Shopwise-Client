@@ -6,8 +6,8 @@ export interface IProduct {
   name: string;
   description: string;
   price: number;
-  discount_percentage: number;
-  discount_price: number;
+  discountPercentage: number;
+  discountPrice: number;
   tags?: string;
   images: {
     id: number;
@@ -31,8 +31,8 @@ export interface IAddProduct {
   category: string;
   tags?: string;
   price: number;
-  discount_percentage?: number;
-  discount_price?: number;
+  discountPercentage?: number;
+  discountPrice?: number;
   stock: number;
   images: File[];
 }
@@ -58,4 +58,28 @@ export interface FilterQuery {
   filter?: any;
   sort?: any;
   pagination?: any;
+}
+
+export interface Category {
+  id: number;
+  title: string;
+  value: string;
+  checked: boolean;
+  image_Url: string;
+}
+
+export interface Section {
+  id: string;
+  name: string;
+  options: Category[];
+}
+
+export interface Filter {
+  [key: string]: string[] | undefined;
+}
+
+export interface IFilter {
+  id: string;
+  name: string;
+  options: Category[];
 }

@@ -1,11 +1,11 @@
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { PRODUCT_PER_PAGE } from '../../constant';
 
-type PaginationProps = {
+interface PaginationProps {
   page: number;
   totalProducts: number;
   handlePage: (page: number) => void;
-};
+}
 
 export default function Pagination({ page, handlePage, totalProducts }: PaginationProps) {
   const totalPage = Math.ceil(totalProducts / PRODUCT_PER_PAGE);

@@ -92,7 +92,7 @@ export default function OrderDetails() {
           <article className="md:w-2/5">
             {selectedOrder?.cart.map((item) => {
               const { _id: id, product, quantity } = item;
-              const { name, images, category, discount_price } = product;
+              const { name, images, category, discountPrice } = product;
 
               return (
                 <div key={id} className="flex items-center gap-4 py-4 border-b border-gray-300">
@@ -111,7 +111,7 @@ export default function OrderDetails() {
                     </Link>
                     <div className="flex items-center justify-between">
                       <span className="text-[#4a4a4a] tracking-wider">
-                        {formatPrice(discount_price)} x {quantity}
+                        {formatPrice(discountPrice)} x {quantity}
                       </span>
                       <span className="bg-orange-200 py-1 px-2 rounded text-[#201f13] text-xs md:text-sm">
                         {category}

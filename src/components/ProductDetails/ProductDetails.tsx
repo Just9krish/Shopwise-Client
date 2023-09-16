@@ -20,7 +20,7 @@ const Carousel = loadable(() => import('./Carousel/Carousel'));
 const Slider = loadable(() => import('./Slider/Slider'));
 
 export default function ProductDetails({ product }: { product: IProduct }) {
-  const { images, name, discount_price, price, description, shop, discount_percentage } = product;
+  const { images, name, discountPrice, price, description, shop, discountPercentage } = product;
   const [isWish, setIsWish] = useState(false);
   const wishlists = useAppSelector(selectWishlist);
   const isWishlistLoading = useAppSelector(selectWishlistLoading);
@@ -63,9 +63,9 @@ export default function ProductDetails({ product }: { product: IProduct }) {
             <div>
               <h4 className="text-green-700 font-semibold text-lg">Deal of a Day</h4>
               <div className={`${style.flex_normal}`}>
-                <span className="text-2xl text-[#CC0C39] mr-3">-{discount_percentage}%</span>
+                <span className="text-2xl text-[#CC0C39] mr-3">-{discountPercentage}%</span>
                 <span className={`${style.productDiscountPrice} text-[28px]`}>
-                  {formatPrice(discount_price)}
+                  {formatPrice(discountPrice)}
                 </span>
               </div>
               <div className="text-sm">

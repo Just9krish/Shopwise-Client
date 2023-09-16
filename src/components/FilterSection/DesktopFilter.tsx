@@ -1,10 +1,10 @@
 import { Disclosure } from '@headlessui/react';
 import { ChangeEvent } from 'react';
 import { BiMinus, BiPlus } from 'react-icons/bi';
-import { Section, filter, Category } from '../../pages/ProductsPage';
+import { Category, Section, IFilter } from '../../redux/features/Products/interface';
 
 type DesktopFilterProps = {
-  filters: filter[];
+  filters: IFilter[];
   handleFilter: (e: ChangeEvent<HTMLInputElement>, section: Section, option: Category) => void;
 };
 

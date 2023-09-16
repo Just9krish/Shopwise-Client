@@ -13,6 +13,7 @@ import {
 } from '../redux/features/Products/productSlice';
 import { PRODUCT_PER_PAGE } from '../constant';
 import Pagination from '../components/Pagination/Pagination';
+import { Category, Filter, Section, IFilter } from '../redux/features/Products/interface';
 
 const ProductGrid = loadable(() => import('../components/ProductGrid/ProductGrid'));
 const DesktopFilter = loadable(() => import('../components/FilterSection/DesktopFilter'));
@@ -22,37 +23,13 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ');
 }
 
-export type Category = {
-  id: number;
-  title: string;
-  value: string;
-  checked: boolean;
-  image_Url: string;
-};
-
-export type Section = {
-  id: string;
-  name: string;
-  options: Category[];
-};
-
-export type Filter = {
-  [key: string]: string[] | undefined;
-};
-
-export type filter = {
-  id: string;
-  name: string;
-  options: Category[];
-};
-
 const sortOptions = [
   { name: 'Best Rating', sort: 'rating', order: 'desc', current: false },
   { name: 'Price: Low to High', sort: 'price', order: 'asc', current: false },
   { name: 'Price: High to Low', sort: 'price', order: 'desc', current: false },
 ];
 
-const filters: filter[] = [
+const filters: IFilter[] = [
   {
     id: 'category',
     name: 'Category',
@@ -141,11 +118,6 @@ export default function ProductsPage() {
                           <button
                             type="button"
                             onClick={() => handleSort(option)}
-                            onKeyPress={(e) => {
-                              if (e.key === 'Enter') {
-                                handleSort(option);
-                              }
-                            }}
                             className={classNames(
                               option.current ? 'font-medium text-gray-900' : 'text-gray-500',
                               active ? 'bg-gray-100' : '',
@@ -190,12 +162,7 @@ export default function ProductsPage() {
         </section>
 
         {/* Pagination */}
-        <Pagination
-          page={page}
-          handlePage={() => setPage(page)}
-          setPage={setPage}
-          totalProducts={totalProducts}
-        />
+        <Pagination page={page} handlePage={() => setPage(page)} totalProducts={totalProducts} />
       </main>
     </div>
   );

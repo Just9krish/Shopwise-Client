@@ -48,8 +48,8 @@ export default function AddProduct() {
     form.append('category', productCategory.toString());
     form.append('tags', productTags.toString());
     form.append('price', productPrice.toString());
-    form.append('discount_percentage', productDiscountPercentage.toString());
-    form.append('discount_price', productDiscountPrice.toString());
+    form.append('discountPercentage', productDiscountPercentage.toString());
+    form.append('discountPrice', productDiscountPrice.toString());
     form.append('stock', productStock.toString());
 
     try {

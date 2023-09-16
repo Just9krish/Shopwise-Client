@@ -15,8 +15,8 @@ export interface IEvent {
   status: string;
   tags: string;
   price: number;
-  discount_percentage: number;
-  discount_price: number;
+  discountPercentage: number;
+  discountPrice: number;
   stock: number;
   images: File[];
   shop: IShop;

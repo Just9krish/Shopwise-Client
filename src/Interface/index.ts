@@ -7,8 +7,8 @@ export interface IProduct {
   name: string;
   description: string;
   price: number;
-  discount_percentage: number;
-  discount_price: number;
+  discountPercentage: number;
+  discountPrice: number;
   tags?: string;
   images: {
     id: number;
@@ -32,8 +32,8 @@ export interface IAddProduct {
   category: string;
   tags?: string;
   price: number;
-  discount_percentage?: number;
-  discount_price?: number;
+  discountPercentage?: number;
+  discountPrice?: number;
   stock: number;
   images: File[];
 }
@@ -84,8 +84,8 @@ export interface IEvent {
   status: string;
   tags: string;
   price: number;
-  discount_percentage: number;
-  discount_price: number;
+  discountPercentage: number;
+  discountPrice: number;
   stock: number;
   images: File[];
   shop: ISeller;

@@ -69,8 +69,8 @@ export default function CreateEvent() {
     form.append('category', productCategory);
     form.append('tags', productTags);
     form.append('price', productPrice);
-    form.append('discount_percentage', productDiscountPercentage);
-    form.append('discount_price', productDiscountPrice);
+    form.append('discountPercentage', productDiscountPercentage);
+    form.append('discountPrice', productDiscountPrice);
     form.append('stock', productStock);
     if (startDate !== null) form.append('startDate', startDate);
     if (endDate !== null) form.append('endDate', endDate);

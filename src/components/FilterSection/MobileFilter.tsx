@@ -2,11 +2,11 @@ import { ChangeEvent, Fragment } from 'react';
 import { Dialog, Disclosure, Transition } from '@headlessui/react';
 import { IoClose } from 'react-icons/io5';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import { Category, Section, filter } from '../../pages/ProductsPage';
+import { Category, Section, IFilter } from '../../redux/features/Products/interface';
 
 interface MobileFilterProps {
   mobileFiltersOpen: boolean;
-  filters: filter[];
+  filters: IFilter[];
   setMobileFiltersOpen: (mobileFiltersOpen: boolean) => void;
   handleFilter: (e: ChangeEvent<HTMLInputElement>, section: Section, option: Category) => void;
 }

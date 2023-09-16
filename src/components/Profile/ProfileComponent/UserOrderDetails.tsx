@@ -60,7 +60,7 @@ export default function UserOrderDetails() {
                   <div className="w-full">
                     <h5 className="pl-3 text-[20px]">{item.product.name}</h5>
                     <h5 className="pl-3 text-[20px] text-[#00000091]">
-                      {formatPrice(item.product.discount_price)} x {item.quantity}
+                      {formatPrice(item.product.discountPrice)} x {item.quantity}
                     </h5>
                   </div>
                   {/* {!item.isReviewed && data?.status === "Delivered" ? (

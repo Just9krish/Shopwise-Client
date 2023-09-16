@@ -158,8 +158,8 @@ export default function ShopAllEvents() {
       price: formatPrice(item.price),
       stock: item.stock,
       sold: item.sold_out,
-      discountpercentage: item.discount_percentage,
-      discountprice: formatPrice(item.discount_price),
+      discountpercentage: item.discountPercentage,
+      discountprice: formatPrice(item.discountPrice),
     });
   });
 

@@ -16,7 +16,7 @@ interface IProps {
 }
 
 function ItemCard({ item, toggleWishlist }: IProps) {
-  const { name, price, images, discount_price, discount_percentage, _id: productId } = item;
+  const { name, price, images, discountPrice, discountPercentage, _id: productId } = item;
   const [isInCart, setIsInCart] = useState(false);
   const cart = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
@@ -55,8 +55,8 @@ function ItemCard({ item, toggleWishlist }: IProps) {
         </Link>
         <h4 className="text-xs text-[#777777,] line-through">{formatPrice(price)}</h4>
         <div className="flex gap-3 items-center">
-          <p className="text-[#2D3436] font-thin">{discount_percentage}% off</p>
-          <h4 className="text-[#00B894] font-bold">{formatPrice(discount_price)}</h4>
+          <p className="text-[#2D3436] font-thin">{discountPercentage}% off</p>
+          <h4 className="text-[#00B894] font-bold">{formatPrice(discountPrice)}</h4>
         </div>
       </div>
       {!isInCart ? (

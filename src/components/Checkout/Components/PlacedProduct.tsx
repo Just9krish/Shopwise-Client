@@ -83,8 +83,8 @@ export default function PlacedProduct() {
                       Price:
                       {formatPrice(
                         orderProduct.quantity *
-                          (orderProduct.product.discount_percentage > 0
-                            ? orderProduct.product.discount_price
+                          (orderProduct.product.discountPercentage > 0
+                            ? orderProduct.product.discountPrice
                             : orderProduct.product.price)
                       )}
                     </p>

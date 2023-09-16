@@ -23,7 +23,7 @@ export interface IProps {
 }
 
 export default function Product({ product }: IProps) {
-  const { name, category, rating, price, discount_price, images, _id: productId } = product;
+  const { name, category, rating, price, discountPrice, images, _id: productId } = product;
   const wishlists = useAppSelector(selectWishlist);
   const isWishlistLoading = useAppSelector(selectWishlistLoading);
   const isUserAuthenticated = useAppSelector(selectIsUserAuthenticate);
@@ -71,7 +71,7 @@ export default function Product({ product }: IProps) {
         <div className={`${style.flex_normal} justify-between`}>
           <div className="">
             <span className="text-green-600 font-bold text-base block">
-              {formatPrice(discount_price)}
+              {formatPrice(discountPrice)}
             </span>
             <span className="text-xs text-gray-400 line-through block">{formatPrice(price)}</span>
           </div>
