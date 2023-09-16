@@ -78,7 +78,7 @@ export default function UserOrders() {
     status: string;
   }[] = [];
 
-  userOrders &&
+  if (userOrders) {
     userOrders.forEach((item) => {
       rows.push({
         id: item?._id,
@@ -87,6 +87,7 @@ export default function UserOrders() {
         status: item.orderStatus,
       });
     });
+  }
 
   return (
     <div>

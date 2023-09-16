@@ -10,9 +10,13 @@ export default function OngoingShopEvents() {
       {shopEvents.length > 0 ? (
         <div className="space-y-3">
           {shopEvents.map((event) => (
-            <div>
+            <div key={event._id}>
               <div className="h-32 w-32 rounded">
-                <img className="h-full w-full object-cover" src={`${host}/${event.images[0]}`} />
+                <img
+                  className="h-full w-full object-cover"
+                  src={`${host}/${event.images[0]}`}
+                  alt={event.name}
+                />
               </div>
               <div>
                 <h5>{event.name}</h5>

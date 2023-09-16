@@ -16,7 +16,7 @@ interface IProps {
 }
 
 function ItemCard({ item, toggleWishlist }: IProps) {
-  const { name, price, images, discount_price, discount_percentage, _id } = item;
+  const { name, price, images, discount_price, discount_percentage, _id: productId } = item;
   const [isInCart, setIsInCart] = useState(false);
   const cart = useAppSelector(selectCart);
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ function ItemCard({ item, toggleWishlist }: IProps) {
   }
 
   useEffect(() => {
-    if (cart && item && cart.find((i) => i.product?.id === item?.id)) {
+    if (cart && item && cart.find((i) => i.product?._id === item?._id)) {
       setIsInCart(true);
     } else {
       setIsInCart(false);
@@ -36,10 +36,10 @@ function ItemCard({ item, toggleWishlist }: IProps) {
 
   return (
     <div className={`${style.flex_normal} w-full border-b p-4 justify-between gap-4`}>
-      <button type="button" onClick={() => dispatch(removeToWishlistAsync(_id))}>
+      <button type="button" onClick={() => dispatch(removeToWishlistAsync(productId))}>
         <RxCross1 className="cursor-pointer" size={10} />
       </button>
-      <Link to={`/products/${_id}`}>
+      <Link to={`/products/${productId}`}>
         <img
           src={getImageSource(images[0].url)}
           className="w-12 rounded-md h-12"
@@ -48,7 +48,7 @@ function ItemCard({ item, toggleWishlist }: IProps) {
         />
       </Link>
       <div className="flex-grow">
-        <Link to={`/products/${_id}`}>
+        <Link to={`/products/${productId}`}>
           <h4 className="text-xs font-medium text-[#333333] hover:text-blue-400 transition-all">
             {name}
           </h4>
@@ -60,9 +60,7 @@ function ItemCard({ item, toggleWishlist }: IProps) {
         </div>
       </div>
       {!isInCart ? (
-        <button
-          type="button"
-          onClick={() => dispatch(addToCartAsync({ productId: _id, quantity: 1 }))}>
+        <button type="button" onClick={() => dispatch(addToCartAsync({ productId, quantity: 1 }))}>
           <BsCartPlus size={20} className="cursor-pointer" color="#ff7d1a" title="Add to Cart" />
         </button>
       ) : (

@@ -1,8 +1,8 @@
-import style from '../../styles/style';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import style from '../../styles/style';
 import logo from '../../assets/shopwise.png';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loginShopAsync, selectShopLoading } from '../../redux/features/Shop/shopSlice';
@@ -14,7 +14,6 @@ export default function ShopLogin() {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
 
@@ -33,8 +32,7 @@ export default function ShopLogin() {
               password: data.password,
             };
             dispatch(loginShopAsync(loginData));
-          })}
-        >
+          })}>
           <div>
             <label htmlFor="email" className="sr-only">
               Email
@@ -71,16 +69,16 @@ export default function ShopLogin() {
                   required: 'Password is requried!',
                 })}
               />
-              <div
+              <button
+                type="button"
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                onClick={() => setIsPasswordShown(!isPasswordShown)}
-              >
+                onClick={() => setIsPasswordShown(!isPasswordShown)}>
                 {isPasswordShown ? (
                   <AiOutlineEyeInvisible color="orange" size={20} />
                 ) : (
                   <AiOutlineEye color="orange" size={20} />
                 )}
-              </div>
+              </button>
             </div>
             {errors?.password && (
               <span className="text-red-500 text-sm">{errors?.password.message?.toString()}</span>
@@ -101,8 +99,7 @@ export default function ShopLogin() {
             <div className="text-sm">
               <Link
                 to="/forgotpassword"
-                className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500"
-              >
+                className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 focus:text-orange-500">
                 Forgot your password?
               </Link>
             </div>
@@ -112,16 +109,14 @@ export default function ShopLogin() {
               isShopLoading ? 'opacity-80' : ''
             } `}
             type="submit"
-            disabled={isShopLoading}
-          >
+            disabled={isShopLoading}>
             {isShopLoading ? 'Login...' : 'Login'}
           </button>
           <p className="mt-10 text-center text-sm text-gray-500">
             Not have any account?
             <Link
               to="/create-shop"
-              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 ml-1 focus:text-orange-500 leading-6"
-            >
+              className="font-medium text-[#ff7d1a] transition-all hover:text-orange-500 ml-1 focus:text-orange-500 leading-6">
               Signup
             </Link>
           </p>
@@ -129,8 +124,7 @@ export default function ShopLogin() {
             Send me back to
             <Link
               to="/"
-              className="font-medium text-blue-500 transition-all hover:text-blue-500 ml-1 focus:text-blue-500"
-            >
+              className="font-medium text-blue-500 transition-all hover:text-blue-500 ml-1 focus:text-blue-500">
               Home
             </Link>
           </p>

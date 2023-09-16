@@ -41,7 +41,7 @@ export default function ShopOrders() {
       minWidth: 130,
       flex: 0.7,
       cellClassName: (params: GridCellParams) => {
-        return params.value == 'Delivered' ? 'greenColor' : 'redcolor';
+        return params.value === 'Delivered' ? 'greenColor' : 'redcolor';
       },
     },
     {
@@ -70,13 +70,11 @@ export default function ShopOrders() {
 
       renderCell: (params: GridCellParams) => {
         return (
-          <>
-            <Link to={`/shop-orders/${params.id}`}>
-              <button>
-                <AiOutlineArrowRight size={20} />
-              </button>
-            </Link>
-          </>
+          <Link to={`/shop-orders/${params.id}`}>
+            <button type="button">
+              <AiOutlineArrowRight size={20} />
+            </button>
+          </Link>
         );
       },
     },
@@ -95,19 +93,13 @@ export default function ShopOrders() {
 
   useEffect(() => {
     if (shop) dispatch(getAllOrdersOfShopAsync(shop._id));
-  }, [shop?._id]);
+  }, [shop, dispatch]);
 
-  return (
-    <>
-      {isShopLoading ? (
-        <Loader />
-      ) : (
-        <>
-          <div className="w-[100%] lg:mx-8 pt-1 lg:mt-10 bg-white overflow-x-scroll">
-            <DataGrid rows={row} columns={columns} autoHeight />
-          </div>
-        </>
-      )}
-    </>
+  return isShopLoading ? (
+    <Loader />
+  ) : (
+    <div className="w-[100%] lg:mx-8 pt-1 lg:mt-10 bg-white overflow-x-scroll">
+      <DataGrid rows={row} columns={columns} autoHeight />
+    </div>
   );
 }

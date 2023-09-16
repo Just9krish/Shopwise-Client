@@ -1,7 +1,8 @@
 import { AiOutlineCamera } from 'react-icons/ai';
 import { ChangeEvent, useState, useEffect } from 'react';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import style from '../../../styles/style';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { API_URL } from '../../../constant';
@@ -11,12 +12,11 @@ import {
   updateUserInfoAsync,
 } from '../../../redux/features/User/userSlice';
 import getImageSource from '../../../helper/getImageSource';
-import { toast } from 'react-toastify';
 
 export default function UserProfile() {
   const user = useAppSelector(selectUser);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [profilePic, setProfilePic] = useState<null | File>(null);
+  const [, setProfilePic] = useState<null | File>(null);
   const dispatch = useAppDispatch();
   const {
     register,
@@ -47,11 +47,11 @@ export default function UserProfile() {
         });
 
         dispatch(fetchUserDetailsAsync());
-      } catch (e: AxiosError | any) {
-        if (e.response) {
-          toast.error(e.response.data.message);
+      } catch (error: any) {
+        if (error.response) {
+          toast.error(error.response.data.message);
         } else {
-          toast.error(e.message);
+          toast.error(error.message);
         }
       }
     }
@@ -70,10 +70,10 @@ export default function UserProfile() {
       setValue('primaryPhoneNumber', user.primaryPhoneNumber);
       setValue('secondaryPhoneNumber', user.secondaryPhoneNumber);
     }
-  }, [user]);
+  }, [user, setValue]);
 
   return (
-    <>
+    <div>
       {user && (
         <div className={`${style.flex_normal} flex-col w-full space-y-10`}>
           <div className="relative w-fit">
@@ -82,7 +82,9 @@ export default function UserProfile() {
               src={getImageSource(user?.avatar)}
               alt="User Avatar"
             />
-            <button className="w-8 h-8 rounded-full flex justify-center items-center absolute bottom-1 right-1 cursor-pointer bg-gray-200">
+            <button
+              type="button"
+              className="w-8 h-8 rounded-full flex justify-center items-center absolute bottom-1 right-1 cursor-pointer bg-gray-200">
               <label htmlFor="avatar">
                 <AiOutlineCamera cursor="pointer" />
               </label>
@@ -104,8 +106,8 @@ export default function UserProfile() {
                 const updateData = {
                   password: data.password,
                   name: data.name,
-                  primaryPhoneNumber: parseInt(data.primaryPhoneNumber),
-                  secondaryPhoneNumber: parseInt(data.secondaryPhoneNumber),
+                  primaryPhoneNumber: parseInt(data.primaryPhoneNumber, 10),
+                  secondaryPhoneNumber: parseInt(data.secondaryPhoneNumber, 10),
                   email: data.email,
                 };
 
@@ -140,6 +142,7 @@ export default function UserProfile() {
                     {...register('email', {
                       required: 'Email is required!',
                       pattern: {
+                        // eslint-disable-next-line no-useless-escape
                         value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
                         message: 'Email not valid!',
                       },
@@ -260,6 +263,6 @@ export default function UserProfile() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }

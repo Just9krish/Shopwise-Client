@@ -1,11 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
 import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { PRODUCT_PER_PAGE } from '../../constant';
 
 type PaginationProps = {
   page: number;
   totalProducts: number;
-  setPage: Dispatch<SetStateAction<number>>;
   handlePage: (page: number) => void;
 };
 
@@ -23,7 +21,7 @@ export default function Pagination({ page, handlePage, totalProducts }: Paginati
         </button>
         <button
           type="button"
-          onClick={(e) => handlePage(page < totalPage ? page + 1 : page)}
+          onClick={() => handlePage(page < totalPage ? page + 1 : page)}
           className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50">
           Next
         </button>
@@ -44,7 +42,7 @@ export default function Pagination({ page, handlePage, totalProducts }: Paginati
             aria-label="Pagination">
             <button
               type="button"
-              onClick={(e) => handlePage(page > 1 ? page - 1 : page)}
+              onClick={() => handlePage(page > 1 ? page - 1 : page)}
               className="cursor-pointer relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0">
               <span className="sr-only">Previous</span>
               <BsChevronLeft className="h-5 w-5" aria-hidden="true" />
@@ -55,6 +53,7 @@ export default function Pagination({ page, handlePage, totalProducts }: Paginati
             }).map((_, idx) => (
               <button
                 type="button"
+                // eslint-disable-next-line react/no-array-index-key
                 key={idx}
                 onClick={() => handlePage(idx + 1)}
                 onKeyDown={() => handlePage(idx + 1)}

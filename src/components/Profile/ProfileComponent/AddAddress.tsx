@@ -6,12 +6,12 @@ import style from '../../../styles/style';
 import { useAppDispatch } from '../../../hooks';
 import { updateUserAddressAsync } from '../../../redux/features/User/userSlice';
 
-type Props = {
+interface Props {
   handleModalOpen: () => void;
-};
+}
 
 export default function AddAddress({ handleModalOpen }: Props) {
-  const addressType = [
+  const ADDRESSTYPE = [
     {
       name: 'Home',
       icon: <HiOutlineHome className="mr-1" />,
@@ -44,7 +44,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
       <div className="w-full max-w-[600px] overflow-y-scroll bg-white shadow px-8 py-12 rounded">
         <div className="flex justify-between">
           <h2 className="text-2xl font-Poppins">Add New Address</h2>
-          <button onClick={handleModalOpen}>
+          <button type="button" onClick={handleModalOpen}>
             <RxCross1 size={30} />
           </button>
         </div>
@@ -58,7 +58,7 @@ export default function AddAddress({ handleModalOpen }: Props) {
                 address1: data.address1,
                 address2: data.address2,
                 address3: data.address3,
-                zipcode: parseInt(data.zipcode),
+                zipcode: parseInt(data.zipcode, 10),
                 addressType: data.addressType,
               };
 
@@ -145,9 +145,9 @@ export default function AddAddress({ handleModalOpen }: Props) {
               </div>
 
               <div className="w-2/5">
-                <label className="block pb-1">Select Address Type:</label>
+                <p className="block pb-1">Select Address Type:</p>
                 <div className={`${style.flex_normal} gap-2`}>
-                  {addressType?.map((addressType) => (
+                  {ADDRESSTYPE?.map((addressType) => (
                     <button
                       type="button"
                       key={addressType.name}

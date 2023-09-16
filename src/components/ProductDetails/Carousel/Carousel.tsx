@@ -10,19 +10,32 @@ export type ImageProps = {
 };
 
 export default function Carousel({ images }: { images: ImageProps[] }) {
-  const [selectImg, setSelectImg] = useState(images[0].id);
+  const [selectedImage, setSelectedImage] = useState(images[0]);
+
+  const handleThumbnailClick = (image: ImageProps) => {
+    setSelectedImage(image);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>, image: ImageProps) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      setSelectedImage(image);
+    }
+  };
 
   return (
-    <div className="hidden lg:flex lg:justify-between lg:items-center lg:gap-10 ">
+    <div className="lg:flex lg:justify-between lg:items-center lg:gap-10">
       <div className="lg:w-1/4 space-y-5">
-        {images?.map((image) => (
+        {images.map((image) => (
           <div
             key={image.id}
-            className="hover:opacity-40 cursor-pointer w-28 duration-500 border-[2.5px] hover:border-[2.5px] hover:border-orange-500 hover:bg-orange-500 rounded-lg">
+            className="hover:opacity-40 cursor-pointer w-28 duration-500 border-[2.5px] hover:border-[2.5px] hover:border-orange-500 hover:bg-orange-500 rounded-lg"
+            onClick={() => handleThumbnailClick(image)}
+            onKeyDown={(e) => handleKeyDown(e, image)}
+            role="button"
+            tabIndex={0}>
             <img
               src={getImageSource(image.url)}
               className="rounded-lg"
-              onClick={() => setSelectImg(image.id)}
               alt={image.name}
               loading="lazy"
             />
@@ -30,15 +43,12 @@ export default function Carousel({ images }: { images: ImageProps[] }) {
         ))}
       </div>
       <div className="lg:w-3/4 md:w-full">
-        {images?.map((image) => (
-          <img
-            src={getImageSource(image.url)}
-            key={image.id}
-            className={`${image.id === selectImg ? 'block' : 'hidden'} rounded-lg border`}
-            alt={image.name}
-            loading="lazy"
-          />
-        ))}
+        <img
+          src={getImageSource(selectedImage.url)}
+          className="rounded-lg border"
+          alt={selectedImage.name}
+          loading="lazy"
+        />
       </div>
     </div>
   );

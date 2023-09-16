@@ -13,7 +13,7 @@ import {
   selectShopProducts,
 } from '../../../redux/features/Products/productSlice';
 
-type row = {
+interface Row {
   id: string;
   name: string;
   price: string;
@@ -21,7 +21,7 @@ type row = {
   sold: number;
   discountpercentage: number;
   discountprice: string;
-};
+}
 
 export default function ShopAllProducts() {
   const dispatch = useAppDispatch();
@@ -35,7 +35,7 @@ export default function ShopAllProducts() {
 
   useEffect(() => {
     if (shop) dispatch(getShopProductsAsync(shop._id));
-  }, [dispatch, shop?._id]);
+  }, [dispatch, shop]);
 
   const columns = [
     {
@@ -99,15 +99,15 @@ export default function ShopAllProducts() {
       maxWidth: 100,
       renderCell: (params: GridCellParams) => {
         const d = params.row.name;
-        const product_name = d.replace(/\s+/g, '-');
+        const productName = d.replace(/\s+/g, '-');
         return (
-          <>
-            <Link to={`/products/${product_name}`}>
-              <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
-                <AiOutlineEye size={20} />
-              </button>
-            </Link>
-          </>
+          <Link to={`/products/${productName}`}>
+            <button
+              type="button"
+              className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
+              <AiOutlineEye size={20} />
+            </button>
+          </Link>
         );
       },
     },
@@ -121,20 +121,18 @@ export default function ShopAllProducts() {
       maxWidth: 100,
       renderCell: (params: GridCellParams) => {
         return (
-          <>
-            <button
-              onClick={() => deleteProductHandler(params.id.toString(), shop?._id!)}
-              className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all"
-            >
-              <AiOutlineDelete size={20} />
-            </button>
-          </>
+          <button
+            type="button"
+            onClick={() => deleteProductHandler(params.id.toString(), shop._id!)}
+            className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
+            <AiOutlineDelete size={20} />
+          </button>
         );
       },
     },
   ];
 
-  const row: row[] = [];
+  const row: Row[] = [];
 
   shopProducts?.forEach((item) => {
     row.push({
@@ -148,15 +146,11 @@ export default function ShopAllProducts() {
     });
   });
 
-  return (
-    <>
-      {isProductLoading ? (
-        <Loader />
-      ) : (
-        <div className="w-full lg:mx-8 pt-1 lg:mt-10 bg-white overflow-x-scroll">
-          <DataGrid rows={row} columns={columns} autoHeight disableRowSelectionOnClick />
-        </div>
-      )}
-    </>
+  return isProductLoading ? (
+    <Loader />
+  ) : (
+    <div className="w-full lg:mx-8 pt-1 lg:mt-10 bg-white overflow-x-scroll">
+      <DataGrid rows={row} columns={columns} autoHeight disableRowSelectionOnClick />
+    </div>
   );
 }

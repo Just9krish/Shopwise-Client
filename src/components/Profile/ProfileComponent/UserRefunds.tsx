@@ -55,7 +55,9 @@ export default function UserRefunds() {
       renderCell: (params: any) => {
         return (
           <Link to={`/order/${params.id}`}>
-            <button className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
+            <button
+              type="button"
+              className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
               <AiOutlineArrowRight size={20} />
             </button>
           </Link>
@@ -71,7 +73,7 @@ export default function UserRefunds() {
     status: string;
   }[] = [];
 
-  orders &&
+  if (orders) {
     orders.forEach((item) => {
       rows.push({
         id: item._id,
@@ -80,6 +82,7 @@ export default function UserRefunds() {
         status: item.orderStatus,
       });
     });
+  }
 
   return (
     <div>

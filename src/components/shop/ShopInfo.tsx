@@ -1,10 +1,9 @@
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
 import { MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import formateDate from '../../helper/formatDate';
 import { useAppSelector } from '../../hooks';
-import { host } from '../../server';
 import style from '../../styles/style';
 import { API_URL } from '../../constant';
 import { selectShop } from '../../redux/features/Shop/shopSlice';
@@ -28,13 +27,12 @@ export default function ShopInfo({ isOwner }: IProps) {
         withCredentials: true,
       });
 
-      if (res.status == 201) {
+      if (res.status === 201) {
         toast.success(res.data.message);
         navigate('/login-shop');
         window.location.reload();
       }
-    } catch (error: AxiosError | any) {
-      console.error(error);
+    } catch (error: any) {
       if (error.response) {
         toast.error(error.response.data.message);
       } else {
@@ -50,7 +48,7 @@ export default function ShopInfo({ isOwner }: IProps) {
           className="object-cover h-36 w-36 rounded-full"
           src={getImageSource(avatar)}
           loading="lazy"
-          alt="shop profile picture"
+          alt="shop profile"
         />
         <h4 className="text-xl">{name}</h4>
         <p className="text-[#000000a6] text-sm">
@@ -82,8 +80,10 @@ export default function ShopInfo({ isOwner }: IProps) {
 
         {isOwner && (
           <div className="flex gap-4 pt-5">
-            <button className={`${style.button} text-white`}>Edit Shop</button>
-            <button onClick={logoutHandler} className={`${style.button} text-white`}>
+            <button type="button" className={`${style.button} text-white`}>
+              Edit Shop
+            </button>
+            <button type="button" onClick={logoutHandler} className={`${style.button} text-white`}>
               Logout
             </button>
           </div>

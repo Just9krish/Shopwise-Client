@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { GrFormPrevious, GrFormNext } from 'react-icons/gr';
-import { host } from '../../../server';
 import { ImageProps } from '../Carousel/Carousel';
 import getImageSource from '../../../helper/getImageSource';
 
@@ -25,8 +24,7 @@ export default function Slider({ images }: { images: ImageProps[] }) {
         style={{
           width: `${images.length * 100}vw`,
           transform: `translateX(${-100 * slide}vw)`,
-        }}
-      >
+        }}>
         {images?.map((image) => (
           <div key={image.id} className="w-[100vw]">
             <img
@@ -39,18 +37,18 @@ export default function Slider({ images }: { images: ImageProps[] }) {
         ))}
       </div>
       <div className="absolute top-1/2 -translate-y-1/2 flex justify-between w-full px-2">
-        <div
+        <button
+          type="button"
           onClick={() => changeSlide('l')}
-          className="bg-white h-8 w-8 rounded-full flex justify-center items-center"
-        >
+          className="bg-white h-8 w-8 rounded-full flex justify-center items-center">
           <GrFormPrevious />
-        </div>
-        <div
+        </button>
+        <button
+          type="button"
           onClick={() => changeSlide('r')}
-          className="bg-white h-8 w-8 rounded-full flex justify-center items-center"
-        >
+          className="bg-white h-8 w-8 rounded-full flex justify-center items-center">
           <GrFormNext />
-        </div>
+        </button>
       </div>
     </div>
   );

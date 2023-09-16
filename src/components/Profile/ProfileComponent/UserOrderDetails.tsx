@@ -10,6 +10,7 @@ import {
 import { formattedPrice } from '../../../helper/formatPrice';
 import formateDate from '../../../helper/formatDate';
 import getImageSource from '../../../helper/getImageSource';
+import styles from '../../../styles/style';
 
 export default function UserOrderDetails() {
   const [open, setOpen] = useState(false);
@@ -17,7 +18,6 @@ export default function UserOrderDetails() {
   const dispatch = useAppDispatch();
 
   const order = useAppSelector(selectSelectedOrder);
-
 
   useEffect(() => {
     if (orderId) {

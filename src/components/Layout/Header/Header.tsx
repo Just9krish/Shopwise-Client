@@ -1,17 +1,18 @@
 import loadable from '@loadable/component';
-import logo from '../../../assets/shopwise.png';
-import style from '../../../styles/style';
 import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { CgMenuLeft } from 'react-icons/cg';
 import { IoIosArrowForward } from 'react-icons/io';
 import { RiCloseLine } from 'react-icons/ri';
+import style from '../../../styles/style';
+import logo from '../../../assets/shopwise.png';
 import { IProduct } from '../../../Interface';
 import { useAppSelector, useAppDispatch } from '../../../hooks';
 import { selectProducts } from '../../../redux/features/Products/productSlice';
 import { selectCart, toggleCart } from '../../../redux/features/Cart/cartSlice';
 import getImageSource from '../../../helper/getImageSource';
+
 const Dropdown = loadable(() => import('./Dropdown/Dropdown'));
 const Navbar = loadable(() => import('./Navbar/Navbar'));
 const UserNavigation = loadable(() => import('./UserNavigation/UserNavigation'));
@@ -99,14 +100,13 @@ export default function Header() {
                   <div className="absolute bg-slate-50 w-full shadow-modal-1 z-[999] max-h-[60vh] overflow-scroll mt-4 rounded-md py-2">
                     {searchedProduct?.map((product) => (
                       <Link to={`/products/${product._id}`} key={product._id}>
-                        <div
-                          className={`w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
-                        >
+                        <div className="w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white">
                           <div className={`px-6 py-2 ${style.flex_normal}`}>
                             <img
                               className="w-11 h-10 mr-8"
                               loading="lazy"
                               src={getImageSource(product.images[0].url)}
+                              alt={product.name}
                             />
                             <h1>{product.name}</h1>
                           </div>
@@ -120,7 +120,7 @@ export default function Header() {
           </div>
           <div>
             <Link to="/create-shop">
-              <button className={`${style.button} text-white`}>
+              <button type="button" className={`${style.button} text-white`}>
                 Become Seller <IoIosArrowForward className="ml-1" />
               </button>
             </Link>
@@ -145,9 +145,9 @@ export default function Header() {
       <header className="w-full fixed top-0 z-50 bg-white shadow left-0 lg:hidden">
         <div className={`${style.section} py-5`}>
           <div className={`${style.flex_normal} justify-between`}>
-            <div className="cursor-pointer" onClick={toggleMobileNav}>
+            <button type="button" className="cursor-pointer" onClick={toggleMobileNav}>
               <CgMenuLeft size={30} title="Menu" />
-            </div>
+            </button>
             <div>
               <Link className={`${style.flex_normal}`} to="/">
                 <img src={logo} alt="Company logo" className="h-8 w-12" />
@@ -169,12 +169,11 @@ export default function Header() {
         <div
           className={`fixed top-0 min-h-screen left-0 shadow-md transition-all duration-300 w-3/4 bg-white z-20 ${
             isMobileOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}
-        >
-          <div
+          }`}>
+          <button
+            type="button"
             className="border-b py-5 px-4  justify-between flex items-center"
-            onClick={toggleMobileNav}
-          >
+            onClick={toggleMobileNav}>
             <RiCloseLine size={30} title="Close Menu" />
             <h4 className="flex-1 text-center">Menu</h4>
             <div className="relative cursor-pointer ">
@@ -187,7 +186,7 @@ export default function Header() {
                 0
               </span>
             </div>
-          </div>
+          </button>
           <div className="py-5 px-4 space-y-12">
             <div className="relative">
               <input
@@ -205,18 +204,20 @@ export default function Header() {
               />
               {searchedProduct.length !== 0 ? (
                 <div className="absolute bg-slate-50 shadow-md z-50 max-h-[73vh] overflow-scroll mt-4 rounded-md py-2">
-                  {searchedProduct?.map((product, idx) => {
+                  {searchedProduct?.map((product) => {
                     const productSlug = product.name.replace(/\s+/g, '-');
                     return (
-                      <Link to={`/products/${productSlug}`} onClick={toggleMobileNav} key={idx}>
-                        <div
-                          className={`w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
-                        >
+                      <Link
+                        to={`/products/${productSlug}`}
+                        onClick={toggleMobileNav}
+                        key={product._id}>
+                        <div className="w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white">
                           <div className={`px-3 py-2 ${style.flex_normal}`}>
                             <img
                               className="w-11 h-10 mr-8"
                               loading="lazy"
                               src={getImageSource(product.images[0].url)}
+                              alt={product.name}
                             />
                             <h4 className="text-sm">{product.name.slice(0, 30)}...</h4>
                           </div>
@@ -228,11 +229,11 @@ export default function Header() {
               ) : null}
             </div>
             <div className="pl-4">
-              <Navbar mobile={true} toggleMobileNav={toggleMobileNav} />
+              <Navbar mobile toggleMobileNav={toggleMobileNav} />
             </div>
             <div>
               <Link to="/create-shop">
-                <button className={`${style.button} text-white`}>
+                <button type="button" className={`${style.button} text-white`}>
                   Become Seller <IoIosArrowForward className="ml-1" />
                 </button>
               </Link>
@@ -251,8 +252,7 @@ export default function Header() {
               <Link
                 to="/profile"
                 onClick={toggleMobileNav}
-                className="flex items-center gap-3 p-2 border text-gray-700 hover:text-gray-900  focus:text-gray-900 border-gray-300 transition-all rounded hover:border-gray-500 focus:border-gray-500"
-              >
+                className="flex items-center gap-3 p-2 border text-gray-700 hover:text-gray-900  focus:text-gray-900 border-gray-300 transition-all rounded hover:border-gray-500 focus:border-gray-500">
                 <img
                   className="h-8 w-8 rounded-full"
                   src={getImageSource(userState?.user?.avatar! || '')}

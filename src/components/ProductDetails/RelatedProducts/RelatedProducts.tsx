@@ -19,20 +19,19 @@ export default function RelatedProducts({ product }: IProps) {
   const [relatedProducts, setRelatedProducts] = useState<IProduct[]>([]);
 
   useEffect(() => {
-    const filteredProducts = allProducts?.filter((product) => product.category === category);
-
+    const filteredProducts = allProducts?.filter((pro) => pro.category === category);
     setRelatedProducts(filteredProducts);
-  }, [category]);
-  return (
-    <>
-      {relatedProducts.length !== 0 ? (
-        <div className="p-4">
-          <h1 className={`${style.heading} border-b`}>Related Products</h1>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 mt-8">
-            {relatedProducts?.map((product, idx) => <Product product={product} key={idx} />)}
-          </div>
+  }, [category, allProducts]);
+
+  if (relatedProducts.length !== 0) {
+    return (
+      <div className="p-4">
+        <h1 className={`${style.heading} border-b`}>Related Products</h1>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 mt-8">
+          {relatedProducts?.map((pro) => <Product product={pro} key={pro._id} />)}
         </div>
-      ) : null}
-    </>
-  );
+      </div>
+    );
+  }
+  return null;
 }

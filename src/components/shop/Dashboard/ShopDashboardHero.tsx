@@ -16,12 +16,12 @@ import {
   selectShopOrders,
 } from '../../../redux/features/Orders/orderSlice';
 
-type row = {
+interface Row {
   id: string;
   total: string;
   quantity: number;
   status: string;
-};
+}
 
 export default function ShopDashboardHero() {
   const shopOrders = useAppSelector(selectShopOrders);
@@ -66,19 +66,17 @@ export default function ShopDashboardHero() {
       sortable: false,
       renderCell: (params: GridCellParams) => {
         return (
-          <>
-            <Link to={`/dashboard/order/${params.id}`}>
-              <AiOutlineArrowRight size={20} />
-            </Link>
-          </>
+          <Link to={`/dashboard/order/${params.id}`}>
+            <AiOutlineArrowRight size={20} />
+          </Link>
         );
       },
     },
   ];
 
-  const row: row[] = [];
+  const row: Row[] = [];
 
-  shopOrders &&
+  if (shopOrders) {
     shopOrders.forEach((order) => {
       row.push({
         id: order._id,
@@ -87,13 +85,14 @@ export default function ShopDashboardHero() {
         status: order.orderStatus,
       });
     });
+  }
 
   useEffect(() => {
     if (shop) {
       dispatch(getAllOrdersOfShopAsync(shop._id));
       dispatch(getShopProductsAsync(shop._id));
     }
-  }, [dispatch]);
+  }, [dispatch, shop]);
 
   return (
     <div className="p-8 w-full space-y-12">

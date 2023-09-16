@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import style from '../../../styles/style';
-import logo from '../../../assets/shopwise.png';
 import { AiOutlineGift } from 'react-icons/ai';
 import { BsCalendarEvent } from 'react-icons/bs';
 import { HiMenuAlt3 } from 'react-icons/hi';
 import { FiPackage, FiShoppingBag } from 'react-icons/fi';
-import { host } from '../../../server';
+import logo from '../../../assets/shopwise.png';
+import style from '../../../styles/style';
 import { useAppSelector } from '../../../hooks';
 import { selectShop } from '../../../redux/features/Shop/shopSlice';
 import getImageSource from '../../../helper/getImageSource';
@@ -34,10 +33,10 @@ export default function ShopHeader() {
           <Link to="/shop-orders">
             <FiPackage title="All Orders" size={30} color="#555" />
           </Link>
-          <Link to={`/shop/${shop?._id}`}>
+          <Link to={`/shop/${shop._id}`}>
             <img
-              src={getImageSource(shop?.avatar!)}
-              alt="Shop Profile Picture"
+              src={getImageSource(shop.avatar!)}
+              alt="Shop Profile"
               className="h-11 w-11 rounded-full object-cover"
             />
           </Link>

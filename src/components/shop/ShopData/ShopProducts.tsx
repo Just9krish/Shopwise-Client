@@ -6,6 +6,7 @@ import {
   getShopProductsAsync,
   selectShopProducts,
 } from '../../../redux/features/Products/productSlice';
+
 const Product = loadable(() => import('../../Product/Product'));
 
 export default function ShopProducts() {
@@ -15,11 +16,11 @@ export default function ShopProducts() {
 
   useEffect(() => {
     if (shop) dispatch(getShopProductsAsync(shop._id));
-  }, [shop?._id, dispatch]);
+  }, [shop, dispatch]);
 
   return shopProducts.length > 0 ? (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-y-10 md:gap-x-4 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-4 xl:gap-y-10">
-      {shopProducts?.map((product, idx) => <Product product={product} key={idx} />)}
+      {shopProducts?.map((product) => <Product product={product} key={product._id} />)}
     </div>
   ) : (
     <div className="h-full w-full">

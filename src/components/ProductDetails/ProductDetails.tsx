@@ -47,7 +47,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
     } else {
       setIsWish(false);
     }
-  }, [wishlists]);
+  }, [wishlists, product]);
 
   return (
     <div className="w-full py-5 mt-8">

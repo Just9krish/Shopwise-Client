@@ -1,12 +1,10 @@
-import loadable from '@loadable/component';
 import { useEffect, useState } from 'react';
 import { BsBagFill } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
+import { Country, State } from 'country-state-city';
 import { formattedPrice } from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { IShopOrder } from '../../../Interface';
-import { host } from '../../../server';
-import { Country, State } from 'country-state-city';
 
 import { selectShop } from '../../../redux/features/Shop/shopSlice';
 import {
@@ -15,7 +13,6 @@ import {
   updateOrderStatusAsync,
 } from '../../../redux/features/Orders/orderSlice';
 import getImageSource from '../../../helper/getImageSource';
-const Loader = loadable(() => import('../../Loader/Loader'));
 
 export default function OrderDetails() {
   const dispatch = useAppDispatch();
@@ -25,17 +22,25 @@ export default function OrderDetails() {
   const [selectedOrder, setSelectedOrder] = useState<IShopOrder | null>(null);
   const [orderStatus, setOrderStatus] = useState('');
 
-  const orderStatusList = ['Shipped', 'Delivered', 'Cancelled', 'Processing'];
-  const refundStatusList = ['Processing refund', 'Refund Success'];
+  const orderStatusList = [
+    { id: 1, label: 'Shipped' },
+    { id: 2, label: 'Delivered' },
+    { id: 3, label: 'Cancelled' },
+    { id: 4, label: 'Processing' },
+  ];
+  const refundStatusList = [
+    { label: 'Processing refund', id: 1 },
+    { label: 'Refund Success', id: 2 },
+  ];
 
   const getCountryName = (isoCode: string) => {
-    const country = Country.getAllCountries().find((country) => country.isoCode === isoCode);
+    const country = Country.getAllCountries().find((i) => i.isoCode === isoCode);
     return country ? country.name : '';
   };
 
   const getStateName = (isoCode: string, countryIsoCode: string) => {
     const country = State.getStatesOfCountry(countryIsoCode).find(
-      (country) => country.isoCode === isoCode
+      (item) => item.isoCode === isoCode
     );
     return country ? country.name : '';
   };
@@ -44,13 +49,13 @@ export default function OrderDetails() {
     if (shop) {
       dispatch(getAllOrdersOfShopAsync(shop._id));
     }
-  }, [dispatch, shop?._id]);
+  }, [dispatch, shop]);
 
   useEffect(() => {
-    const order = shopOrders.find((order) => order._id === orderId);
-    setSelectedOrder(order || null);
+    const matchedOrder = shopOrders.find((order) => order._id === orderId);
+    setSelectedOrder(matchedOrder || null);
 
-    setOrderStatus(order?.orderStatus || '');
+    setOrderStatus(matchedOrder?.orderStatus || '');
   }, [orderId, shopOrders]);
 
   return (
@@ -61,7 +66,9 @@ export default function OrderDetails() {
           <h1 className="text-2xl font-bold">Order Details</h1>
         </div>
         <Link to="/shop-orders">
-          <button className="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded">
+          <button
+            type="button"
+            className="bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded">
             Order List
           </button>
         </Link>
@@ -84,11 +91,11 @@ export default function OrderDetails() {
 
           <article className="md:w-2/5">
             {selectedOrder?.cart.map((item) => {
-              const { _id, product, quantity } = item;
-              const { name, price, images, category, discount_price } = product;
+              const { _id: id, product, quantity } = item;
+              const { name, images, category, discount_price } = product;
 
               return (
-                <div key={_id} className="flex items-center gap-4 py-4 border-b border-gray-300">
+                <div key={id} className="flex items-center gap-4 py-4 border-b border-gray-300">
                   <Link to={`/products/${product._id}`}>
                     <img
                       src={getImageSource(images[0].url)}
@@ -175,19 +182,20 @@ export default function OrderDetails() {
 
               <div className="flex items-center gap-2">
                 <span className="text-[#201f13] font-extralight">Payment Mode:</span>
-                <span
-                  className={`${
-                    selectedOrder?.paymentInfo?.status === 'succeeded'
-                      ? 'text-[#19e50b]'
-                      : selectedOrder?.paymentInfo?.status === 'canceled'
-                      ? 'text-[#f75e68]'
-                      : 'text-orange-500'
-                  } font-Poppins font-semibold`}
-                >
-                  {selectedOrder?.paymentInfo?.paymentMethod === 'COD'
-                    ? 'Cash on Delivery'
-                    : 'Online Payment'}
-                </span>
+                {selectedOrder?.paymentInfo && (
+                  <span
+                    className={`font-Poppins font-semibold ${
+                      selectedOrder.paymentInfo.status === 'succeeded'
+                        ? 'text-[#19e50b]'
+                        : selectedOrder.paymentInfo.status === 'canceled'
+                        ? 'text-[#f75e68]'
+                        : 'text-orange-500'
+                    }`}>
+                    {selectedOrder.paymentInfo.paymentMethod === 'COD'
+                      ? 'Cash on Delivery'
+                      : 'Online Payment'}
+                  </span>
+                )}
               </div>
             </div>
           </article>
@@ -199,19 +207,18 @@ export default function OrderDetails() {
             <select
               value={orderStatus}
               onChange={(e) => setOrderStatus(e.target.value)}
-              className="w-56 mt-2 border rounded py-1.5 px-3"
-            >
-              {orderStatusList.map((status, index) => (
-                <option key={index} value={status}>
-                  {status}
+              className="w-56 mt-2 border rounded py-1.5 px-3">
+              {orderStatusList.map((status) => (
+                <option key={status.id} value={status.label}>
+                  {status.label}
                 </option>
               ))}
             </select>
 
             <select className="w-56 mt-2 border rounded py-1.5 px-3" name="" id="refund">
-              {refundStatusList.map((status, index) => (
-                <option key={index} value={status}>
-                  {status}
+              {refundStatusList.map((status) => (
+                <option key={status.id} value={status.label}>
+                  {status.label}
                 </option>
               ))}
             </select>
@@ -221,6 +228,7 @@ export default function OrderDetails() {
           </div>
 
           <button
+            type="button"
             onClick={() => {
               if (selectedOrder && shop)
                 dispatch(
@@ -231,8 +239,7 @@ export default function OrderDetails() {
                   })
                 );
             }}
-            className="bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-4 rounded mt-4"
-          >
+            className="bg-orange-500 hover:bg-orange-600 text-white py-1.5 px-4 rounded mt-4">
             Update Status
           </button>
         </div>

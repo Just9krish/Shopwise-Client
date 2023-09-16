@@ -1,12 +1,12 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import generateProductName from '../../../helper/generateRandomProductName';
-import categoriesData from '../../../constant/categories.json';
-import calculateDiscountPrice from '../../../helper/calculateDiscountPrice';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { RxCross2 } from 'react-icons/rx';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import calculateDiscountPrice from '../../../helper/calculateDiscountPrice';
+import categoriesData from '../../../constant/categories.json';
+import generateProductName from '../../../helper/generateRandomProductName';
 import { API_URL } from '../../../constant';
 
 export default function AddProduct() {
@@ -24,7 +24,7 @@ export default function AddProduct() {
 
   function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
-    const files = e.target.files;
+    const { files } = e.target;
 
     if (files) {
       const filesArray = Array.from(files);
@@ -58,12 +58,11 @@ export default function AddProduct() {
 
       const res = await axios.post(API_URL.ADD_PRODUCT, form, config);
 
-      if (res.status == 201) {
+      if (res.status === 201) {
         toast.success('Product Added Successfully');
         navigate('/shop-products');
       }
     } catch (error: any) {
-      console.log(error);
       if (error.response) {
         toast.error(error.response.data.message);
       } else {
@@ -121,13 +120,12 @@ export default function AddProduct() {
             name="productCategory"
             id="productcategory"
             required
-            onChange={(e) => setProductCategory(e.target.value)}
-          >
+            onChange={(e) => setProductCategory(e.target.value)}>
             <option disabled selected>
               Choose a Category
             </option>
-            {categoriesData?.map((category, idx) => (
-              <option value={category.value} key={idx}>
+            {categoriesData?.map((category) => (
+              <option value={category.value} key={category.id}>
                 {category.title}
               </option>
             ))}
@@ -160,7 +158,7 @@ export default function AddProduct() {
             name="productPrice"
             min={0}
             required
-            onChange={(e) => setProductPrice(parseInt(e.target.value))}
+            onChange={(e) => setProductPrice(parseInt(e.target.value, 10))}
             value={productPrice}
             placeholder="Enter your product price"
           />
@@ -178,7 +176,7 @@ export default function AddProduct() {
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="produtdiscountpercentage"
             name="productDiscountPercentage"
-            onChange={(e) => setproductDiscountPercentage(parseInt(e.target.value))}
+            onChange={(e) => setproductDiscountPercentage(parseInt(e.target.value, 10))}
             value={productDiscountPercentage}
             placeholder="Enter your product discount percentage"
           />
@@ -208,13 +206,13 @@ export default function AddProduct() {
             id="produtstock"
             name="productStock"
             required
-            onChange={(e) => setproductStock(parseInt(e.target.value))}
+            onChange={(e) => setproductStock(parseInt(e.target.value, 10))}
             value={productStock}
           />
         </div>
 
         <div>
-          <label className="text-sm md:text-base">
+          <label htmlFor="productdimages" className="text-sm md:text-base">
             Upload Images (max 5 images) <span className="text-red-500">*</span>
           </label>
           <input
@@ -235,22 +233,24 @@ export default function AddProduct() {
               </label>
             )}
             {productImages?.map((img, idx) => (
+              // eslint-disable-next-line react/no-array-index-key
               <div className="inline-block relative" key={idx}>
                 <img
                   src={URL.createObjectURL(img)}
                   loading="lazy"
                   className="h-24 w-24 rounded object-cover m-2"
+                  alt={img.name}
                 />
-                <span
+                <button
+                  type="button"
                   className="absolute cursor-pointer top-0 right-0 rounded-full bg-red-600 text-white h-6 w-6 flex items-center justify-center"
                   onClick={() => {
                     const newImages = [...productImages];
                     newImages.splice(idx, 1);
                     setProductImages(newImages);
-                  }}
-                >
+                  }}>
                   <RxCross2 />
-                </span>
+                </button>
               </div>
             ))}
           </div>

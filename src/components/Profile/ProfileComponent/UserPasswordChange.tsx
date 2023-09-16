@@ -47,7 +47,8 @@ export default function UserPasswordChange() {
                   required: 'Old password is requried!',
                 })}
               />
-              <div
+              <button
+                type="button"
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
                 onClick={() => setIsPasswordShown(!isPasswordShown)}>
                 {isPasswordShown ? (
@@ -55,7 +56,7 @@ export default function UserPasswordChange() {
                 ) : (
                   <AiOutlineEye color="orange" size={20} />
                 )}
-              </div>
+              </button>
             </div>
             {errors?.oldPassword && (
               <span className="text-red-500 text-sm">
@@ -76,7 +77,8 @@ export default function UserPasswordChange() {
                   required: 'New password is requried!',
                 })}
               />
-              <div
+              <button
+                type="button"
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
                 onClick={() => setIsNewPasswordShown(!isNewPasswordShown)}>
                 {isNewPasswordShown ? (
@@ -84,7 +86,7 @@ export default function UserPasswordChange() {
                 ) : (
                   <AiOutlineEye color="orange" size={20} />
                 )}
-              </div>
+              </button>
             </div>
             {errors?.newPassword && (
               <span className="text-red-500 text-sm">
@@ -105,7 +107,8 @@ export default function UserPasswordChange() {
                   required: 'Confrim new password is requried!',
                 })}
               />
-              <div
+              <button
+                type="button"
                 className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
                 onClick={() => setIsConfirmNewPasswordShown(!isConfirmNewPasswordShown)}>
                 {isConfirmNewPasswordShown ? (
@@ -113,7 +116,7 @@ export default function UserPasswordChange() {
                 ) : (
                   <AiOutlineEye color="orange" size={20} />
                 )}
-              </div>
+              </button>
             </div>
             {errors?.newPassword && (
               <span className="text-red-500 text-sm">
@@ -123,7 +126,9 @@ export default function UserPasswordChange() {
           </div>
 
           <div>
-            <button className="bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600">
+            <button
+              type="submit"
+              className="bg-[#28a745] text-white rounded py-1.5 px-4 hover:shadow transition-all hover:bg-green-600">
               Save Changes
             </button>
           </div>

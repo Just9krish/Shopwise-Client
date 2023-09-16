@@ -5,8 +5,8 @@ import { RxDashboard } from 'react-icons/rx';
 import { VscNewFile } from 'react-icons/vsc';
 import { CiMoneyBill, CiSettings } from 'react-icons/ci';
 import { Link } from 'react-router-dom';
-import style from '../../../styles/style';
 import { HiOutlineReceiptRefund } from 'react-icons/hi';
+import style from '../../../styles/style';
 
 interface IProps {
   activeTab: number;
@@ -83,18 +83,15 @@ export default function ShopSidebar({ activeTab }: IProps) {
           <Link to={link.link} key={link.id}>
             <div
               key={link.id}
-              className={`${style.flex_normal} gap-3 cursor-pointer transition-all w-fit md:w-full px-5 py-4 lg:px-12 hover:bg-orange-200`}
-            >
+              className={`${style.flex_normal} gap-3 cursor-pointer transition-all w-fit md:w-full px-5 py-4 lg:px-12 hover:bg-orange-200`}>
               <span
-                className={`${activeTab === link.id ? 'text-orange-500' : 'text-[#555]'} text-xl`}
-              >
+                className={`${activeTab === link.id ? 'text-orange-500' : 'text-[#555]'} text-xl`}>
                 {link.icon}
               </span>
               <span
                 className={`${
                   activeTab === link.id ? 'text-orange-500' : 'text-[#555]'
-                } capitalize hidden text-sm lg:text-base md:block`}
-              >
+                } capitalize hidden text-sm lg:text-base md:block`}>
                 {link.linkName}
               </span>
             </div>

@@ -35,7 +35,16 @@ export default function Dropdown() {
   }, [ref]);
 
   return (
-    <div onClick={handleClick} ref={ref}>
+    <div
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'enter') {
+          handleClick();
+        }
+      }}
+      onClick={handleClick}
+      ref={ref}>
       <div className="relative h-[60px] w-[270px] hidden lg:block">
         <BiMenuAltLeft size={30} className="absolute left-2 top-1/2 -translate-y-1/2" />
         <button
@@ -52,11 +61,12 @@ export default function Dropdown() {
         {isDropdownOpen ? (
           <div className="w-full bg-[#fff] absolute rounded-b-md shadow-sm z-30 max-h-[60vh] overflow-scroll">
             {categories &&
-              categories?.map((category, idx) => (
-                <div
+              categories?.map((category) => (
+                <button
+                  type="button"
                   className={`${style.flex_normal} cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
                   onClick={() => handleSubmit(category)}
-                  key={idx}>
+                  key={category.id}>
                   <div className={`${style.flex_normal} py-1.5 px-2.5`}>
                     <img
                       src={category.image_Url}
@@ -66,7 +76,7 @@ export default function Dropdown() {
                     />
                     <p className="m-3 select-none text-sm">{category.title}</p>
                   </div>
-                </div>
+                </button>
               ))}
           </div>
         ) : null}
