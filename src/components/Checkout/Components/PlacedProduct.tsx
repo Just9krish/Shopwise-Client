@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppSelector } from '../../../hooks';
 import { IProduct, IShippingAddress } from '../../../Interface';
 import { selectUser } from '../../../redux/features/User/userSlice';
@@ -53,7 +53,7 @@ export default function PlacedProduct() {
           <div>
             <div className="bg-gray-100 p-4 rounded-lg">
               <h5 className="text-xl font-semibold">
-                Total Price : {formattedPrice(order.totalPrice)}
+                Total Price : {formatPrice(order.totalPrice)}
               </h5>
             </div>
             {order.isPaid ? (
@@ -81,7 +81,7 @@ export default function PlacedProduct() {
                     <p className="text-gray-600 text-sm">Quantity: {orderProduct.quantity}</p>
                     <p className="text-gray-600 text-sm">
                       Price:
-                      {formattedPrice(
+                      {formatPrice(
                         orderProduct.quantity *
                           (orderProduct.product.discount_percentage > 0
                             ? orderProduct.product.discount_price

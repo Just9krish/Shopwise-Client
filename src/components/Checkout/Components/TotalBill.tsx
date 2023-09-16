@@ -1,4 +1,4 @@
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppSelector } from '../../../hooks';
 import style from '../../../styles/style';
 import { selectCart, selectCartPrice } from '../../../redux/features/Cart/cartSlice';
@@ -20,13 +20,13 @@ export default function TotalBill() {
         className={`${style.flex_normal} justify-between  
       `}>
         <p className="text-[#000000a4]">Cart MRP Value:</p>
-        <p className="font-semibold text-lg line-through">{formattedPrice(mrpCartPrice)}</p>
+        <p className="font-semibold text-lg line-through">{formatPrice(mrpCartPrice)}</p>
       </div>
       <div
         className={`${style.flex_normal} justify-between  
       `}>
         <p className="text-[#000000a4]">Cart Discount Value:</p>
-        <p className="font-semibold text-lg">{formattedPrice(cartPrice)}</p>
+        <p className="font-semibold text-lg">{formatPrice(cartPrice)}</p>
       </div>
 
       <div
@@ -38,7 +38,7 @@ export default function TotalBill() {
             !shippingCharged ? "line-through font-extralight" : "font-semibold"
           }`}
         >
-          {formattedPrice(shippingCharge)}
+          {formatPrice(shippingCharge)}
         </p> */}
       </div>
       <div
@@ -58,7 +58,7 @@ export default function TotalBill() {
               : "text-[#000000a4]"
           } text-lg`}
         >
-          {couponDiscount > 0 ? formattedPrice(couponDiscount) : "---"}
+          {couponDiscount > 0 ? formatPrice(couponDiscount) : "---"}
         </p> */}
       </div>
       <div
@@ -76,12 +76,12 @@ export default function TotalBill() {
             totalSaving > 0 ? "text-[#5cb85c]" : "text-red-500"
           }  font-bold text-lg`}
         >
-          {formattedPrice(totalSaving)}
+          {formatPrice(totalSaving)}
         </p> */}
       </div>
 
       <div className="w-full py-2 border-t font-bold">
-        <p className="text-lg text-end">{formattedPrice(cartPrice)}</p>
+        <p className="text-lg text-end">{formatPrice(cartPrice)}</p>
       </div>
 
       <form>

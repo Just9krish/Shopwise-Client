@@ -45,11 +45,13 @@ export default function ResetPassword() {
             noValidate
             onSubmit={handleSubmit((data) => {
               if (resetToken) resetPassword(resetToken, data.password);
-            })}>
+            })}
+          >
             <div>
               <label
                 className="block text-sm font-medium leading-6 text-gray-900"
-                htmlFor="password">
+                htmlFor="password"
+              >
                 New Password
               </label>
               <div className="relative mt-2">
@@ -73,7 +75,8 @@ export default function ResetPassword() {
                 <button
                   type="button"
                   className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                  onClick={() => setIsPasswordShown(!isPasswordShown)}>
+                  onClick={() => setIsPasswordShown(!isPasswordShown)}
+                >
                   {isPasswordShown ? (
                     <AiOutlineEyeInvisible color="orange" size={20} />
                   ) : (
@@ -89,7 +92,8 @@ export default function ResetPassword() {
             <div>
               <label
                 className="block text-sm font-medium leading-6 text-gray-900"
-                htmlFor="password">
+                htmlFor="password"
+              >
                 Confirm New Password
               </label>
               <div className="relative mt-2">
@@ -107,7 +111,8 @@ export default function ResetPassword() {
                 <button
                   type="button"
                   className="absolute cursor-pointer top-1/2 -translate-y-1/2 right-4"
-                  onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}>
+                  onClick={() => setIsConfirmPasswordShown(!isConfirmPasswordShown)}
+                >
                   {isConfirmPasswordShown ? (
                     <AiOutlineEyeInvisible color="orange" size={20} />
                   ) : (
@@ -124,7 +129,8 @@ export default function ResetPassword() {
 
             <button
               className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
-              type="submit">
+              type="submit"
+            >
               Reset my password
             </button>
           </form>
@@ -136,7 +142,8 @@ export default function ResetPassword() {
             <Link
               to="/login"
               className="flex w-full justify-center rounded-md bg-[#ff7d1a] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-600"
-              type="button">
+              type="button"
+            >
               Login
             </Link>
           </div>

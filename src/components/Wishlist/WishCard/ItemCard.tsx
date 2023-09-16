@@ -3,7 +3,7 @@ import { RxCross1 } from 'react-icons/rx';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import style from '../../../styles/style';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { IProduct } from '../../../redux/features/Products/interface';
 import { addToCartAsync, selectCart, toggleCart } from '../../../redux/features/Cart/cartSlice';
@@ -53,10 +53,10 @@ function ItemCard({ item, toggleWishlist }: IProps) {
             {name}
           </h4>
         </Link>
-        <h4 className="text-xs text-[#777777,] line-through">{formattedPrice(price)}</h4>
+        <h4 className="text-xs text-[#777777,] line-through">{formatPrice(price)}</h4>
         <div className="flex gap-3 items-center">
           <p className="text-[#2D3436] font-thin">{discount_percentage}% off</p>
-          <h4 className="text-[#00B894] font-bold">{formattedPrice(discount_price)}</h4>
+          <h4 className="text-[#00B894] font-bold">{formatPrice(discount_price)}</h4>
         </div>
       </div>
       {!isInCart ? (

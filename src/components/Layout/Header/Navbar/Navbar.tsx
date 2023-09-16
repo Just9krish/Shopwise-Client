@@ -19,7 +19,8 @@ export default function Navbar({ mobile, toggleMobileNav }: IProps) {
                 key={nav.title}
                 className={({ isActive }) =>
                   isActive ? 'text-black' : 'text-white hover:text-gray-800 transition-all'
-                }>
+                }
+              >
                 {nav.title}
               </NavLink>
             ))}
@@ -36,7 +37,8 @@ export default function Navbar({ mobile, toggleMobileNav }: IProps) {
                   isActive
                     ? 'text-[#ff7d1a] block'
                     : 'text-black hover:text-gray-800 transition-all block'
-                }>
+                }
+              >
                 {nav.title}
               </NavLink>
             ))}

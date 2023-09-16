@@ -4,7 +4,7 @@ import { BiShoppingBag } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 import style from '../../styles/style';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { formattedPrice } from '../../helper/formatPrice';
+import formatPrice from '../../helper/formatPrice';
 import {
   selectCart,
   selectCartOpen,
@@ -60,7 +60,7 @@ export default function Cart() {
               <button
                 type="button"
                 className="rounded-lg px-10 bg-[#ff7d1a] text-white text-center w-full h-10">
-                Checkout for {formattedPrice(cartPrice)}
+                Checkout for {formatPrice(cartPrice)}
               </button>
             </Link>
           </div>

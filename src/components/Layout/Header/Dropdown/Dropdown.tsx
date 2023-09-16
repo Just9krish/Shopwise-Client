@@ -44,12 +44,14 @@ export default function Dropdown() {
         }
       }}
       onClick={handleClick}
-      ref={ref}>
+      ref={ref}
+    >
       <div className="relative h-[60px] w-[270px] hidden lg:block">
         <BiMenuAltLeft size={30} className="absolute left-2 top-1/2 -translate-y-1/2" />
         <button
           type="button"
-          className={`font-medium w-full h-full mt-[10px] text-[17px] bg-white ${style.flex_normal} justify-between pl-10 rounded-t-md`}>
+          className={`font-medium w-full h-full mt-[10px] text-[17px] bg-white ${style.flex_normal} justify-between pl-10 rounded-t-md`}
+        >
           All Categories
         </button>
         <IoIosArrowDown
@@ -66,7 +68,8 @@ export default function Dropdown() {
                   type="button"
                   className={`${style.flex_normal} cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white`}
                   onClick={() => handleSubmit(category)}
-                  key={category.id}>
+                  key={category.id}
+                >
                   <div className={`${style.flex_normal} py-1.5 px-2.5`}>
                     <img
                       src={category.image_Url}

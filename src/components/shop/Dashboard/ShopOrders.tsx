@@ -2,7 +2,7 @@ import { DataGrid, GridCellParams } from '@mui/x-data-grid';
 import { useEffect } from 'react';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import Loader from '../../Loader/Loader';
 import { selectShop, selectShopLoading } from '../../../redux/features/Shop/shopSlice';
@@ -86,7 +86,7 @@ export default function ShopOrders() {
     row.push({
       id: order._id,
       itemsQty: order.cart.reduce((acc, item) => acc + item.quantity, 0),
-      total: formattedPrice(order.totalPrice),
+      total: formatPrice(order.totalPrice),
       status: order.orderStatus,
     });
   });

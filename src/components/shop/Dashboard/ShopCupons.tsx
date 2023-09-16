@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { RxCross1 } from 'react-icons/rx';
 import { toast } from 'react-toastify';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { ICoupon } from '../../../Interface';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { API_URL } from '../../../constant';
@@ -171,7 +171,7 @@ export default function ShopCupons() {
       id: item._id,
       name: item.name,
       discountpercentage: `${item.value}%`,
-      minamt: formattedPrice(item.minAmount),
+      minamt: formatPrice(item.minAmount),
     });
   });
 

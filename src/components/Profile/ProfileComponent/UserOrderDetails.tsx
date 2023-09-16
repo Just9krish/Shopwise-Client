@@ -7,7 +7,7 @@ import {
   getSingleUserOrderAsync,
   selectSelectedOrder,
 } from '../../../redux/features/Orders/orderSlice';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import formateDate from '../../../helper/formatDate';
 import getImageSource from '../../../helper/getImageSource';
 import styles from '../../../styles/style';
@@ -26,7 +26,7 @@ export default function UserOrderDetails() {
   }, [dispatch, orderId]);
 
   return (
-    <>
+    <div>
       {order ? (
         <div className={`py-4 min-h-screen ${styles.section}`}>
           <div className="w-full flex items-center justify-between">
@@ -49,9 +49,9 @@ export default function UserOrderDetails() {
           <br />
           <br />
           {order &&
-            order?.cart.map((item, index) => {
+            order?.cart.map((item) => {
               return (
-                <div className="w-full flex items-start mb-5">
+                <div key={item._id} className="w-full flex items-start mb-5">
                   <img
                     src={getImageSource(item.product.images[0].url)}
                     alt=""
@@ -60,7 +60,7 @@ export default function UserOrderDetails() {
                   <div className="w-full">
                     <h5 className="pl-3 text-[20px]">{item.product.name}</h5>
                     <h5 className="pl-3 text-[20px] text-[#00000091]">
-                      {formattedPrice(item.product.discount_price)} x {item.quantity}
+                      {formatPrice(item.product.discount_price)} x {item.quantity}
                     </h5>
                   </div>
                   {/* {!item.isReviewed && data?.status === "Delivered" ? (
@@ -128,10 +128,10 @@ export default function UserOrderDetails() {
         </div> */}
                 <br />
                 <div className="w-full ml-3">
-                  <label className="block text-[20px] font-[500]">
+                  <p className="block text-[20px] font-[500]">
                     Write a comment
                     <span className="ml-1 font-[400] text-[16px] text-[#00000052]">(optional)</span>
-                  </label>
+                  </p>
                   <textarea
                     name="comment"
                     // value={comment}
@@ -152,7 +152,7 @@ export default function UserOrderDetails() {
 
           <div className="border-t w-full text-right">
             <h5 className="pt-3 text-[18px]">
-              Total Price: <strong>{formattedPrice(order?.totalPrice)}</strong>
+              Total Price: <strong>{formatPrice(order?.totalPrice)}</strong>
             </h5>
           </div>
           <br />
@@ -188,6 +188,6 @@ export default function UserOrderDetails() {
       ) : (
         <div />
       )}
-    </>
+    </div>
   );
 }

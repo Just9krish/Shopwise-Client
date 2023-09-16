@@ -2,7 +2,7 @@ import loadable from '@loadable/component';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { formattedPrice } from '../../helper/formatPrice';
+import formatPrice from '../../helper/formatPrice';
 import style from '../../styles/style';
 import { IProduct } from '../../Interface';
 import { useAppDispatch, useAppSelector } from '../../hooks';
@@ -71,11 +71,9 @@ export default function Product({ product }: IProps) {
         <div className={`${style.flex_normal} justify-between`}>
           <div className="">
             <span className="text-green-600 font-bold text-base block">
-              {formattedPrice(discount_price)}
+              {formatPrice(discount_price)}
             </span>
-            <span className="text-xs text-gray-400 line-through block">
-              {formattedPrice(price)}
-            </span>
+            <span className="text-xs text-gray-400 line-through block">{formatPrice(price)}</span>
           </div>
           {isWish ? (
             <button

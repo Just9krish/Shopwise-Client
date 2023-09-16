@@ -27,13 +27,15 @@ export default function Hero() {
         <button
           type="button"
           className="bg-black rounded-tr opacity-40 rounded-br text-xl lg:text-3xl py-3 px-1.5 lg:py-6 lg:px-3 flex justify-center items-center"
-          onClick={() => sliderRef?.slickPrev()}>
+          onClick={() => sliderRef?.slickPrev()}
+        >
           <FaChevronLeft color="white" />
         </button>
         <button
           type="button"
           className="bg-black rounded-tl opacity-40 rounded-bl text-xl lg:text-3xl py-3 px-1.5 lg:py-6 lg:px-3 flex justify-center items-center"
-          onClick={() => sliderRef?.slickNext()}>
+          onClick={() => sliderRef?.slickNext()}
+        >
           <FaChevronRight color="white" />
         </button>
       </div>

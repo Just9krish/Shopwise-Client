@@ -3,7 +3,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { MdOutlineTrackChanges } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 
 export default function TrackUserOrder() {
   const orders = [
@@ -80,7 +80,7 @@ export default function TrackUserOrder() {
       rows.push({
         id: item._id,
         itemsQty: item.orderItems.length,
-        total: formattedPrice(item.totalPrice),
+        total: formatPrice(item.totalPrice),
         status: item.orderStatus,
       });
     });

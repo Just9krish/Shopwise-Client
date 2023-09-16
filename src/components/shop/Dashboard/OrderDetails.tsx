@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { BsBagFill } from 'react-icons/bs';
 import { Link, useParams } from 'react-router-dom';
 import { Country, State } from 'country-state-city';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { IShopOrder } from '../../../Interface';
 
@@ -111,7 +111,7 @@ export default function OrderDetails() {
                     </Link>
                     <div className="flex items-center justify-between">
                       <span className="text-[#4a4a4a] tracking-wider">
-                        {formattedPrice(discount_price)} x {quantity}
+                        {formatPrice(discount_price)} x {quantity}
                       </span>
                       <span className="bg-orange-200 py-1 px-2 rounded text-[#201f13] text-xs md:text-sm">
                         {category}
@@ -125,7 +125,7 @@ export default function OrderDetails() {
             <div className="mt-6 flex items-center gap-2 justify-end">
               <span className="text-lg text-[#201f13]">Total Price:</span>
               <span className="tracking-wide">
-                <strong>{selectedOrder && formattedPrice(selectedOrder.totalPrice)}</strong>
+                <strong>{selectedOrder && formatPrice(selectedOrder.totalPrice)}</strong>
               </span>
             </div>
           </article>
@@ -171,7 +171,7 @@ export default function OrderDetails() {
               <div className="flex items-center gap-2">
                 <span className="text-[#201f13] font-extralight">Total Price:</span>
                 <span className="font-extrabold tracking-wide">
-                  {selectedOrder && formattedPrice(selectedOrder.totalPrice)}
+                  {selectedOrder && formatPrice(selectedOrder.totalPrice)}
                 </span>
               </div>
 

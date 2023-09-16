@@ -21,7 +21,8 @@ export default function Categories() {
               <div
                 key={category.id}
                 // onClick={() => handleSubmit(category)}
-                className={`bg-white rounded-md ${style.flex_normal} flex-col shadow p-4 cursor-pointer hover:scale-105 transition-all duration-300`}>
+                className={`bg-white rounded-md ${style.flex_normal} flex-col shadow p-4 cursor-pointer hover:scale-105 transition-all duration-300`}
+              >
                 <div className="h-32 overflow-hidden">
                   <img
                     className="w-full h-full object-cover"

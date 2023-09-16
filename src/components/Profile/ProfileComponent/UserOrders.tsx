@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { DataGrid, GridCellParams } from '@mui/x-data-grid';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { selectUser } from '../../../redux/features/User/userSlice';
 import {
   getAllOrdersOfUserAsnyc,
@@ -83,7 +83,7 @@ export default function UserOrders() {
       rows.push({
         id: item?._id,
         itemsQty: item?.cart?.length,
-        total: formattedPrice(item.totalPrice),
+        total: formatPrice(item.totalPrice),
         status: item.orderStatus,
       });
     });

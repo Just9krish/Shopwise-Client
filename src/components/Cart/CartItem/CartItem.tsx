@@ -3,9 +3,9 @@ import { toast } from 'react-toastify';
 import { RxCross1 } from 'react-icons/rx';
 import { Link } from 'react-router-dom';
 import style from '../../../styles/style';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { getCartItemPrice } from '../../../helper/getCartItemPrice';
+import getCartItemPrice from '../../../helper/getCartItemPrice';
 import { ICartItem } from '../../../redux/features/Cart/interface';
 import {
   removeFromCartAsync,
@@ -89,10 +89,10 @@ export default function CartItem({ item }: IProps) {
             <h4 className="text-xs font-extralight">{name}</h4>
           </Link>
           <h4 className="text-xs text-gray-500">
-            {formattedPrice(getCartItemPrice(item.product))} × {quantity}
+            {formatPrice(getCartItemPrice(item.product))} × {quantity}
           </h4>
           <h4 className="font-medium text-sm">
-            {formattedPrice(getCartItemPrice(item.product) * quantity)}
+            {formatPrice(getCartItemPrice(item.product) * quantity)}
           </h4>
         </div>
       </div>

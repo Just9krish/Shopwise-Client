@@ -1,7 +1,7 @@
 import { DataGrid } from '@mui/x-data-grid';
 import { AiOutlineArrowRight } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 
 export default function UserRefunds() {
   const orders = [
@@ -78,7 +78,7 @@ export default function UserRefunds() {
       rows.push({
         id: item._id,
         itemsQty: item.orderItems.length,
-        total: formattedPrice(item.totalPrice),
+        total: formatPrice(item.totalPrice),
         status: item.orderStatus,
       });
     });

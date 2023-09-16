@@ -169,11 +169,13 @@ export default function Header() {
         <div
           className={`fixed top-0 min-h-screen left-0 shadow-md transition-all duration-300 w-3/4 bg-white z-20 ${
             isMobileOpen ? 'translate-x-0' : '-translate-x-full'
-          }`}>
+          }`}
+        >
           <button
             type="button"
             className="border-b py-5 px-4  justify-between flex items-center"
-            onClick={toggleMobileNav}>
+            onClick={toggleMobileNav}
+          >
             <RiCloseLine size={30} title="Close Menu" />
             <h4 className="flex-1 text-center">Menu</h4>
             <div className="relative cursor-pointer ">
@@ -210,7 +212,8 @@ export default function Header() {
                       <Link
                         to={`/products/${productSlug}`}
                         onClick={toggleMobileNav}
-                        key={product._id}>
+                        key={product._id}
+                      >
                         <div className="w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white">
                           <div className={`px-3 py-2 ${style.flex_normal}`}>
                             <img
@@ -252,7 +255,8 @@ export default function Header() {
               <Link
                 to="/profile"
                 onClick={toggleMobileNav}
-                className="flex items-center gap-3 p-2 border text-gray-700 hover:text-gray-900  focus:text-gray-900 border-gray-300 transition-all rounded hover:border-gray-500 focus:border-gray-500">
+                className="flex items-center gap-3 p-2 border text-gray-700 hover:text-gray-900  focus:text-gray-900 border-gray-300 transition-all rounded hover:border-gray-500 focus:border-gray-500"
+              >
                 <img
                   className="h-8 w-8 rounded-full"
                   src={getImageSource(userState?.user?.avatar! || '')}

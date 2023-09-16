@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { AiOutlineArrowRight, AiOutlineMoneyCollect } from 'react-icons/ai';
 import { MdBorderClear } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import style from '../../../styles/style';
 import { selectShop } from '../../../redux/features/Shop/shopSlice';
@@ -81,7 +81,7 @@ export default function ShopDashboardHero() {
       row.push({
         id: order._id,
         quantity: order.cart.reduce((acc, item) => acc + item.quantity, 0),
-        total: formattedPrice(order.totalPrice),
+        total: formatPrice(order.totalPrice),
         status: order.orderStatus,
       });
     });
@@ -110,7 +110,7 @@ export default function ShopDashboardHero() {
                 <span className="text-sm !font-thin">(with 10% service charge)</span>
               </div>
               <div>
-                <p className="text-2xl font-medium">{formattedPrice(23423032.234)}</p>
+                <p className="text-2xl font-medium">{formatPrice(23423032.234)}</p>
                 <Link to="/dashboard" className="text-[#077f9c]">
                   Withdraw Money
                 </Link>

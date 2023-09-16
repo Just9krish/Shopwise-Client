@@ -2,7 +2,7 @@ import { DataGrid, GridCellParams } from '@mui/x-data-grid';
 import { useEffect } from 'react';
 import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import Loader from '../../Loader/Loader';
 import { selectShop } from '../../../redux/features/Shop/shopSlice';
@@ -138,11 +138,11 @@ export default function ShopAllProducts() {
     row.push({
       id: item._id,
       name: item.name,
-      price: formattedPrice(item.price),
+      price: formatPrice(item.price),
       stock: item.stock,
       sold: item.sold_out,
       discountpercentage: item.discount_percentage,
-      discountprice: formattedPrice(item.discount_price),
+      discountprice: formatPrice(item.discount_price),
     });
   });
 

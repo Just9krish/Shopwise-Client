@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from '../../styles/style';
 import { IProduct } from '../../Interface';
-import { formattedPrice } from '../../helper/formatPrice';
+import formatPrice from '../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   addToWishlistAsync,
@@ -65,12 +65,12 @@ export default function ProductDetails({ product }: { product: IProduct }) {
               <div className={`${style.flex_normal}`}>
                 <span className="text-2xl text-[#CC0C39] mr-3">-{discount_percentage}%</span>
                 <span className={`${style.productDiscountPrice} text-[28px]`}>
-                  {formattedPrice(discount_price)}
+                  {formatPrice(discount_price)}
                 </span>
               </div>
               <div className="text-sm">
                 <span className="text-[#565959]">M.R.P.:</span>
-                <span className={`${style.price}`}>{formattedPrice(price)}</span>
+                <span className={`${style.price}`}>{formatPrice(price)}</span>
               </div>
             </div>
             <div className={`${style.flex_normal} justify-between`}>

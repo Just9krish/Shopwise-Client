@@ -2,7 +2,7 @@ import { DataGrid, GridCellParams } from '@mui/x-data-grid';
 import { useEffect } from 'react';
 import { AiOutlineDelete, AiOutlineEye } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
-import { formattedPrice } from '../../../helper/formatPrice';
+import formatPrice from '../../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import Loader from '../../Loader/Loader';
 import { selectShop } from '../../../redux/features/Shop/shopSlice';
@@ -155,11 +155,11 @@ export default function ShopAllEvents() {
       startDate: new Date(item.startDate).toLocaleDateString(),
       endDate: new Date(item.endDate).toLocaleDateString(),
       status: item.status.toUpperCase(),
-      price: formattedPrice(item.price),
+      price: formatPrice(item.price),
       stock: item.stock,
       sold: item.sold_out,
       discountpercentage: item.discount_percentage,
-      discountprice: formattedPrice(item.discount_price),
+      discountprice: formatPrice(item.discount_price),
     });
   });
 
