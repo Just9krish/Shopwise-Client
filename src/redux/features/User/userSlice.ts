@@ -11,7 +11,8 @@ import {
   updateUserInfo,
 } from './userAPI';
 import { IAddressFrom, IUpdateData, IUserPasswordChange, LoginData, UserData } from './interface';
-import { RootState } from '../../type';
+// eslint-disable-next-line import/no-cycle
+import { RootState } from '../../store';
 
 const initialState: IUserState = {
   isUserAuthenticated: false,
@@ -120,7 +121,6 @@ export const userSlice = createSlice({
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.isUserLoading = false;
-        console.log(action.error.message);
         state.userError = action.error.message ? action.error.message : 'Something went wrong';
       })
       .addCase(fetchUserDetailsAsync.pending, (state) => {

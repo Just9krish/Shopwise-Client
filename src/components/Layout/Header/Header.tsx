@@ -130,15 +130,15 @@ export default function Header() {
           <div className={` ${style.section}`}>
             <div className={`relative ${style.flex_normal} justify-between `}>
               <Dropdown />
-              <Navbar mobile={false} toggleMobileNav={toggleMobileNav} />
-              <UserNavigation userState={userState} toggleWishlist={toggleWishlist} />
+              <Navbar mobile={false} toggleMobileNav={() => toggleMobileNav()} />
+              <UserNavigation userState={userState} toggleWishlist={() => toggleWishlist()} />
             </div>
           </div>
         </div>
         {/* cart model */}
         <Cart />
         {/* wishlist model */}
-        <Wishlist toggleWishlist={toggleWishlist} isWishlistOpen={isWishlistOpen} />
+        <Wishlist toggleWishlist={() => toggleWishlist()} isWishlistOpen={isWishlistOpen} />
       </header>
 
       {/* mobile header  */}
@@ -180,7 +180,7 @@ export default function Header() {
               <AiOutlineHeart
                 size={30}
                 className="hover:fill-gray-800 transition-all"
-                onClick={toggleWishlist}
+                onClick={() => toggleWishlist()}
               />
               <span className="absolute top-0 right-0 bg-black text-white text-xs p-1.5 rounded-full h-4 w-4 flex justify-center items-center">
                 0
@@ -209,7 +209,7 @@ export default function Header() {
                     return (
                       <Link
                         to={`/products/${productSlug}`}
-                        onClick={toggleMobileNav}
+                        onClick={() => toggleMobileNav()}
                         key={product._id}>
                         <div className="w-full cursor-pointer transition-all hover:bg-[#ff7d1a] hover:text-white">
                           <div className={`px-3 py-2 ${style.flex_normal}`}>
@@ -229,7 +229,7 @@ export default function Header() {
               ) : null}
             </div>
             <div className="pl-4">
-              <Navbar mobile toggleMobileNav={toggleMobileNav} />
+              <Navbar mobile toggleMobileNav={() => toggleMobileNav()} />
             </div>
             <div>
               <Link to="/create-shop">
@@ -251,7 +251,7 @@ export default function Header() {
             ) : (
               <Link
                 to="/profile"
-                onClick={toggleMobileNav}
+                onClick={() => toggleMobileNav()}
                 className="flex items-center gap-3 p-2 border text-gray-700 hover:text-gray-900  focus:text-gray-900 border-gray-300 transition-all rounded hover:border-gray-500 focus:border-gray-500">
                 <img
                   className="h-8 w-8 rounded-full"

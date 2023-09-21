@@ -10,32 +10,33 @@ export default function SellerActivationPage() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState('');
-  const activateShop = async () => {
-    try {
-      const response = await axios.post(
-        API_URL.ACTIVATE_SHOP,
-        {
-          verificationToken: activationToken,
-        },
-        { withCredentials: true }
-      );
-
-      setMessage(response.data.message);
-    } catch (e: any) {
-      setError(true);
-      setMessage(e.response.data.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   useEffect(() => {
-    activateShop();
+    const fetchShopData = async () => {
+      try {
+        const response = await axios.post(
+          API_URL.ACTIVATE_SHOP,
+          {
+            verificationToken: activationToken,
+          },
+          { withCredentials: true }
+        );
+
+        setMessage(response.data.message);
+      } catch (e: any) {
+        setError(true);
+        setMessage(e.response.data.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchShopData();
   }, [activationToken]);
 
   const handleRetryClick = () => {
     setIsLoading(true);
-    activateShop();
+    window.location.reload();
   };
 
   return (

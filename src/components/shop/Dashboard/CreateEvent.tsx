@@ -37,9 +37,9 @@ export default function CreateEvent() {
   }
 
   function handleStartDateChange(e: ChangeEvent<HTMLInputElement>) {
-    const startDate = new Date(e.target.value);
-    const minEndDate = new Date(startDate.getTime() + 3 * 60 * 60 * 1000);
-    setStartDate(startDate);
+    const startdate = new Date(e.target.value);
+    const minEndDate = new Date(startdate.getTime() + 3 * 60 * 60 * 1000);
+    setStartDate(startdate);
     setEndDate(null);
 
     const inputDateElement = document.getElementById('eventenddate') as HTMLInputElement | null;
@@ -49,8 +49,8 @@ export default function CreateEvent() {
   }
 
   function handleEndDateChange(e: ChangeEvent<HTMLInputElement>) {
-    const endDate = new Date(e.target.value);
-    setEndDate(endDate);
+    const enddate = new Date(e.target.value);
+    setEndDate(enddate);
   }
 
   const today = new Date().toISOString().slice(0, 10);
@@ -88,7 +88,6 @@ export default function CreateEvent() {
         navigate('/shop-events');
       }
     } catch (error: any) {
-      console.log(error);
       if (error.response) {
         toast.error(error.response.data.message);
       } else {

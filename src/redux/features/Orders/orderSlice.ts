@@ -6,7 +6,7 @@ import {
   getOrderOfUser,
   updateOrderStatus,
 } from './orderAPI';
-import { RootState } from '../../type';
+import { RootState } from '../../store';
 
 const initialState: IOrderState = {
   isOrderLoading: false,

@@ -23,8 +23,6 @@ export default function ShopOrders() {
   const isShopLoading = useAppSelector(selectShopLoading);
   const shopOrders = useAppSelector(selectShopOrders);
 
-  console.log(shopOrders);
-
   const dispatch = useAppDispatch();
 
   const columns = [

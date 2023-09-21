@@ -14,37 +14,6 @@ const Loader = loadable(() => import('../components/Loader/Loader'));
 const RelatedProducts = loadable(
   () => import('../components/ProductDetails/RelatedProducts/RelatedProducts')
 );
-
-export default function ProductPage() {
-  const { productId } = useParams();
-  const dispatch = useAppDispatch();
-  const product = useAppSelector(selectSelectedProduct);
-
-  useEffect(() => {
-    if (productId) {
-      dispatch(getProductAsync(productId));
-    }
-  }, [productId, dispatch]);
-
-  return (
-    <div>
-      {product ? (
-        <section>
-          <div className={`${style.section}`}>
-            <ProductDetails product={product} />
-            <ProductDetailsInfo product={product} />
-            {product && <RelatedProducts product={product} />}
-          </div>
-        </section>
-      ) : (
-        <section className="min-h-screen flex justify-center items-center">
-          <Loader />
-        </section>
-      )}
-    </div>
-  );
-}
-
 function ProductDetailsInfo({ product }: { product: IProduct }) {
   const [activeTab, setActiveTab] = useState('productDetails');
   const [shopProducts, setShopProducts] = useState(0);
@@ -157,6 +126,36 @@ function ProductDetailsInfo({ product }: { product: IProduct }) {
             </div>
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+export default function ProductPage() {
+  const { productId } = useParams();
+  const dispatch = useAppDispatch();
+  const product = useAppSelector(selectSelectedProduct);
+
+  useEffect(() => {
+    if (productId) {
+      dispatch(getProductAsync(productId));
+    }
+  }, [productId, dispatch]);
+
+  return (
+    <div>
+      {product ? (
+        <section>
+          <div className={`${style.section}`}>
+            <ProductDetails product={product} />
+            <ProductDetailsInfo product={product} />
+            {product && <RelatedProducts product={product} />}
+          </div>
+        </section>
+      ) : (
+        <section className="min-h-screen flex justify-center items-center">
+          <Loader />
+        </section>
       )}
     </div>
   );

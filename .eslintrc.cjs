@@ -38,6 +38,7 @@ module.exports = {
     'no-underscore-dangle': ['error', { allow: ['_id'] }],
     'no-async-promise-executor': 'off',
     'react/jsx-props-no-spreading': 'off',
+    'import/no-cycle': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
     'jsx-a11y/label-has-associated-control': [
       'error',

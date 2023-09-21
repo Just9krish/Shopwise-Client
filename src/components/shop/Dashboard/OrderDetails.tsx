@@ -185,6 +185,7 @@ export default function OrderDetails() {
                 {selectedOrder?.paymentInfo && (
                   <span
                     className={`font-Poppins font-semibold ${
+                      // eslint-disable-next-line no-nested-ternary
                       selectedOrder.paymentInfo.status === 'succeeded'
                         ? 'text-[#19e50b]'
                         : selectedOrder.paymentInfo.status === 'canceled'

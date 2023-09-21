@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IDeleteEventData, IEventState } from './interface';
 import { deleteShopEvent, getAllEvents, getShopAllEvents } from './eventAPI';
-import { RootState } from '../../type';
+import { RootState } from '../../store';
 
 const initialState: IEventState = {
   isEventsLoading: true,

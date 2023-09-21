@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { addToWishlist, getWishlist, removeFromWishlist } from './wishlistAPI';
-import { RootState } from '../../type';
+import { RootState } from '../../store';
 import { IWishlistState } from './interface';
 
 const initialState: IWishlistState = {

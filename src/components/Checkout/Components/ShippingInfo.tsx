@@ -9,30 +9,29 @@ type IProps = {
   toggleActiveStep: (para: number) => void;
 };
 
+const initialFormState = {
+  fullName: '',
+  email: '',
+  primaryNumber: '',
+  alternateNumber: '',
+  zipCode: '',
+  selectedCountry: '',
+  selectedState: '',
+  address1: '',
+  address2: '',
+  address3: '',
+};
+
 export default function ShippingInfo({ toggleActiveStep }: IProps) {
   const [selectedAddress, setSelectedAddress] = useState<null | string>(null);
 
   const user = useAppSelector(selectUser);
+  const [formState, setFormState] = useState(initialFormState);
   let addresses: null | IAddress[] = null;
 
   if (user?.addresses) {
     addresses = user.addresses;
   }
-
-  const initialFormState = {
-    fullName: '',
-    email: '',
-    primaryNumber: '',
-    alternateNumber: '',
-    zipCode: '',
-    selectedCountry: '',
-    selectedState: '',
-    address1: '',
-    address2: '',
-    address3: '',
-  };
-
-  const [formState, setFormState] = useState(initialFormState);
 
   useEffect(() => {
     if (selectedAddress) {

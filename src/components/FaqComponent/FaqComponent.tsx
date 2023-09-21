@@ -22,10 +22,18 @@ function FaqComponent({ questions }: IProps) {
     <div className={`${style.section} min-h-[70vh] my-12`}>
       <div className="mx-auto max-w-5xl space-y-6">
         {questions.map((q, index) => (
-          <div key={index} className="py-3 px-9 shadow rounded-md bg-white">
-            <div
-              className={`${style.flex_normal} justify-between cursor-pointer`}
-              onClick={() => handleQuestionClick(index)}>
+          <div
+            key={q.id}
+            className="py-3 px-9 shadow rounded-md bg-white"
+            role="button"
+            tabIndex={0}
+            onClick={() => handleQuestionClick(index)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === 'Space') {
+                handleQuestionClick(index);
+              }
+            }}>
+            <div className={`${style.flex_normal} justify-between cursor-pointer`}>
               <h2 className="font-medium text-xl">{q.question}</h2>
               <span>
                 {expandedQuestionIndex !== index ? (

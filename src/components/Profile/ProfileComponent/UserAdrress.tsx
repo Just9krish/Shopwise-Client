@@ -48,7 +48,7 @@ export default function UserAdrress() {
 
   return (
     <div className="w-full px-5">
-      {isModalOpen && <AddAddress handleModalOpen={handleModalOpen} />}
+      {isModalOpen && <AddAddress handleModalOpen={() => handleModalOpen()} />}
       <div className={`w-full ${style.flex_normal} justify-between`}>
         <h1 className="text-[#000000ba] pb-2 text-2xl">Saved Addresses</h1>
 

@@ -40,10 +40,8 @@ export default function ShopCupons() {
     } catch (e: any) {
       if (e.response) {
         setError(e.response.data.message);
-        console.log(e);
       } else {
         setError(e.message);
-        console.log(e);
       }
     }
   }
@@ -60,10 +58,8 @@ export default function ShopCupons() {
     } catch (err: any) {
       if (err.response) {
         toast.error(err.response.data.message);
-        console.log(err);
       } else {
         setError(err.message);
-        console.log(err);
       }
     }
   }
@@ -103,7 +99,6 @@ export default function ShopCupons() {
         toast.success(res.data.message);
       }
     } catch (err: any) {
-      console.log(err);
       if (err.response) {
         toast.error(err.response.data.message);
       } else {

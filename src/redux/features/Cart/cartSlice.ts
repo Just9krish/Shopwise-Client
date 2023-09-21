@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IAddToCart, ICartState } from './interface';
 import { addToCart, fetchCartDetails, removeFromCart, updateQuantity } from './cartAPI';
-import { RootState } from '../../type';
+import { RootState } from '../../store';
 
 const initialState: ICartState = {
   cartPrice: 0,

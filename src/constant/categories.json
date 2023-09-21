@@ -1,72 +1,142 @@
 [
   {
-    "id": 1,
-    "title": "Computers and Laptops",
-    "value": "computers-and-laptops",
+    "id": 21,
+    "title": "Appliance",
+    "value": "appliance",
     "checked": false,
-    "image_Url": "https://cdn.shopify.com/s/files/1/1706/9177/products/NEWAppleMacbookProwithM1ProChip14InchLaptop2021ModelMKGQ3LL_A_16GB_1TBSSD_custommacbd.jpg?v=1659592838"
+    "image_Url": "https://rukminim2.flixcart.com/flap/128/128/image/0ff199d1bd27eb98.png?q=100"
   },
   {
     "id": 2,
-    "title": "Cosmetics and Body Care",
-    "value": "cosmetics-and-body-care",
+    "title": "Bags",
+    "value": "bags",
     "checked": false,
-    "image_Url": "https://rukminim1.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100"
+    "image_Url": "https://static.vecteezy.com/system/resources/thumbnails/024/096/555/small/blue-school-bag-equipment-free-png.png"
   },
   {
     "id": 3,
-    "title": "Accesories",
+    "title": "Books",
+    "value": "books",
+    "checked": false,
+    "image_Url": "https://pngimg.com/uploads/book/book_PNG51038.png"
+  },
+  {
+    "id": 4,
+    "title": "Camera & Accesories",
     "value": "accesories",
     "checked": false,
     "image_Url": "https://img.freepik.com/free-vector/ordering-goods-online-internet-store-online-shopping-niche-e-commerce-website-mother-buying-babies-clothes-footwear-toys-infant-accessories_335657-2345.jpg?w=2000"
   },
   {
-    "id": 4,
+    "id": 5,
     "title": "Cloths",
     "value": "cloths",
     "checked": false,
     "image_Url": "https://www.shift4shop.com/2015/images/industries/clothing/clothing-apparel.png"
   },
   {
-    "id": 5,
-    "title": "Shoes",
-    "value": "shoes",
+    "id": 6,
+    "title": "Dresses",
+    "value": "dresses",
     "checked": false,
-    "image_Url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvBQPQMVNRd6TtDkGs2dCri0Y-rxKkFOiEWw&usqp=CAU"
+    "image_Url": "https://static.vecteezy.com/system/resources/thumbnails/010/175/439/small/design-clothes-dresses-wedding-evening-celebration-customs-png.png"
   },
   {
-    "id": 6,
+    "id": 7,
+    "title": "Fragrances",
+    "value": "fragrances",
+    "checked": false,
+    "image_Url": "https://png.pngitem.com/pimgs/s/583-5830387_perfumes-png-transparent-png.png"
+  },
+  {
+    "id": 8,
+    "title": "Jewellery",
+    "value": "jewellery",
+    "checked": false,
+    "image_Url": "https://png.pngtree.com/png-vector/20221121/ourmid/pngtree-bride-wearing-beautiful-lehenga-and-jewellery-for-indian-wedding-png-image_6472201.png"
+  },
+  {
+    "id": 9,
     "title": "Gifts",
     "value": "gifts",
     "checked": false,
     "image_Url": "https://rukminim1.flixcart.com/flap/128/128/image/f15c02bfeb02d15d.png?q=100"
   },
   {
-    "id": 7,
-    "title": "Pet Care",
-    "value": "pet-care",
+    "id": 10,
+    "title": "Home Furniture",
+    "value": "home-furniture",
     "checked": false,
-    "image_Url": "https://cdn.openpr.com/T/c/Tc15444071_g.jpg"
+    "image_Url": "https://rukminim2.flixcart.com/flap/128/128/image/ab7e2b022a4587dd.jpg?q=100"
   },
   {
-    "id": 8,
-    "title": "Mobile and Tablets",
-    "value": "mobile-and-tablets",
+    "id": 11,
+    "title": "Laptops",
+    "value": "laptops",
     "checked": false,
-    "image_Url": "https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100"
+    "image_Url": "https://cdn.shopify.com/s/files/1/1706/9177/products/NEWAppleMacbookProwithM1ProChip14InchLaptop2021ModelMKGQ3LL_A_16GB_1TBSSD_custommacbd.jpg?v=1659592838"
   },
   {
-    "id": 9,
+    "id": 12,
     "title": "Music and Gaming",
     "value": "music-and-gaming",
     "checked": false,
     "image_Url": "https://static.vecteezy.com/system/resources/previews/011/996/555/original/3d-black-headphone-illustration-ecommerce-icon-png.png"
   },
   {
-    "id": 10,
+    "id": 13,
     "title": "Others",
     "value": "others",
     "checked": false,
     "image_Url": "https://searchspring.com/wp-content/uploads/2022/10/Hero-Image-Platform-Others-2.png"
+  },
+  {
+    "id": 14,
+    "title": "Pet Care",
+    "value": "pet-care",
+    "checked": false,
+    "image_Url": "https://cdn.openpr.com/T/c/Tc15444071_g.jpg"
+  },
+  {
+    "id": 15,
+    "title": "Shoes",
+    "value": "shoes",
+    "checked": false,
+    "image_Url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvBQPQMVNRd6TtDkGs2dCri0Y-rxKkFOiEWw&usqp=CAU"
+  },
+  {
+    "id": 16,
+    "title": "Skin Care",
+    "value": "skin-care",
+    "checked": false,
+    "image_Url": "https://rukminim1.flixcart.com/flap/128/128/image/dff3f7adcf3a90c6.png?q=100"
+  },
+  {
+    "id": 17,
+    "title": "Smartphone",
+    "value": "smartphone",
+    "checked": false,
+    "image_Url": "https://rukminim1.flixcart.com/flap/128/128/image/22fddf3c7da4c4f4.png?q=100"
+  },
+  {
+    "id": 18,
+    "title": "Sunglasses",
+    "value": "sunglasses",
+    "checked": false,
+    "image_Url": "https://pngimg.com/uploads/glasses/small/glasses_PNG6.png"
+  },
+  {
+    "id": 19,
+    "title": "Toys",
+    "value": "toy",
+    "checked": false,
+    "image_Url": "https://pngimg.com/uploads/bear/small/bear_PNG1185.png"
+  },
+  {
+    "id": 20,
+    "title": "Watches",
+    "value": "watches",
+    "checked": false,
+    "image_Url": "https://image.shutterstock.com/image-vector/smartwatch-collection-realistic-icons-isolated-260nw-1953584863.jpg"
   }
 ]

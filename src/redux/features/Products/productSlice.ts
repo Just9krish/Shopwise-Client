@@ -8,7 +8,7 @@ import {
   getProduct,
   getShopProducts,
 } from './productAPI';
-import { RootState } from '../../type';
+import { RootState } from '../../store';
 
 const initialState: IProductState = {
   allProducts: [],
