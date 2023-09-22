@@ -1,84 +1,93 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { ChangeEvent } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { RxCross2 } from 'react-icons/rx';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 import calculateDiscountPrice from '../../../helper/calculateDiscountPrice';
 import categoriesData from '../../../constant/categories.json';
-import generateProductName from '../../../helper/generateRandomProductName';
-import { API_URL } from '../../../constant';
+import { useAppDispatch } from '../../../hooks';
+import { addShopProductAsync } from '../../../redux/features/Products/productSlice';
+
+export interface IAddProduct {
+  productName: string;
+  productDescription: string;
+  productImages: any[];
+  productCategory: string;
+  productTags: string;
+  productPrice: number;
+  productDiscountPrice: number;
+  productDiscountPercentage: number;
+  productStock: number;
+}
 
 export default function AddProduct() {
-  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+    getValues,
+  } = useForm<IAddProduct>({
+    defaultValues: {
+      productImages: [],
+      productPrice: 1,
+      productDiscountPercentage: 1,
+      productName: '',
+      productDescription: '',
+      productCategory: '',
+      productTags: '',
+      productDiscountPrice: 0,
+      productStock: 1,
+    },
+  });
 
-  const [productName, setProductName] = useState(generateProductName);
-  const [productDescription, setProductDescription] = useState('');
-  const [productImages, setProductImages] = useState<File[]>([]);
-  const [productCategory, setProductCategory] = useState('');
-  const [productTags, setProductTags] = useState('');
-  const [productPrice, setProductPrice] = useState(0);
-  const [productDiscountPercentage, setproductDiscountPercentage] = useState(0);
-  const [productDiscountPrice, setProductDiscountPrice] = useState(0);
-  const [productStock, setproductStock] = useState(0);
+  const productPrice = watch('productPrice');
+  const productDiscountPercentage = watch('productDiscountPercentage');
+  const discountPrice = calculateDiscountPrice(productPrice, productDiscountPercentage);
+  const productImages = watch('productImages');
+  const dispatch = useAppDispatch();
 
-  function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
-    e.preventDefault();
-    const { files } = e.target;
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from((e.target.files || []) as File[]);
 
-    if (files) {
-      const filesArray = Array.from(files);
-      if (filesArray) {
-        setProductImages((prev) => [...prev, ...filesArray]);
-      }
+    if (selectedFiles.length + productImages.length > 5) {
+      toast.info('You can only select up to 5 images.');
+      return;
     }
-  }
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
+    setValue('productImages', [...productImages, ...selectedFiles]);
+  };
 
+  const removeImage = (index: number) => {
+    const currentImages = getValues('productImages');
+    currentImages.splice(index, 1);
+    setValue('productImages', [...currentImages]);
+  };
+
+  const onSubmit = (data: IAddProduct) => {
     const form = new FormData();
 
     productImages.forEach((img) => {
       form.append('images', img);
     });
 
-    form.append('name', productName.toString());
-    form.append('description', productDescription.toString());
-    form.append('category', productCategory.toString());
-    form.append('tags', productTags.toString());
-    form.append('price', productPrice.toString());
-    form.append('discountPercentage', productDiscountPercentage.toString());
-    form.append('discountPrice', productDiscountPrice.toString());
-    form.append('stock', productStock.toString());
+    form.append('name', data.productName);
+    form.append('description', data.productDescription);
+    form.append('category', data.productCategory);
+    form.append('tags', data.productTags);
+    form.append('price', data.productPrice.toString());
+    form.append('discount_percentage', data.productDiscountPercentage.toString());
+    form.append('discount_price', discountPrice.toString());
+    form.append('stock', data.productStock.toString());
 
-    try {
-      axios.defaults.withCredentials = true;
-      const config = { headers: { 'Content-Type': 'multipart/form-data' } };
-
-      const res = await axios.post(API_URL.ADD_PRODUCT, form, config);
-
-      if (res.status === 201) {
-        toast.success('Product Added Successfully');
-        navigate('/shop-products');
-      }
-    } catch (error: any) {
-      if (error.response) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(error.message);
-      }
-    }
-  }
-
-  useEffect(() => {
-    setProductDiscountPrice(calculateDiscountPrice(productPrice, productDiscountPercentage));
-  }, [productPrice, productDiscountPercentage]);
+    dispatch(addShopProductAsync(form));
+  };
 
   return (
     <div className="w-full lg:w-3/5 p-8">
       <h4 className="text-3xl font-Poppins text-center">Add Product</h4>
-      <form onSubmit={handleSubmit} className="space-y-6 mt-8">
+      <form noValidate onSubmit={handleSubmit(onSubmit)} className="space-y-6 mt-8">
         <div>
           <label className="text-sm md:text-base" htmlFor="productname">
             Product Name <span className="text-red-500">*</span>
@@ -86,13 +95,15 @@ export default function AddProduct() {
           <input
             type="text"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
-            id="productname"
-            name="productName"
-            required
-            onChange={(e) => setProductName(e.target.value)}
-            value={productName}
+            {...register('productName', {
+              valueAsNumber: false,
+              required: 'Product name is required',
+            })}
             placeholder="Enter your product name"
           />
+          {errors?.productName && (
+            <span className="text-red-500 text-sm">{errors.productName.message?.toString()}</span>
+          )}
         </div>
 
         <div>
@@ -103,12 +114,20 @@ export default function AddProduct() {
             type="text"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="productdescription"
-            name="productDescription"
-            required
-            onChange={(e) => setProductDescription(e.target.value)}
-            value={productDescription}
+            {...register('productDescription', {
+              required: 'Product description is required',
+              minLength: {
+                value: 200,
+                message: 'Product description should be at least 200 characters long',
+              },
+            })}
             placeholder="Enter your product Description"
           />
+          {errors?.productDescription && (
+            <span className="text-red-500 text-sm">
+              {errors.productDescription.message?.toString()}
+            </span>
+          )}
         </div>
 
         <div>
@@ -117,10 +136,10 @@ export default function AddProduct() {
           </label>
           <select
             className="w-full mt-2 border h-9 rounded bg-gray-50 text-sm md:text-base px-3 py-1.5"
-            name="productCategory"
             id="productcategory"
-            required
-            onChange={(e) => setProductCategory(e.target.value)}>
+            {...register('productCategory', {
+              required: 'Product category is required',
+            })}>
             <option disabled selected>
               Choose a Category
             </option>
@@ -130,6 +149,11 @@ export default function AddProduct() {
               </option>
             ))}
           </select>
+          {errors?.productCategory && (
+            <span className="text-red-500 text-sm">
+              {errors.productCategory.message?.toString()}
+            </span>
+          )}
         </div>
 
         <div>
@@ -140,9 +164,7 @@ export default function AddProduct() {
             type="text"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="producttags"
-            name="productTags"
-            onChange={(e) => setProductTags(e.target.value)}
-            value={productTags}
+            {...register('productTags')}
             placeholder="Enter your product tags"
           />
         </div>
@@ -155,13 +177,19 @@ export default function AddProduct() {
             type="number"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="productprice"
-            name="productPrice"
-            min={0}
-            required
-            onChange={(e) => setProductPrice(parseInt(e.target.value, 10))}
-            value={productPrice}
+            {...register('productPrice', {
+              required: 'Product price is required',
+              valueAsNumber: true,
+              min: {
+                value: 0,
+                message: 'Product price should be greater than 0',
+              },
+            })}
             placeholder="Enter your product price"
           />
+          {errors?.productPrice && (
+            <span className="text-red-500 text-sm">{errors.productPrice.message?.toString()}</span>
+          )}
         </div>
 
         <div>
@@ -170,16 +198,31 @@ export default function AddProduct() {
           </label>
           <input
             type="number"
-            max={90}
-            min={0}
-            maxLength={2}
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="produtdiscountpercentage"
-            name="productDiscountPercentage"
-            onChange={(e) => setproductDiscountPercentage(parseInt(e.target.value, 10))}
-            value={productDiscountPercentage}
+            {...register('productDiscountPercentage', {
+              required: 'Product discount percentage is required',
+              valueAsNumber: true,
+              max: {
+                value: 90,
+                message: 'Product discount percentage should be less than 90',
+              },
+              min: {
+                value: 1,
+                message: 'Product discount percentage should be greater than 0',
+              },
+              maxLength: {
+                value: 2,
+                message: 'Product discount percentage should be less than 90',
+              },
+            })}
             placeholder="Enter your product discount percentage"
           />
+          {errors?.productDiscountPercentage && (
+            <span className="text-red-500 text-sm">
+              {errors.productDiscountPercentage.message?.toString()}
+            </span>
+          )}
         </div>
 
         <div>
@@ -188,12 +231,17 @@ export default function AddProduct() {
           </label>
           <input
             type="number"
-            disabled
+            readOnly
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="produtdiscountpercentage"
-            name="productDiscountPercentage"
-            value={productDiscountPrice}
+            value={discountPrice}
+            {...register('productDiscountPrice')}
           />
+          {errors?.productDiscountPrice && (
+            <span className="text-red-500 text-sm">
+              {errors.productDiscountPrice.message?.toString()}
+            </span>
+          )}
         </div>
 
         <div>
@@ -204,11 +252,18 @@ export default function AddProduct() {
             type="number"
             className="appearance-none block w-full px-3 mt-1 h-9 border border-gray-300 rounded placeholder-gray-400 focus:border-orange-500 focus:outline-none focus:ring-orange-500"
             id="produtstock"
-            name="productStock"
-            required
-            onChange={(e) => setproductStock(parseInt(e.target.value, 10))}
-            value={productStock}
+            {...register('productStock', {
+              required: 'Product stock is required',
+              valueAsNumber: true,
+              min: {
+                value: 0,
+                message: 'Product stock should be greater than 0',
+              },
+            })}
           />
+          {errors?.productStock && (
+            <span className="text-red-500 text-sm">{errors.productStock.message?.toString()}</span>
+          )}
         </div>
 
         <div>
@@ -225,7 +280,7 @@ export default function AddProduct() {
             onChange={handleImageChange}
           />
           <div className="flex items-center mt-2 gap-1 overflow-x-scroll whitespace-nowrap">
-            {productImages.length < 5 && (
+            {getValues('productImages').length < 5 && (
               <label htmlFor="productdimages" className="cursor-pointer">
                 <div className="h-24 w-24 rounded bg-gray-200 flex justify-center items-center">
                   <IoAddCircleOutline color="orange" size={30} />
@@ -245,15 +300,16 @@ export default function AddProduct() {
                   type="button"
                   className="absolute cursor-pointer top-0 right-0 rounded-full bg-red-600 text-white h-6 w-6 flex items-center justify-center"
                   onClick={() => {
-                    const newImages = [...productImages];
-                    newImages.splice(idx, 1);
-                    setProductImages(newImages);
+                    removeImage(idx);
                   }}>
                   <RxCross2 />
                 </button>
               </div>
             ))}
           </div>
+          {errors?.productImages && (
+            <span className="text-red-500 text-sm">{errors.productImages.message?.toString()}</span>
+          )}
         </div>
 
         <div>

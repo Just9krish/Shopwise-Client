@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { FilterQuery, IDeleteProduct, IProductState } from './interface';
 import {
+  addProduct,
   deleteProduct,
   getAllProductsByFilters,
   getBestDealsProducts,
@@ -71,80 +72,100 @@ export const getFeaturedProductsAsync = createAsyncThunk(
   }
 );
 
+export const addShopProductAsync = createAsyncThunk(
+  'product/addProduct',
+  async (data: FormData) => {
+    const res: any = await addProduct(data);
+    return res.data;
+  }
+);
+
 const productsSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getAllProductsByFiltersAsync.pending, (state) => {
-      state.isProductLoading = true;
-    });
-    builder.addCase(getAllProductsByFiltersAsync.fulfilled, (state, action) => {
-      state.isProductLoading = false;
-      state.allProducts = action.payload.products;
-      state.totalProducts = action.payload.totalDocs;
-    });
-    builder.addCase(getAllProductsByFiltersAsync.rejected, (state, action) => {
-      state.isProductLoading = false;
-      state.productError = action.error.message ? action.error.message : 'Something went wrong';
-    });
-    builder.addCase(getProductAsync.pending, (state) => {
-      state.isProductLoading = true;
-    });
-    builder.addCase(getProductAsync.fulfilled, (state, action) => {
-      state.isProductLoading = false;
-      state.selectedProduct = action.payload.product;
-    });
-    builder.addCase(getProductAsync.rejected, (state, action) => {
-      state.isProductLoading = false;
-      state.productError = action.error.message ? action.error.message : 'Something went wrong';
-      state.selectedProduct = null;
-    });
-    builder.addCase(getShopProductsAsync.pending, (state) => {
-      state.isProductLoading = true;
-    });
-    builder.addCase(getShopProductsAsync.fulfilled, (state, action) => {
-      state.isProductLoading = false;
-      state.shopProducts = action.payload.products;
-    });
-    builder.addCase(getShopProductsAsync.rejected, (state, action) => {
-      state.isProductLoading = false;
-      state.productError = action.error.message ? action.error.message : 'Something went wrong';
-      state.selectedProduct = null;
-    });
-    builder.addCase(deleteShopProductAsync.pending, (state) => {
-      state.isProductLoading = true;
-    });
-    builder.addCase(deleteShopProductAsync.fulfilled, (state, action) => {
-      const { deletedProductId, message } = action.payload;
+    builder
+      .addCase(getAllProductsByFiltersAsync.pending, (state) => {
+        state.isProductLoading = true;
+      })
+      .addCase(getAllProductsByFiltersAsync.fulfilled, (state, action) => {
+        state.isProductLoading = false;
+        state.allProducts = action.payload.products;
+        state.totalProducts = action.payload.totalDocs;
+      })
+      .addCase(getAllProductsByFiltersAsync.rejected, (state, action) => {
+        state.isProductLoading = false;
+        state.productError = action.error.message ? action.error.message : 'Something went wrong';
+      })
+      .addCase(getProductAsync.pending, (state) => {
+        state.isProductLoading = true;
+      })
+      .addCase(getProductAsync.fulfilled, (state, action) => {
+        state.isProductLoading = false;
+        state.selectedProduct = action.payload.product;
+      })
+      .addCase(getProductAsync.rejected, (state, action) => {
+        state.isProductLoading = false;
+        state.productError = action.error.message ? action.error.message : 'Something went wrong';
+        state.selectedProduct = null;
+      })
+      .addCase(getShopProductsAsync.pending, (state) => {
+        state.isProductLoading = true;
+      })
+      .addCase(getShopProductsAsync.fulfilled, (state, action) => {
+        state.isProductLoading = false;
+        state.shopProducts = action.payload.products;
+      })
+      .addCase(getShopProductsAsync.rejected, (state, action) => {
+        state.isProductLoading = false;
+        state.productError = action.error.message ? action.error.message : 'Something went wrong';
+        state.selectedProduct = null;
+      })
+      .addCase(deleteShopProductAsync.pending, (state) => {
+        state.isProductLoading = true;
+      })
+      .addCase(deleteShopProductAsync.fulfilled, (state, action) => {
+        const { deletedProductId, message } = action.payload;
 
-      return {
-        ...state,
-        isProductLoading: false,
-        shopProducts: state.shopProducts.filter((product) => product._id !== deletedProductId),
-        productMessage: message,
-      };
-    });
-
-    builder.addCase(deleteShopProductAsync.rejected, (state, action) => {
-      state.isProductLoading = false;
-      state.productError = action.error.message ? action.error.message : 'Something went wrong';
-      state.selectedProduct = null;
-    });
-    builder.addCase(getBestDealsProductsAsync.pending, (state) => {
-      state.isProductLoading = true;
-    });
-    builder.addCase(getBestDealsProductsAsync.fulfilled, (state, action) => {
-      state.isProductLoading = false;
-      state.bestDealsProducts = action.payload.bestDealProducts;
-    });
-    builder.addCase(getFeaturedProductsAsync.pending, (state) => {
-      state.isProductLoading = true;
-    });
-    builder.addCase(getFeaturedProductsAsync.fulfilled, (state, action) => {
-      state.isProductLoading = false;
-      state.featuredProducts = action.payload.featuredProducts;
-    });
+        return {
+          ...state,
+          isProductLoading: false,
+          shopProducts: state.shopProducts.filter((product) => product._id !== deletedProductId),
+          productMessage: message,
+        };
+      })
+      .addCase(deleteShopProductAsync.rejected, (state, action) => {
+        state.isProductLoading = false;
+        state.productError = action.error.message ? action.error.message : 'Something went wrong';
+        state.selectedProduct = null;
+      })
+      .addCase(getBestDealsProductsAsync.pending, (state) => {
+        state.isProductLoading = true;
+      })
+      .addCase(getBestDealsProductsAsync.fulfilled, (state, action) => {
+        state.isProductLoading = false;
+        state.bestDealsProducts = action.payload.bestDealProducts;
+      })
+      .addCase(getFeaturedProductsAsync.pending, (state) => {
+        state.isProductLoading = true;
+      })
+      .addCase(getFeaturedProductsAsync.fulfilled, (state, action) => {
+        state.isProductLoading = false;
+        state.featuredProducts = action.payload.featuredProducts;
+      })
+      .addCase(addShopProductAsync.pending, (state) => {
+        state.isProductLoading = true;
+      })
+      .addCase(addShopProductAsync.fulfilled, (state, action) => {
+        state.isProductLoading = false;
+        state.shopProducts.push(action.payload.product);
+        state.productMessage = action.payload.message;
+      })
+      .addCase(addShopProductAsync.rejected, (state, action) => {
+        state.isProductLoading = false;
+        state.productError = action.error.message ? action.error.message : 'Something went wrong';
+      });
   },
 });
 

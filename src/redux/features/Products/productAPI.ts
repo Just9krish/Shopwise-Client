@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { API_URL } from '../../../constant';
-import { FilterQuery, IAddProduct, IDeleteProduct } from './interface';
+import { FilterQuery, IDeleteProduct } from './interface';
 
 const config = {
   headers: { 'Content-Type': 'multipart/form-data' },
@@ -37,7 +37,7 @@ export function getAllProductsByFilters({ filter, sort, pagination }: FilterQuer
   });
 }
 
-export function addProduct(data: IAddProduct) {
+export function addProduct(data: FormData) {
   return new Promise(async (resolve, reject) => {
     try {
       const res: AxiosResponse = await axios.post(API_URL.ADD_PRODUCT, data, config);

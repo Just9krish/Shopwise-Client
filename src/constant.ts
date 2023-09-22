@@ -59,7 +59,7 @@ export const API_URL = {
   GET_STRIPE_SECRET_KEY: `${DOMAIN}/payments/stripe-secret-key`,
 
   // Product APIs
-  ADD_PRODUCT: `${DOMAIN}/products`,
+  ADD_PRODUCT: `${DOMAIN}/products/addProduct`,
   GET_FILTERED_PRODUCTS: (queryString: string) => `${DOMAIN}/products?${queryString}`,
   GET_SINGLE_PRODUCT: (productId: string) => `${DOMAIN}/products/${productId}`,
   GET_BEST_DEALS: `${DOMAIN}/products/best-deals`,
