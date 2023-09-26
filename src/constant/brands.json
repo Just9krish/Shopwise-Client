@@ -118,5 +118,17 @@
         "value": "baking-food-items",
         "title": "Baking Food Items",
         "checked": false
+    },
+    {
+        "id": 21,
+        "value": "cannon",
+        "title": "Cannon",
+        "checked": false
+    },
+    {
+        "id":22,
+        "value": "boat",
+        "title":"Boat",
+        "checked":false
     }
 ]

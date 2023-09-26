@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import getImageSource from '../../../helper/getImageSource';
 
 export type ImageProps = {
@@ -22,8 +22,12 @@ export default function Carousel({ images }: { images: ImageProps[] }) {
     }
   };
 
+  useEffect(() => {
+    setSelectedImage(images[0]);
+  }, [images]);
+
   return (
-    <div className="lg:flex lg:justify-between lg:items-center lg:gap-10">
+    <div className="hidden lg:flex lg:justify-between lg:items-center lg:gap-10">
       <div className="lg:w-1/4 space-y-5">
         {images.map((image) => (
           <div

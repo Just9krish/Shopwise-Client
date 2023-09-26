@@ -68,7 +68,7 @@ export default function ShippingInfo({ toggleActiveStep }: IProps) {
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    localStorage.setItem('shipping_address', JSON.stringify(formState));
+    localStorage.setItem('SHIPPINGADDRESS', JSON.stringify(formState));
     toggleActiveStep(1);
   }
 

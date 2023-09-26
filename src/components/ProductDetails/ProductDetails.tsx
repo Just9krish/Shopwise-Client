@@ -3,7 +3,7 @@ import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from 'react-icons/ai';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from '../../styles/style';
-import { IProduct } from '../../Interface';
+import { IProduct } from '../../redux/features/Products/interface';
 import formatPrice from '../../helper/formatPrice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
@@ -42,7 +42,7 @@ export default function ProductDetails({ product }: { product: IProduct }) {
   }
 
   useEffect(() => {
-    if (wishlists?.find((i: IProduct) => i._id === product._id)) {
+    if (wishlists?.find((i) => i._id === product._id)) {
       setIsWish(true);
     } else {
       setIsWish(false);

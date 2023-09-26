@@ -1,7 +1,7 @@
 import loadable from '@loadable/component';
 import { useEffect, useState } from 'react';
 import { useAppSelector } from '../../../hooks';
-import { IProduct } from '../../../Interface';
+import { IProduct } from '../../../redux/features/Products/interface';
 import style from '../../../styles/style';
 import { selectProducts } from '../../../redux/features/Products/productSlice';
 

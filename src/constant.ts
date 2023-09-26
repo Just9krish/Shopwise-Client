@@ -80,4 +80,4 @@ export const API_URL = {
 export const maxQuantityItem = 4;
 export const minQuantityItem = 1;
 
-export const PRODUCT_PER_PAGE = 10;
+export const PRODUCT_PER_PAGE = 9;

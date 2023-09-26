@@ -2,7 +2,7 @@ import loadable from '@loadable/component';
 import { useParams, Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { IProduct } from '../Interface';
+import { IProduct } from '../redux/features/Products/interface';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import style from '../styles/style';
 import { API_URL } from '../constant';
@@ -30,7 +30,7 @@ function ProductDetailsInfo({ product }: { product: IProduct }) {
   }, [shop?._id]);
 
   return (
-    <div className="bg-white lg:px-10 rounded my-16 px-3 py-6">
+    <div className="bg-white lg:px-10 rounded my-16 px-2 py-6">
       <div className="w-full flex justify-between border-b py-4">
         <div
           role="button"
@@ -119,7 +119,7 @@ function ProductDetailsInfo({ product }: { product: IProduct }) {
                 Total Reviews : <span>23</span>
               </h4>
               <Link className="inline-block" to="/shop">
-                <button type="button" className={` ${style.button} text-white `}>
+                <button type="button" className={`${style.button} text-white `}>
                   Visit Shop
                 </button>
               </Link>

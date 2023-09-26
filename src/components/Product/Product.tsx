@@ -23,7 +23,16 @@ export interface IProps {
 }
 
 export default function Product({ product }: IProps) {
-  const { name, category, rating, price, discountPrice, images, _id: productId } = product;
+  const {
+    name,
+    category,
+    rating,
+    price,
+    discountPrice,
+    images,
+    _id: productId,
+    discountPercentage,
+  } = product;
   const wishlists = useAppSelector(selectWishlist);
   const isWishlistLoading = useAppSelector(selectWishlistLoading);
   const isUserAuthenticated = useAppSelector(selectIsUserAuthenticate);
@@ -31,8 +40,6 @@ export default function Product({ product }: IProps) {
   const [isWish, setIsWish] = useState(false);
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
-
-  // const productSlug = product.name.replace(/\s+/g, "-");
 
   useEffect(() => {
     if (wishlists?.find((i: IProduct) => i._id === product._id)) {
@@ -60,7 +67,7 @@ export default function Product({ product }: IProps) {
         <Link
           className="block font-bold text-sm capitalize hover:text-blue-500 transition-all"
           to={`/products/${productId}`}>
-          {name.length > 55 ? `${name.slice(0, 55)}...` : name}
+          {name.length > 55 ? `${name.slice(0, 33)}...` : name}
         </Link>
         <span className="capitalize inline-block bg-red-300 text-white text-xs px-1.5 rounded-xl">
           {category}
@@ -69,11 +76,14 @@ export default function Product({ product }: IProps) {
       </div>
       <div className="space-y-3 border-t border-[#ddd] pt-3">
         <div className={`${style.flex_normal} justify-between`}>
-          <div className="">
-            <span className="text-green-600 font-bold text-base block">
-              {formatPrice(discountPrice)}
-            </span>
-            <span className="text-xs text-gray-400 line-through block">{formatPrice(price)}</span>
+          <div className="flex items-start gap-2">
+            <div className="">
+              <span className="text-green-600 font-bold text-base block">
+                {formatPrice(discountPrice)}
+              </span>
+              <span className="text-xs text-gray-400 line-through block">{formatPrice(price)}</span>
+            </div>
+            <span className="text-red-500 text-xl font-semibold">-{discountPercentage}%</span>
           </div>
           {isWish ? (
             <button
@@ -97,8 +107,7 @@ export default function Product({ product }: IProps) {
             </button>
           )}
         </div>
-
-        <AddtoCart product={product} variant="card" />
+        {product.stock > 0 && <AddtoCart product={product} variant="card" />}
       </div>
     </div>
   );

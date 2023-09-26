@@ -14,6 +14,7 @@ import style from '../../../styles/style';
 import { API_URL } from '../../../constant';
 import { selectUser } from '../../../redux/features/User/userSlice';
 import { fetchCartDetailsAsync } from '../../../redux/features/Cart/cartSlice';
+import generateRandomText from '../../../helper/generateRandomText';
 
 type SavedAddress = {
   fullName: string;
@@ -40,6 +41,7 @@ export default function Payment({ toggleActiveStep }: IProps) {
   const user = useAppSelector(selectUser);
 
   const SHIPPINGADDRESS = localStorage.getItem('SHIPPINGADDRESS');
+  console.log(SHIPPINGADDRESS);
 
   let savedAddress: SavedAddress | undefined;
 
@@ -62,8 +64,10 @@ export default function Payment({ toggleActiveStep }: IProps) {
   // card payment
   async function handleCardPayment(e: FormEvent) {
     e.preventDefault();
+    console.log('cart payment');
     try {
       if (!elements || !stripe) {
+        console.log('ddfd');
         return;
       }
 
@@ -131,15 +135,6 @@ export default function Payment({ toggleActiveStep }: IProps) {
   const [randomText, setRandomText] = useState('');
   const [userInput, setUserInput] = useState('');
 
-  function generateRandomText() {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let text = '';
-    for (let i = 0; i < 6; i += 1) {
-      text += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return text;
-  }
-
   function handleInputChange(e: ChangeEvent<HTMLInputElement>) {
     setUserInput(e.target.value);
   }
@@ -161,12 +156,11 @@ export default function Payment({ toggleActiveStep }: IProps) {
         },
         withCredentials: true,
       });
-      dispatch(fetchCartDetailsAsync());
       toast.success('Order created successfully');
       localStorage.removeItem('SHIPPINGADDRESS');
       localStorage.setItem('latestorder', JSON.stringify(data));
-
       toggleActiveStep(2);
+      // dispatch(fetchCartDetailsAsync());
     } catch (err: any) {
       if (err.response) {
         toast.error(err.response.data.message);

@@ -42,6 +42,7 @@ export default function UserAdrress() {
     }
     if (message) {
       toast.success(message);
+      setIsModalOpen(false);
       dispatch(clearUserMessage());
     }
   }, [userError, message, dispatch]);

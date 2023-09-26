@@ -79,6 +79,10 @@ export default function ProductsPage() {
     setFilter(newFilter);
   };
 
+  const handlePage = (num: number) => {
+    setPage(num);
+  };
+
   useEffect(() => {
     const pagination = { _page: page, _limit: PRODUCT_PER_PAGE };
     dispatch(getAllProductsByFiltersAsync({ filter, sort, pagination }));
@@ -168,7 +172,7 @@ export default function ProductsPage() {
         </section>
 
         {/* Pagination */}
-        <Pagination page={page} handlePage={() => setPage(page)} totalProducts={totalProducts} />
+        <Pagination page={page} handlePage={handlePage} totalProducts={totalProducts} />
       </main>
     </div>
   );
