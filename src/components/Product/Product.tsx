@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import formatPrice from '../../helper/formatPrice';
 import style from '../../styles/style';
-import { IProduct } from '../../Interface';
+import { IProduct } from '../../redux/features/Products/interface';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import AddtoCart from '../ProductDetails/AddtoCart/AddtoCart';
 import {
@@ -97,6 +97,7 @@ export default function Product({ product }: IProps) {
             </button>
           )}
         </div>
+
         <AddtoCart product={product} variant="card" />
       </div>
     </div>
