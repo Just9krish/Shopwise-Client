@@ -1,4 +1,4 @@
-import { IProduct } from '../../Interface';
+import { IProduct } from '../../redux/features/Products/interface';
 import Product from '../Product/Product';
 
 export default function ProductGrid({ products }: { products: IProduct[] }) {

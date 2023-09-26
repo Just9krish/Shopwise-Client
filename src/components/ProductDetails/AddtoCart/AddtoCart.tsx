@@ -2,7 +2,7 @@ import { TiPlus, TiMinus } from 'react-icons/ti';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
-import { IProduct } from '../../../Interface';
+import { IProduct } from '../../../redux/features/Products/interface';
 import style from '../../../styles/style';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import {

@@ -53,7 +53,7 @@ export default function ShopCupons() {
       });
       if (res.status === 200) {
         toast.success(res.data.message);
-        getCoupons(shop._id!);
+        getCoupons(shop!._id);
       }
     } catch (err: any) {
       if (err.response) {
@@ -77,7 +77,7 @@ export default function ShopCupons() {
 
     try {
       const res = await axios.post(
-        API_URL.CREATE_SHOP_COUPON(shop._id!),
+        API_URL.CREATE_SHOP_COUPON(shop!._id),
         {
           name: cuponcode,
           value: discountpercentage,
@@ -95,7 +95,7 @@ export default function ShopCupons() {
         setDiscountpercentage(0);
         setMiniAmount(0);
         setSelectedProduct(null);
-        getCoupons(shop._id!);
+        getCoupons(shop!._id);
         toast.success(res.data.message);
       }
     } catch (err: any) {
@@ -150,7 +150,7 @@ export default function ShopCupons() {
         return (
           <button
             type="button"
-            onClick={() => handleDeleteCoupon(shop._id!, params.id.toString())}
+            onClick={() => handleDeleteCoupon(shop!._id, params.id.toString())}
             className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
             <AiOutlineDelete size={20} />
           </button>

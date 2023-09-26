@@ -1,0 +1,122 @@
+[
+    {
+        "id": 1,
+        "value": "apple",
+        "title": "Apple",
+        "checked": false
+    },
+    {
+        "id": 2,
+        "value": "samsung",
+        "title": "Samsung",
+        "checked": false
+    },
+    {
+        "id": 3,
+        "value": "oppo",
+        "title": "OPPO",
+        "checked": false
+    },
+    {
+        "id": 4,
+        "value": "huawei",
+        "title": "Huawei",
+        "checked": false
+    },
+    {
+        "id": 5,
+        "value": "microsoft-surface",
+        "title": "Microsoft Surface",
+        "checked": false
+    },
+    {
+        "id": 6,
+        "value": "infinix",
+        "title": "Infinix",
+        "checked": false
+    },
+    {
+        "id": 7,
+        "value": "hp-pavilion",
+        "title": "HP Pavilion",
+        "checked": false
+    },
+    {
+        "id": 8,
+        "value": "impression-of-acqua-di-gio",
+        "title": "Impression of Acqua Di Gio",
+        "checked": false
+    },
+    {
+        "id": 9,
+        "value": "royal-mirage",
+        "title": "Royal_Mirage",
+        "checked": false
+    },
+    {
+        "id": 10,
+        "value": "fog-scent-xpressio",
+        "title": "Fog Scent Xpressio",
+        "checked": false
+    },
+    {
+        "id": 11,
+        "value": "al-munakh",
+        "title": "Al Munakh",
+        "checked": false
+    },
+    {
+        "id": 12,
+        "value": "lord-al-rehab",
+        "title": "Lord   Al Rehab",
+        "checked": false
+    },
+    {
+        "id": 13,
+        "value": "loreal-paris",
+        "title": "L'Oreal Paris",
+        "checked": false
+    },
+    {
+        "id": 14,
+        "value": "hemani-tea",
+        "title": "Hemani Tea",
+        "checked": false
+    },
+    {
+        "id": 15,
+        "value": "dermive",
+        "title": "Dermive",
+        "checked": false
+    },
+    {
+        "id": 16,
+        "value": "rorec-white-rice",
+        "title": "ROREC White Rice",
+        "checked": false
+    },
+    {
+        "id": 17,
+        "value": "fair-clear",
+        "title": "Fair & Clear",
+        "checked": false
+    },
+    {
+        "id": 18,
+        "value": "saaf-khaas",
+        "title": "Saaf & Khaas",
+        "checked": false
+    },
+    {
+        "id": 19,
+        "value": "bake-parlor-big",
+        "title": "Bake Parlor Big",
+        "checked": false
+    },
+    {
+        "id": 20,
+        "value": "baking-food-items",
+        "title": "Baking Food Items",
+        "checked": false
+    }
+]

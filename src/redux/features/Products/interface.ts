@@ -3,6 +3,7 @@ import { IShop } from '../Shop/interface';
 export interface IProduct {
   _id: string;
   category?: string;
+  brand: string;
   name: string;
   description: string;
   price: number;
@@ -19,7 +20,7 @@ export interface IProduct {
   shop: IShop;
   reviews?: { user: any; comment: string; rating: number }[];
   rating: number;
-  sold_out: number;
+  soldOut: number;
   stock: number;
   created_at: Date;
   updated_at: Date;
@@ -65,7 +66,7 @@ export interface Category {
   title: string;
   value: string;
   checked: boolean;
-  image_Url: string;
+  image_Url?: string;
 }
 
 export interface Section {

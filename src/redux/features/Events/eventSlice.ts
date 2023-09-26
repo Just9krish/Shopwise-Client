@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { IDeleteEventData, IEventState } from './interface';
-import { deleteShopEvent, getAllEvents, getShopAllEvents } from './eventAPI';
+import { createEvent, deleteShopEvent, getAllEvents, getShopAllEvents } from './eventAPI';
 import { RootState } from '../../store';
 
 const initialState: IEventState = {
@@ -31,6 +31,11 @@ export const deleteShopEventAsync = createAsyncThunk(
     return response.data;
   }
 );
+
+export const createEventAsync = createAsyncThunk('event/createEvent', async (event: FormData) => {
+  const response: any = await createEvent(event);
+  return response.data;
+});
 
 export const eventSlice = createSlice({
   name: 'event',
@@ -77,6 +82,18 @@ export const eventSlice = createSlice({
         state.allEvents = state.allEvents.filter((event) => event._id !== deletedEventId);
       })
       .addCase(deleteShopEventAsync.rejected, (state, action) => {
+        state.isEventsLoading = false;
+        state.eventError = action.error.message ? action.error.message : 'Something went wrong';
+      })
+      .addCase(createEventAsync.pending, (state) => {
+        state.isEventsLoading = true;
+      })
+      .addCase(createEventAsync.fulfilled, (state, action) => {
+        state.isEventsLoading = false;
+        state.eventMessage = action.payload.message;
+        state.allEvents.push(action.payload.event);
+      })
+      .addCase(createEventAsync.rejected, (state, action) => {
         state.isEventsLoading = false;
         state.eventError = action.error.message ? action.error.message : 'Something went wrong';
       });

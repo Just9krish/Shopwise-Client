@@ -7,6 +7,11 @@ const config = {
   withCredentials: true,
 };
 
+const formConfig = {
+  headers: { 'Content-Type': 'multipart/form-data' },
+  withCredentials: true,
+};
+
 export function getAllEvents() {
   return new Promise(async (resolve, reject) => {
     try {
@@ -44,6 +49,21 @@ export function deleteShopEvent({ shopId, eventId }: IDeleteEventData) {
         API_URL.DELETE_SHOP_EVENT(shopId, eventId),
         config
       );
+      resolve({ data: res.data });
+    } catch (error: any) {
+      if (error.response) {
+        reject(error.response.data);
+      } else {
+        reject(error);
+      }
+    }
+  });
+}
+
+export function createEvent(form: FormData) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res: AxiosResponse = await axios.post(API_URL.CREATE_SHOP_EVENT, form, formConfig);
       resolve({ data: res.data });
     } catch (error: any) {
       if (error.response) {

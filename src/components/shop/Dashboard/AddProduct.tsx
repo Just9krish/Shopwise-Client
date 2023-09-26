@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import calculateDiscountPrice from '../../../helper/calculateDiscountPrice';
 import categoriesData from '../../../constant/categories.json';
+import brandsData from '../../../constant/brands.json';
 import { useAppDispatch } from '../../../hooks';
 import { addShopProductAsync } from '../../../redux/features/Products/productSlice';
 
@@ -13,6 +14,7 @@ export interface IAddProduct {
   productDescription: string;
   productImages: any[];
   productCategory: string;
+  productBrand: string;
   productTags: string;
   productPrice: number;
   productDiscountPrice: number;
@@ -36,6 +38,7 @@ export default function AddProduct() {
       productName: '',
       productDescription: '',
       productCategory: '',
+      productBrand: '',
       productTags: '',
       productDiscountPrice: 0,
       productStock: 1,
@@ -75,10 +78,11 @@ export default function AddProduct() {
     form.append('name', data.productName);
     form.append('description', data.productDescription);
     form.append('category', data.productCategory);
+    form.append('brand', data.productBrand);
     form.append('tags', data.productTags);
     form.append('price', data.productPrice.toString());
-    form.append('discount_percentage', data.productDiscountPercentage.toString());
-    form.append('discount_price', discountPrice.toString());
+    form.append('discountPercentage', data.productDiscountPercentage.toString());
+    form.append('discountPrice', discountPrice.toString());
     form.append('stock', data.productStock.toString());
 
     dispatch(addShopProductAsync(form));
@@ -153,6 +157,30 @@ export default function AddProduct() {
             <span className="text-red-500 text-sm">
               {errors.productCategory.message?.toString()}
             </span>
+          )}
+        </div>
+
+        <div>
+          <label className="text-sm md:text-base" htmlFor="productcategory">
+            Product Brands <span className="text-red-500">*</span>
+          </label>
+          <select
+            className="w-full mt-2 border h-9 rounded bg-gray-50 text-sm md:text-base px-3 py-1.5"
+            id="productcategory"
+            {...register('productBrand', {
+              required: 'Product bran is required',
+            })}>
+            <option disabled selected>
+              Choose a Brand
+            </option>
+            {brandsData?.map((brand) => (
+              <option value={brand.value} key={brand.id}>
+                {brand.title}
+              </option>
+            ))}
+          </select>
+          {errors?.productBrand && (
+            <span className="text-red-500 text-sm">{errors.productBrand.message?.toString()}</span>
           )}
         </div>
 

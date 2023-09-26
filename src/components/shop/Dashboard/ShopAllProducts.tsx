@@ -123,7 +123,7 @@ export default function ShopAllProducts() {
         return (
           <button
             type="button"
-            onClick={() => deleteProductHandler(params.id.toString(), shop._id!)}
+            onClick={() => deleteProductHandler(params.id.toString(), shop!._id)}
             className="hover:bg-gray-200 bg-transparent rounded py-1.5 px-4 transition-all">
             <AiOutlineDelete size={20} />
           </button>
@@ -135,6 +135,7 @@ export default function ShopAllProducts() {
   const row: Row[] = [];
 
   shopProducts?.forEach((item) => {
+    console.log(item);
     row.push({
       id: item._id,
       name: item.name,

@@ -6,6 +6,7 @@ import { HiOutlineSquares2X2 } from 'react-icons/hi2';
 import { PiFunnelLight } from 'react-icons/pi';
 import { useAppDispatch, useAppSelector } from '../hooks';
 import categories from '../constant/categories.json';
+import brands from '../constant/brands.json';
 import {
   getAllProductsByFiltersAsync,
   selectProducts,
@@ -34,6 +35,11 @@ const filters: IFilter[] = [
     id: 'category',
     name: 'Category',
     options: categories,
+  },
+  {
+    id: 'brand',
+    name: 'Brands',
+    options: brands,
   },
 ];
 

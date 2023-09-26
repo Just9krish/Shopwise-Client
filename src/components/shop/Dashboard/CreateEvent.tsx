@@ -1,16 +1,14 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { IoAddCircleOutline } from 'react-icons/io5';
 import { RxCross2 } from 'react-icons/rx';
-import { toast } from 'react-toastify';
-import axios from 'axios';
 import calculateDiscountPrice from '../../../helper/calculateDiscountPrice';
 import categoriesData from '../../../constant/categories.json';
 import generateProductName from '../../../helper/generateRandomProductName';
-import { API_URL } from '../../../constant';
+import { useAppDispatch } from '../../../hooks';
+import { createEventAsync } from '../../../redux/features/Events/eventSlice';
 
 export default function CreateEvent() {
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const [productName, setProductName] = useState(generateProductName);
   const [productDescription, setProductDescription] = useState('');
@@ -37,9 +35,9 @@ export default function CreateEvent() {
   }
 
   function handleStartDateChange(e: ChangeEvent<HTMLInputElement>) {
-    const startdate = new Date(e.target.value);
-    const minEndDate = new Date(startdate.getTime() + 3 * 60 * 60 * 1000);
-    setStartDate(startdate);
+    const newStartDate = new Date(e.target.value);
+    const minEndDate = new Date(newStartDate.getTime() + 3 * 60 * 60 * 1000);
+    setStartDate(newStartDate);
     setEndDate(null);
 
     const inputDateElement = document.getElementById('eventenddate') as HTMLInputElement | null;
@@ -49,8 +47,8 @@ export default function CreateEvent() {
   }
 
   function handleEndDateChange(e: ChangeEvent<HTMLInputElement>) {
-    const enddate = new Date(e.target.value);
-    setEndDate(enddate);
+    const newEndDate = new Date(e.target.value);
+    setEndDate(newEndDate);
   }
 
   const today = new Date().toISOString().slice(0, 10);
@@ -64,36 +62,22 @@ export default function CreateEvent() {
 
     const form = new FormData();
 
-    form.append('name', productName);
-    form.append('description', productDescription);
-    form.append('category', productCategory);
-    form.append('tags', productTags);
-    form.append('price', productPrice);
-    form.append('discountPercentage', productDiscountPercentage);
-    form.append('discountPrice', productDiscountPrice);
-    form.append('stock', productStock);
-    if (startDate !== null) form.append('startDate', startDate);
-    if (endDate !== null) form.append('endDate', endDate);
+    productImages.forEach((img) => {
+      form.append('images', img);
+    });
 
-    try {
-      const config = {
-        headers: { 'Content-Type': 'multipart/form-data' },
-        withCredentials: true,
-      };
+    form.append('name', productName.toString());
+    form.append('description', productDescription.toString());
+    form.append('category', productCategory.toString());
+    form.append('tags', productTags.toString());
+    form.append('price', productPrice.toString());
+    form.append('discountPercentage', productDiscountPercentage.toString());
+    form.append('discountPrice', productDiscountPrice.toString());
+    form.append('stock', productStock.toString());
+    if (startDate !== null) form.append('startDate', startDate.toISOString());
+    if (endDate !== null) form.append('endDate', endDate.toISOString());
 
-      const res = await axios.post(API_URL.CREATE_SHOP_EVENT, form, config);
-
-      if (res.status === 201) {
-        toast.success('Event Added Successfully');
-        navigate('/shop-events');
-      }
-    } catch (error: any) {
-      if (error.response) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(error.message);
-      }
-    }
+    dispatch(createEventAsync(form));
   }
 
   useEffect(() => {
@@ -268,9 +252,9 @@ export default function CreateEvent() {
         </div>
 
         <div>
-          <p className="text-sm md:text-base">
+          <label htmlFor="productdimages" className="text-sm md:text-base">
             Upload Images (max 5 images) <span className="text-red-500">*</span>
-          </p>
+          </label>
           <input
             type="file"
             className="hidden"
@@ -289,13 +273,12 @@ export default function CreateEvent() {
               </label>
             )}
             {productImages?.map((img, idx) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <div className="inline-block relative" key={idx}>
+              <div className="inline-block relative" key={img.name}>
                 <img
                   src={URL.createObjectURL(img)}
                   loading="lazy"
                   className="h-24 w-24 rounded object-cover m-2"
-                  alt={img.name}
+                  alt=""
                 />
                 <button
                   type="button"
